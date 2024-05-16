@@ -1,11 +1,14 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
+import '../../background_modal_route.dart';
 import '../../data/models/add_date.dart';
 import '../../data/models/view_model.dart';
 import '../../data/request/api_request_2.dart';
 import '../../data/utility.dart';
 import 'package:intl/intl.dart';
 import '../../main.dart';
+import '../../test.dart';
 import '../../utils/showDelete.dart';
 import '../../widgets/add_screen.dart';
 import '../../widgets/add_screen_cash.dart';
@@ -128,6 +131,19 @@ class _HomeCashState extends State<HomeCash> {
     );
   }
 
+  void handleStatefulBackdropContent(BuildContext context) async {
+    final result = await Navigator.push(
+      context,
+      BackdropModalRoute<int>(
+        overlayContentBuilder: (context) => CounterContentStateful(),
+      ),
+    );
+
+    setState(() {
+      //backdropResult = result.toString();
+    });
+  }
+
   Positioned AddButtom(BuildContext context) {
     return Positioned(
       left: MediaQuery.of(context).size.width * 0.84,
@@ -176,7 +192,19 @@ class _HomeCashState extends State<HomeCash> {
     return Padding(
       padding: EdgeInsets.only(top: 426, left: 20),
       child: Column(children: [
-        //search(),
+        GestureDetector(
+          onTap: () {
+            handleStatefulBackdropContent(context);
+          },
+          child: Text(
+            'Ver pagos',
+            style: TextStyle(
+              fontWeight: FontWeight.w600,
+              fontSize: 19,
+              color: Colors.black,
+            ),
+          ),
+        ),
         SizedBox(
           height: 16,
         ),

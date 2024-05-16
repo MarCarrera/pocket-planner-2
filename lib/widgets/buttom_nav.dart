@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 
 import '../Home/Cash/home_view.dart';
 import '../statisticsCash.dart';
+import '../test.dart';
 
 class ButtomNav extends StatefulWidget {
   const ButtomNav({super.key, required this.index_color});
@@ -25,7 +26,7 @@ class _ButtomNavState extends State<ButtomNav> {
     const Home(),
     const Statistics(),
     const HomeCash(),
-    const StatisticsCash()
+    Test()
   ];
   @override
   Widget build(BuildContext context) {
