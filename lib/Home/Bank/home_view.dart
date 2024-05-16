@@ -8,9 +8,11 @@ import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
+import '../../background_modal_route.dart';
 import '../../data/models/add_date.dart';
 import '../../data/models/view_model.dart';
 import '../../data/request/api_request_2.dart';
+import '../../test.dart';
 import '../../utils/showDelete.dart';
 
 class Home extends StatefulWidget {
@@ -46,7 +48,7 @@ class _HomeState extends State<Home> {
   bool noData = false;
   bool reload = false;
 
-  String? selctedItem;
+  String selctedItem = 'Odontologo';
   String? selctedItemi;
 
   //-------------------------------------------------------------------
@@ -146,7 +148,7 @@ class _HomeState extends State<Home> {
     );
   }
 
-  /*void _showModalSheet() async {
+  void _showModalSheet() async {
     if (selctedItem != null) {
       var data = await mostrarDataConcept(concept: selctedItem.toString());
       var totalData =
@@ -265,9 +267,9 @@ class _HomeState extends State<Home> {
         },
       );
     }
-  }*/
+  }
 
-  /*Positioned search() {
+  Positioned search() {
     return Positioned(
       top: -20,
       child: Row(
@@ -279,11 +281,29 @@ class _HomeState extends State<Home> {
             style: TextStyle(fontSize: 18),
           ),
           //name(),
+          GestureDetector(
+              onTap: () {
+                handleStatefulBackdropContent(context);
+              },
+              child: Text('Datos')),
           //SearchButton(),
         ],
       ),
     );
-  }*/
+  }
+
+  void handleStatefulBackdropContent(BuildContext context) async {
+    final result = await Navigator.push(
+      context,
+      BackdropModalRoute<int>(
+        overlayContentBuilder: (context) => CounterContentStateful(),
+      ),
+    );
+
+    setState(() {
+      //backdropResult = result.toString();
+    });
+  }
 
   Positioned AddButtom(BuildContext context) {
     return Positioned(
@@ -333,7 +353,7 @@ class _HomeState extends State<Home> {
     return Padding(
       padding: EdgeInsets.only(top: 426, left: 20),
       child: Column(children: [
-        //search(),
+        search(),
         SizedBox(
           height: 16,
         ),
@@ -348,8 +368,6 @@ class _HomeState extends State<Home> {
       ]),
     );
   }
-
-  
 
   Padding TotalEfectivo() {
     return Padding(
@@ -479,6 +497,7 @@ class _HomeState extends State<Home> {
       ),
     );
   }
+
   Padding TotalExpense() {
     return Padding(
       padding: const EdgeInsets.only(
@@ -795,7 +814,7 @@ class _HomeState extends State<Home> {
             top: MediaQuery.of(context).size.height * 0.14,
             left: MediaQuery.of(context).size.width * 0.15,
             child: Container(
-              height: MediaQuery.of(context).size.height * 0.236,
+              height: MediaQuery.of(context).size.height * 0.253,
               width: MediaQuery.of(context).size.width * 0.7,
               decoration: BoxDecoration(
                 boxShadow: const [
@@ -982,78 +1001,78 @@ class _HomeState extends State<Home> {
       ),
     );
   }
-  
-  Padding name() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 15),
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 15),
-        width: 300,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          border: Border.all(
-            width: 2,
-            color: const Color(0xffC5C5C5),
-          ),
-        ),
-        child: DropdownButton<String>(
-          value: selctedItem,
-          onChanged: noData
-              ? null
-              : ((value) {
-                  setState(() {
-                    selctedItem = value!;
-                    //_showModalSheet();
-                  });
-                }),
-          items: _item
-              .map((e) => DropdownMenuItem(
-                    child: Container(
-                      alignment: Alignment.center,
-                      child: Row(
-                        children: [
-                          Container(
-                            width: 40,
-                            child: Image.asset('assets/images/${e}.png'),
-                          ),
-                          const SizedBox(width: 10),
-                          Text(
-                            e,
-                            style: const TextStyle(fontSize: 18),
-                          )
-                        ],
-                      ),
-                    ),
-                    value: e,
-                  ))
-              .toList(),
-          selectedItemBuilder: (BuildContext context) => _item
-              .map((e) => Row(
-                    children: [
-                      Container(
-                        width: 42,
-                        child: Image.asset('assets/images/${e}.png'),
-                      ),
-                      const SizedBox(width: 5),
-                      Text(e)
-                    ],
-                  ))
-              .toList(),
-          hint: const Padding(
-            padding: EdgeInsets.only(top: 12),
-            child: Text(
-              'Concepto',
-              style: TextStyle(color: Colors.grey),
-            ),
-          ),
-          dropdownColor: Colors.white,
-          isExpanded: true,
-          underline: Container(),
-          onTap: noData
-              ? () {}
-              : null, // Deshabilita el tap si noData es verdadero
-        ),
-      ),
-    );
-  }
+
+  // Padding name() {
+  //   return Padding(
+  //     padding: const EdgeInsets.symmetric(horizontal: 15),
+  //     child: Container(
+  //       padding: const EdgeInsets.symmetric(horizontal: 15),
+  //       width: 300,
+  //       decoration: BoxDecoration(
+  //         borderRadius: BorderRadius.circular(10),
+  //         border: Border.all(
+  //           width: 2,
+  //           color: const Color(0xffC5C5C5),
+  //         ),
+  //       ),
+  //       child: DropdownButton<String>(
+  //         value: selctedItem,
+  //         onChanged: noData
+  //             ? null
+  //             : ((value) {
+  //                 setState(() {
+  //                   selctedItem = value!;
+
+  //                 });
+  //               }),
+  //         items: _item
+  //             .map((e) => DropdownMenuItem(
+  //                   child: Container(
+  //                     alignment: Alignment.center,
+  //                     child: Row(
+  //                       children: [
+  //                         Container(
+  //                           width: 40,
+  //                           child: Image.asset('assets/images/${e}.png'),
+  //                         ),
+  //                         const SizedBox(width: 10),
+  //                         Text(
+  //                           e,
+  //                           style: const TextStyle(fontSize: 18),
+  //                         )
+  //                       ],
+  //                     ),
+  //                   ),
+  //                   value: e,
+  //                 ))
+  //             .toList(),
+  //         selectedItemBuilder: (BuildContext context) => _item
+  //             .map((e) => Row(
+  //                   children: [
+  //                     Container(
+  //                       width: 42,
+  //                       child: Image.asset('assets/images/${e}.png'),
+  //                     ),
+  //                     const SizedBox(width: 5),
+  //                     Text(e)
+  //                   ],
+  //                 ))
+  //             .toList(),
+  //         hint: const Padding(
+  //           padding: EdgeInsets.only(top: 12),
+  //           child: Text(
+  //             'Concepto',
+  //             style: TextStyle(color: Colors.grey),
+  //           ),
+  //         ),
+  //         dropdownColor: Colors.white,
+  //         isExpanded: true,
+  //         underline: Container(),
+  //         onTap: noData
+  //             ? () {}
+  //             : null, // Deshabilita el tap si noData es verdadero
+  //       ),
+  //     ),
+  //   );
+  // }
 }

@@ -75,20 +75,6 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
   }
-
-  // void handleStatelessBackdropContent(BuildContext context) async {
-  //   final result = await Navigator.push(
-  //     context,
-  //     BackdropModalRoute<String>(
-  //       overlayContentBuilder: (context) => StatelessBackdropOverlayContent(),
-  //     ),
-  //   );
-
-  //   setState(() {
-  //     backdropResult = result;
-  //   });
-  // }
-
   void handleStatefulBackdropContent(BuildContext context) async {
     final result = await Navigator.push(
       context,
@@ -101,64 +87,6 @@ class _MyHomePageState extends State<MyHomePage> {
       backdropResult = result.toString();
     });
   }
-
-  // void handleCustomizedBackdropContent(BuildContext context) async {
-  //   await Navigator.push(
-  //     context,
-  //     BackdropModalRoute<void>(
-  //       overlayContentBuilder: (context) {
-  //         return Container(
-  //           height: MediaQuery.of(context).size.height - 100.0,
-  //           alignment: Alignment.center,
-  //           padding: const EdgeInsets.all(24),
-  //           child: Column(
-  //             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-  //             children: <Widget>[
-  //               Padding(
-  //                 padding: const EdgeInsets.all(8.0),
-  //                 child: Text('Customized Backdrop Modal'),
-  //               ),
-  //               Padding(
-  //                 padding: const EdgeInsets.all(8.0),
-  //                 child: Text('Barrier Dismiss Disabled'),
-  //               ),
-  //               ElevatedButton(
-  //                 onPressed: () => Navigator.pop(context),
-  //                 child: Text('Close'),
-  //               ),
-  //             ],
-  //           ),
-  //         );
-  //       },
-  //       topPadding: 100.0,
-  //       barrierColorVal: Colors.deepPurple,
-  //       backgroundColor: Colors.amberAccent,
-  //       backdropShape: RoundedRectangleBorder(
-  //         borderRadius: BorderRadius.only(
-  //           topLeft: Radius.circular(60),
-  //           topRight: Radius.circular(60),
-  //           bottomLeft: Radius.circular(200),
-  //           bottomRight: Radius.circular(200),
-  //         ),
-  //       ),
-  //       barrierLabelVal: 'Customized Backdrop',
-  //       shouldMaintainState: false,
-  //       canBarrierDismiss: false,
-  //     ),
-  //   );
-  // }
-
-  // void handleCustomBackdropModalRoute(BuildContext context) async {
-  //   final result = await Navigator.push(
-  //     context,
-  //     CustomBackdropModalRoute(),
-  //   );
-
-  //   setState(() {
-  //     backdropResult =
-  //         result != null && result.isNotEmpty ? result.join(', ') : null;
-  //   });
-  // }
 }
 
 class CounterContentStateful extends StatefulWidget {
@@ -177,6 +105,7 @@ class _CounterContentStatefulState extends State<CounterContentStateful> {
 
   @override
   Widget build(BuildContext context) {
+    
     return Container(
       alignment: Alignment.center,
       padding: const EdgeInsets.all(24.0),
