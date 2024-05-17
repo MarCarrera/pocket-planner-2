@@ -56,7 +56,7 @@ class _HomeState extends State<Home> {
   bool noData = false;
   bool reload = false;
 
-  String selctedItem = 'Odontologo';
+  String? selctedItem;
   String? selctedItemi;
 
   final pokemonDropdownController = DropdownController();
@@ -171,11 +171,10 @@ class _HomeState extends State<Home> {
     );
   }
 
-  void _showModalSheet() async {
-    if (selctedItem != null) {
-      var data = await mostrarDataConcept(concept: selctedItem.toString());
-      var totalData =
-          await mostrarTotalDataConcept(concept: selctedItem.toString());
+  void _showModalSheet(String type) async {
+    if (type != null) {
+      var data = await mostrarDataConcept(concept: type.toString());
+      var totalData = await mostrarTotalDataConcept(concept: type.toString());
       //var cant = finance.amount;
       //int amount = int.parse(totalData);
       NumberFormat formatoMoneda = NumberFormat.currency(symbol: '\$');
@@ -184,7 +183,7 @@ class _HomeState extends State<Home> {
         builder: (BuildContext context) {
           return CupertinoActionSheet(
             title: Text(
-              'Total de $selctedItem: ${formatoMoneda.format(totalData)}',
+              'Total de $type: ${formatoMoneda.format(totalData)}',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 20,
@@ -208,7 +207,7 @@ class _HomeState extends State<Home> {
                         child: Column(
                           children: [
                             Text(
-                              'No existen movimientos para el concepto $selctedItem',
+                              'No existen movimientos para el concepto $type',
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 25,
@@ -418,7 +417,7 @@ class _HomeState extends State<Home> {
             onChange: (String selectedItem) {
               print(selectedItem);
               //handleStatefulBackdropContent(context); // Muestra el valor seleccionado en la consola
-              _showModalSheet();
+              _showModalSheet(selectedItem);
               pokemonDropdownController.close();
             },
             resultOptions: ResultOptions(
