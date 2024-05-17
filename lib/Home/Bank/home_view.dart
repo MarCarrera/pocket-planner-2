@@ -171,126 +171,126 @@ class _HomeState extends State<Home> {
     );
   }
 
-  // void _showModalSheet() async {
-  //   if (selctedItem != null) {
-  //     var data = await mostrarDataConcept(concept: selctedItem.toString());
-  //     var totalData =
-  //         await mostrarTotalDataConcept(concept: selctedItem.toString());
-  //     //var cant = finance.amount;
-  //     //int amount = int.parse(totalData);
-  //     NumberFormat formatoMoneda = NumberFormat.currency(symbol: '\$');
-  //     showCupertinoModalPopup(
-  //       context: context,
-  //       builder: (BuildContext context) {
-  //         return CupertinoActionSheet(
-  //           title: Text(
-  //             'Total de $selctedItem: ${formatoMoneda.format(totalData)}',
-  //             style: TextStyle(
-  //               fontWeight: FontWeight.bold,
-  //               fontSize: 20,
-  //               color: const Color(0xff368983),
-  //             ),
-  //           ),
-  //           actions: <Widget>[
-  //             CupertinoActionSheetAction(
-  //               child: const Text('Cerrar'),
-  //               onPressed: () {
-  //                 Navigator.pop(context);
-  //               },
-  //             )
-  //           ],
-  //           message: Container(
-  //             height: MediaQuery.of(context).size.height * 0.6,
-  //             child: data.isEmpty
-  //                 ? Padding(
-  //                     padding: const EdgeInsets.only(top: 40),
-  //                     child: Center(
-  //                       child: Column(
-  //                         children: [
-  //                           Text(
-  //                             'No existen movimientos para el concepto $selctedItem',
-  //                             style: TextStyle(
-  //                               fontWeight: FontWeight.bold,
-  //                               fontSize: 25,
-  //                               color: Colors.black,
-  //                             ),
-  //                           ),
-  //                           Image.asset('assets/gifs/noData.gif'),
-  //                         ],
-  //                       ),
-  //                     ), // Cambia 'assets/error.gif' al path de tu GIF
-  //                   )
-  //                 : Material(
-  //                     child: ListView.builder(
-  //                       itemCount: data.length,
-  //                       itemBuilder: (BuildContext context, int index) {
-  //                         if (index < data.length) {
-  //                           // Construir elementos para los datos devueltos por la API
-  //                           var item = data[index];
-  //                           //var fin = data[(index).toInt()];
-  //                           var cant = item['amount'];
-  //                           int amount = int.parse(cant);
-  //                           NumberFormat formatoMoneda =
-  //                               NumberFormat.currency(symbol: '\$');
+  void _showModalSheet() async {
+    if (selctedItem != null) {
+      var data = await mostrarDataConcept(concept: selctedItem.toString());
+      var totalData =
+          await mostrarTotalDataConcept(concept: selctedItem.toString());
+      //var cant = finance.amount;
+      //int amount = int.parse(totalData);
+      NumberFormat formatoMoneda = NumberFormat.currency(symbol: '\$');
+      showCupertinoModalPopup(
+        context: context,
+        builder: (BuildContext context) {
+          return CupertinoActionSheet(
+            title: Text(
+              'Total de $selctedItem: ${formatoMoneda.format(totalData)}',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+                color: const Color(0xff368983),
+              ),
+            ),
+            actions: <Widget>[
+              CupertinoActionSheetAction(
+                child: const Text('Cerrar'),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              )
+            ],
+            message: Container(
+              height: MediaQuery.of(context).size.height * 0.6,
+              child: data.isEmpty
+                  ? Padding(
+                      padding: const EdgeInsets.only(top: 40),
+                      child: Center(
+                        child: Column(
+                          children: [
+                            Text(
+                              'No existen movimientos para el concepto $selctedItem',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 25,
+                                color: Colors.black,
+                              ),
+                            ),
+                            Image.asset('assets/gifs/noData.gif'),
+                          ],
+                        ),
+                      ), // Cambia 'assets/error.gif' al path de tu GIF
+                    )
+                  : Material(
+                      child: ListView.builder(
+                        itemCount: data.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          if (index < data.length) {
+                            // Construir elementos para los datos devueltos por la API
+                            var item = data[index];
+                            //var fin = data[(index).toInt()];
+                            var cant = item['amount'];
+                            int amount = int.parse(cant);
+                            NumberFormat formatoMoneda =
+                                NumberFormat.currency(symbol: '\$');
 
-  //                           return Padding(
-  //                             padding: const EdgeInsets.only(
-  //                                 top: 8, right: 16, left: 16),
-  //                             child: ListTile(
-  //                               leading: ClipRRect(
-  //                                 borderRadius: BorderRadius.circular(5),
-  //                                 child: Image.asset(
-  //                                     'assets/images/${item['concept']}.png',
-  //                                     height: 40),
-  //                               ),
-  //                               title: Text(
-  //                                 '${item['concept']}',
-  //                                 style: const TextStyle(
-  //                                   fontSize: 17,
-  //                                   fontWeight: FontWeight.w600,
-  //                                 ),
-  //                               ),
-  //                               subtitle: Text(
-  //                                 '${item['reason']}',
-  //                                 style: const TextStyle(
-  //                                   fontWeight: FontWeight.w600,
-  //                                 ),
-  //                               ),
-  //                               trailing: Column(
-  //                                 children: [
-  //                                   Text(
-  //                                     item['type'].toString() == 'Income'
-  //                                         ? formatoMoneda.format(amount)
-  //                                         : '-' + formatoMoneda.format(amount),
-  //                                     style: TextStyle(
-  //                                       fontWeight: FontWeight.w600,
-  //                                       fontSize: 19,
-  //                                       color:
-  //                                           item['type'].toString() == 'Income'
-  //                                               ? Colors.green
-  //                                               : Colors.red,
-  //                                     ),
-  //                                   ),
-  //                                   Text(
-  //                                     '${item['date']}',
-  //                                     style: const TextStyle(
-  //                                       fontWeight: FontWeight.w600,
-  //                                     ),
-  //                                   ),
-  //                                 ],
-  //                               ),
-  //                             ),
-  //                           );
-  //                         }
-  //                       },
-  //                     ),
-  //                   ),
-  //           ),
-  //         );
-  //       },
-  //     );
-  //   }
-  // }
+                            return Padding(
+                              padding: const EdgeInsets.only(
+                                  top: 8, right: 16, left: 16),
+                              child: ListTile(
+                                leading: ClipRRect(
+                                  borderRadius: BorderRadius.circular(5),
+                                  child: Image.asset(
+                                      'assets/images/${item['concept']}.png',
+                                      height: 40),
+                                ),
+                                title: Text(
+                                  '${item['concept']}',
+                                  style: const TextStyle(
+                                    fontSize: 17,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                                subtitle: Text(
+                                  '${item['reason']}',
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                                trailing: Column(
+                                  children: [
+                                    Text(
+                                      item['type'].toString() == 'Income'
+                                          ? formatoMoneda.format(amount)
+                                          : '-' + formatoMoneda.format(amount),
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 19,
+                                        color:
+                                            item['type'].toString() == 'Income'
+                                                ? Colors.green
+                                                : Colors.red,
+                                      ),
+                                    ),
+                                    Text(
+                                      '${item['date']}',
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            );
+                          }
+                        },
+                      ),
+                    ),
+            ),
+          );
+        },
+      );
+    }
+  }
 
   Positioned search() {
     return Positioned(
@@ -304,45 +304,47 @@ class _HomeState extends State<Home> {
               style: TextStyle(fontSize: 18),
             ),
             //name(),
-            GestureDetector(
+            /*GestureDetector(
               onTap: () {
                 //handleStatefulBackdropContent(context);
               },
-              child: Center(
-                child: CoolDropdown<String>(
-                  controller: pokemonDropdownController,
-                  dropdownList: dropdownItems,
-                  defaultItem:
-                      dropdownItems.isNotEmpty ? dropdownItems.last : null,
-                  onChange: (String selectedItem) {
-                  print(selectedItem); 
-                  handleStatefulBackdropContent(context); // Muestra el valor seleccionado en la consola
-                  pokemonDropdownController.close();
-                },
-                  resultOptions: ResultOptions(
-                    width: 70,
-                    render: ResultRender.icon,
-                    icon: SizedBox(
-                      width: 10,
-                      height: 10,
-                      child: CustomPaint(
-                        painter: DropdownArrowPainter(color: Colors.green),
-                      ),
-                    ),
-                  ),
-                  dropdownOptions: DropdownOptions(
-                    width: 140,
-                  ),
-                  dropdownItemOptions: DropdownItemOptions(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    selectedBoxDecoration: BoxDecoration(
-                      color: Color(0XFFEFFAF0),
-                    ),
-                  ),
-                ),
-              ),
+              child: 
+              
+              // Center(
+              //   child: CoolDropdown<String>(
+              //     controller: pokemonDropdownController,
+              //     dropdownList: dropdownItems,
+              //     defaultItem:
+              //         dropdownItems.isNotEmpty ? dropdownItems.last : null,
+              //     onChange: (String selectedItem) {
+              //     print(selectedItem); 
+              //     handleStatefulBackdropContent(context); // Muestra el valor seleccionado en la consola
+              //     pokemonDropdownController.close();
+              //   },
+              //     resultOptions: ResultOptions(
+              //       width: 70,
+              //       render: ResultRender.icon,
+              //       icon: SizedBox(
+              //         width: 10,
+              //         height: 10,
+              //         child: CustomPaint(
+              //           painter: DropdownArrowPainter(color: Colors.green),
+              //         ),
+              //       ),
+              //     ),
+              //     dropdownOptions: DropdownOptions(
+              //       width: 140,
+              //     ),
+              //     dropdownItemOptions: DropdownItemOptions(
+              //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //       selectedBoxDecoration: BoxDecoration(
+              //         color: Color(0XFFEFFAF0),
+              //       ),
+              //     ),
+              //   ),
+              // ),
               //SearchButton(),
-            )
+            )*/
           ]),
     );
   }
@@ -408,7 +410,39 @@ class _HomeState extends State<Home> {
     return Padding(
       padding: EdgeInsets.only(top: 426, left: 20),
       child: Column(children: [
-        search(),
+        Center(
+          child: CoolDropdown<String>(
+            controller: pokemonDropdownController,
+            dropdownList: dropdownItems,
+            defaultItem: dropdownItems.isNotEmpty ? dropdownItems.last : null,
+            onChange: (String selectedItem) {
+              print(selectedItem);
+              //handleStatefulBackdropContent(context); // Muestra el valor seleccionado en la consola
+              _showModalSheet();
+              pokemonDropdownController.close();
+            },
+            resultOptions: ResultOptions(
+              width: 70,
+              render: ResultRender.icon,
+              icon: SizedBox(
+                width: 10,
+                height: 10,
+                child: CustomPaint(
+                  painter: DropdownArrowPainter(color: Colors.green),
+                ),
+              ),
+            ),
+            dropdownOptions: DropdownOptions(
+              width: 140,
+            ),
+            dropdownItemOptions: DropdownItemOptions(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              selectedBoxDecoration: BoxDecoration(
+                color: Color(0XFFEFFAF0),
+              ),
+            ),
+          ),
+        ),
         SizedBox(
           height: 16,
         ),
