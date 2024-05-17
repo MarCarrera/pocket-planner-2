@@ -1,6 +1,8 @@
 // ignore_for_file: use_build_context_synchronously, prefer_interpolation_to_compose_strings, depend_on_referenced_packages, unnecessary_import
 
 import 'dart:async';
+import 'package:cool_dropdown/cool_dropdown.dart';
+import 'package:cool_dropdown/models/cool_dropdown_item.dart';
 import 'package:prueba_realse_apk/Home/Bank/components/concept_view.dart';
 import 'package:prueba_realse_apk/widgets/add_screen.dart';
 import 'package:flutter/cupertino.dart';
@@ -12,7 +14,7 @@ import '../../background_modal_route.dart';
 import '../../data/models/add_date.dart';
 import '../../data/models/view_model.dart';
 import '../../data/request/api_request_2.dart';
-import '../../test.dart';
+import '../../modal_data.dart';
 import '../../utils/showDelete.dart';
 
 class Home extends StatefulWidget {
@@ -28,6 +30,12 @@ class _HomeState extends State<Home> {
   void initState() {
     super.initState();
     cargarFinanzas();
+    dropdownItems = _item.map((item) {
+      return CoolDropdownItem<String>(
+        label: item,
+        value: item,
+      );
+    }).toList();
   }
 
   Future<void> _loadData() async {
@@ -50,6 +58,20 @@ class _HomeState extends State<Home> {
 
   String selctedItem = 'Odontologo';
   String? selctedItemi;
+
+  final pokemonDropdownController = DropdownController();
+  List<CoolDropdownItem<String>> dropdownItems = [];
+
+  final List<String> _item = [
+    'Ahorro Cuenta',
+    'Ahorro Efectivo',
+    'Gastos Diarios Cuenta',
+    'Gastos Diarios Efectivo',
+    "Ganancia Netflix",
+    "Pago Netflix",
+    'Odontologo',
+    'Renta'
+  ];
 
   //-------------------------------------------------------------------
   Future<void> cargarFinanzas() async {
@@ -107,16 +129,17 @@ class _HomeState extends State<Home> {
     'saturday',
     'sunday'
   ];
-  final List<String> _item = [
-    'Ahorro Cuenta',
-    'Ahorro Efectivo',
-    'Gastos Diarios Cuenta',
-    'Gastos Diarios Efectivo',
-    "Ganancia Netflix",
-    "Pago Netflix",
-    'Odontologo',
-    'Renta'
-  ];
+
+  // final List<String> _item = [
+  //   'Ahorro Cuenta',
+  //   'Ahorro Efectivo',
+  //   'Gastos Diarios Cuenta',
+  //   'Gastos Diarios Efectivo',
+  //   "Ganancia Netflix",
+  //   "Pago Netflix",
+  //   'Odontologo',
+  //   'Renta'
+  // ];
   String obtenerSaludo() {
     DateTime ahora = DateTime.now();
     int hora = ahora.hour;
@@ -148,147 +171,179 @@ class _HomeState extends State<Home> {
     );
   }
 
-  void _showModalSheet() async {
-    if (selctedItem != null) {
-      var data = await mostrarDataConcept(concept: selctedItem.toString());
-      var totalData =
-          await mostrarTotalDataConcept(concept: selctedItem.toString());
-      //var cant = finance.amount;
-      //int amount = int.parse(totalData);
-      NumberFormat formatoMoneda = NumberFormat.currency(symbol: '\$');
-      showCupertinoModalPopup(
-        context: context,
-        builder: (BuildContext context) {
-          return CupertinoActionSheet(
-            title: Text(
-              'Total de $selctedItem: ${formatoMoneda.format(totalData)}',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 20,
-                color: const Color(0xff368983),
-              ),
-            ),
-            actions: <Widget>[
-              CupertinoActionSheetAction(
-                child: const Text('Cerrar'),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-              )
-            ],
-            message: Container(
-              height: MediaQuery.of(context).size.height * 0.6,
-              child: data.isEmpty
-                  ? Padding(
-                      padding: const EdgeInsets.only(top: 40),
-                      child: Center(
-                        child: Column(
-                          children: [
-                            Text(
-                              'No existen movimientos para el concepto $selctedItem',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 25,
-                                color: Colors.black,
-                              ),
-                            ),
-                            Image.asset('assets/gifs/noData.gif'),
-                          ],
-                        ),
-                      ), // Cambia 'assets/error.gif' al path de tu GIF
-                    )
-                  : Material(
-                      child: ListView.builder(
-                        itemCount: data.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          if (index < data.length) {
-                            // Construir elementos para los datos devueltos por la API
-                            var item = data[index];
-                            //var fin = data[(index).toInt()];
-                            var cant = item['amount'];
-                            int amount = int.parse(cant);
-                            NumberFormat formatoMoneda =
-                                NumberFormat.currency(symbol: '\$');
+  // void _showModalSheet() async {
+  //   if (selctedItem != null) {
+  //     var data = await mostrarDataConcept(concept: selctedItem.toString());
+  //     var totalData =
+  //         await mostrarTotalDataConcept(concept: selctedItem.toString());
+  //     //var cant = finance.amount;
+  //     //int amount = int.parse(totalData);
+  //     NumberFormat formatoMoneda = NumberFormat.currency(symbol: '\$');
+  //     showCupertinoModalPopup(
+  //       context: context,
+  //       builder: (BuildContext context) {
+  //         return CupertinoActionSheet(
+  //           title: Text(
+  //             'Total de $selctedItem: ${formatoMoneda.format(totalData)}',
+  //             style: TextStyle(
+  //               fontWeight: FontWeight.bold,
+  //               fontSize: 20,
+  //               color: const Color(0xff368983),
+  //             ),
+  //           ),
+  //           actions: <Widget>[
+  //             CupertinoActionSheetAction(
+  //               child: const Text('Cerrar'),
+  //               onPressed: () {
+  //                 Navigator.pop(context);
+  //               },
+  //             )
+  //           ],
+  //           message: Container(
+  //             height: MediaQuery.of(context).size.height * 0.6,
+  //             child: data.isEmpty
+  //                 ? Padding(
+  //                     padding: const EdgeInsets.only(top: 40),
+  //                     child: Center(
+  //                       child: Column(
+  //                         children: [
+  //                           Text(
+  //                             'No existen movimientos para el concepto $selctedItem',
+  //                             style: TextStyle(
+  //                               fontWeight: FontWeight.bold,
+  //                               fontSize: 25,
+  //                               color: Colors.black,
+  //                             ),
+  //                           ),
+  //                           Image.asset('assets/gifs/noData.gif'),
+  //                         ],
+  //                       ),
+  //                     ), // Cambia 'assets/error.gif' al path de tu GIF
+  //                   )
+  //                 : Material(
+  //                     child: ListView.builder(
+  //                       itemCount: data.length,
+  //                       itemBuilder: (BuildContext context, int index) {
+  //                         if (index < data.length) {
+  //                           // Construir elementos para los datos devueltos por la API
+  //                           var item = data[index];
+  //                           //var fin = data[(index).toInt()];
+  //                           var cant = item['amount'];
+  //                           int amount = int.parse(cant);
+  //                           NumberFormat formatoMoneda =
+  //                               NumberFormat.currency(symbol: '\$');
 
-                            return Padding(
-                              padding: const EdgeInsets.only(
-                                  top: 8, right: 16, left: 16),
-                              child: ListTile(
-                                leading: ClipRRect(
-                                  borderRadius: BorderRadius.circular(5),
-                                  child: Image.asset(
-                                      'assets/images/${item['concept']}.png',
-                                      height: 40),
-                                ),
-                                title: Text(
-                                  '${item['concept']}',
-                                  style: const TextStyle(
-                                    fontSize: 17,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                                subtitle: Text(
-                                  '${item['reason']}',
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                                trailing: Column(
-                                  children: [
-                                    Text(
-                                      item['type'].toString() == 'Income'
-                                          ? formatoMoneda.format(amount)
-                                          : '-' + formatoMoneda.format(amount),
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 19,
-                                        color:
-                                            item['type'].toString() == 'Income'
-                                                ? Colors.green
-                                                : Colors.red,
-                                      ),
-                                    ),
-                                    Text(
-                                      '${item['date']}',
-                                      style: const TextStyle(
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            );
-                          }
-                        },
-                      ),
-                    ),
-            ),
-          );
-        },
-      );
-    }
-  }
+  //                           return Padding(
+  //                             padding: const EdgeInsets.only(
+  //                                 top: 8, right: 16, left: 16),
+  //                             child: ListTile(
+  //                               leading: ClipRRect(
+  //                                 borderRadius: BorderRadius.circular(5),
+  //                                 child: Image.asset(
+  //                                     'assets/images/${item['concept']}.png',
+  //                                     height: 40),
+  //                               ),
+  //                               title: Text(
+  //                                 '${item['concept']}',
+  //                                 style: const TextStyle(
+  //                                   fontSize: 17,
+  //                                   fontWeight: FontWeight.w600,
+  //                                 ),
+  //                               ),
+  //                               subtitle: Text(
+  //                                 '${item['reason']}',
+  //                                 style: const TextStyle(
+  //                                   fontWeight: FontWeight.w600,
+  //                                 ),
+  //                               ),
+  //                               trailing: Column(
+  //                                 children: [
+  //                                   Text(
+  //                                     item['type'].toString() == 'Income'
+  //                                         ? formatoMoneda.format(amount)
+  //                                         : '-' + formatoMoneda.format(amount),
+  //                                     style: TextStyle(
+  //                                       fontWeight: FontWeight.w600,
+  //                                       fontSize: 19,
+  //                                       color:
+  //                                           item['type'].toString() == 'Income'
+  //                                               ? Colors.green
+  //                                               : Colors.red,
+  //                                     ),
+  //                                   ),
+  //                                   Text(
+  //                                     '${item['date']}',
+  //                                     style: const TextStyle(
+  //                                       fontWeight: FontWeight.w600,
+  //                                     ),
+  //                                   ),
+  //                                 ],
+  //                               ),
+  //                             ),
+  //                           );
+  //                         }
+  //                       },
+  //                     ),
+  //                   ),
+  //           ),
+  //         );
+  //       },
+  //     );
+  //   }
+  // }
 
   Positioned search() {
     return Positioned(
       top: -20,
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Text(
-            'Mostrar por:',
-            style: TextStyle(fontSize: 18),
-          ),
-          //name(),
-          GestureDetector(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(
+              'Mostrar por:',
+              style: TextStyle(fontSize: 18),
+            ),
+            //name(),
+            GestureDetector(
               onTap: () {
-                handleStatefulBackdropContent(context);
+                //handleStatefulBackdropContent(context);
               },
-              child: Text('Datos')),
-          //SearchButton(),
-        ],
-      ),
+              child: Center(
+                child: CoolDropdown<String>(
+                  controller: pokemonDropdownController,
+                  dropdownList: dropdownItems,
+                  defaultItem:
+                      dropdownItems.isNotEmpty ? dropdownItems.last : null,
+                  onChange: (String selectedItem) {
+                  print(selectedItem); 
+                  handleStatefulBackdropContent(context); // Muestra el valor seleccionado en la consola
+                  pokemonDropdownController.close();
+                },
+                  resultOptions: ResultOptions(
+                    width: 70,
+                    render: ResultRender.icon,
+                    icon: SizedBox(
+                      width: 10,
+                      height: 10,
+                      child: CustomPaint(
+                        painter: DropdownArrowPainter(color: Colors.green),
+                      ),
+                    ),
+                  ),
+                  dropdownOptions: DropdownOptions(
+                    width: 140,
+                  ),
+                  dropdownItemOptions: DropdownItemOptions(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    selectedBoxDecoration: BoxDecoration(
+                      color: Color(0XFFEFFAF0),
+                    ),
+                  ),
+                ),
+              ),
+              //SearchButton(),
+            )
+          ]),
     );
   }
 
@@ -296,7 +351,7 @@ class _HomeState extends State<Home> {
     final result = await Navigator.push(
       context,
       BackdropModalRoute<int>(
-        overlayContentBuilder: (context) => CounterContentStateful(),
+        overlayContentBuilder: (context) => ModalData(),
       ),
     );
 

@@ -44,6 +44,7 @@ dependencies:
   cupertino_modal_sheet: #https://pub.dev/packages/cupertino_modal_sheet/example
 
   modal_bottom_sheet: ^3.0.0
+  cool_dropdown: ^2.1.0
 
 dev_dependencies:
   flutter_test:

@@ -4,10 +4,11 @@ import 'package:prueba_realse_apk/Home/Bank/home_view.dart';
 import 'package:prueba_realse_apk/statistics.dart';
 import 'package:prueba_realse_apk/widgets/add_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:prueba_realse_apk/widgets/test.dart';
 
 import '../Home/Cash/home_view.dart';
 import '../statisticsCash.dart';
-import '../test.dart';
+import '../modal_data.dart';
 
 class ButtomNav extends StatefulWidget {
   const ButtomNav({super.key, required this.index_color});
@@ -22,12 +23,7 @@ class _ButtomNavState extends State<ButtomNav> {
   late int index_color;
   _ButtomNavState({required this.index_color});
 
-  List Screen = [
-    const Home(),
-    const Statistics(),
-    const HomeCash(),
-    Test()
-  ];
+  List Screen = [const Home(), const Statistics(), const HomeCash(), Test()];
   @override
   Widget build(BuildContext context) {
     return Scaffold(

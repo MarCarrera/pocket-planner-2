@@ -8,7 +8,7 @@ import '../../data/request/api_request_2.dart';
 import '../../data/utility.dart';
 import 'package:intl/intl.dart';
 import '../../main.dart';
-import '../../test.dart';
+import '../../modal_data.dart';
 import '../../utils/showDelete.dart';
 import '../../widgets/add_screen.dart';
 import '../../widgets/add_screen_cash.dart';
@@ -135,7 +135,7 @@ class _HomeCashState extends State<HomeCash> {
     final result = await Navigator.push(
       context,
       BackdropModalRoute<int>(
-        overlayContentBuilder: (context) => CounterContentStateful(),
+        overlayContentBuilder: (context) => ModalData(),
       ),
     );
 
