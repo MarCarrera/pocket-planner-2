@@ -409,37 +409,57 @@ class _HomeState extends State<Home> {
     return Padding(
       padding: EdgeInsets.only(top: 426, left: 20),
       child: Column(children: [
-        Center(
-          child: CoolDropdown<String>(
-            controller: pokemonDropdownController,
-            dropdownList: dropdownItems,
-            defaultItem: dropdownItems.isNotEmpty ? dropdownItems.last : null,
-            onChange: (String selectedItem) {
-              print(selectedItem);
-              //handleStatefulBackdropContent(context); // Muestra el valor seleccionado en la consola
-              _showModalSheet(selectedItem);
-              pokemonDropdownController.close();
-            },
-            resultOptions: ResultOptions(
-              width: 70,
-              render: ResultRender.icon,
-              icon: SizedBox(
-                width: 10,
-                height: 10,
-                child: CustomPaint(
-                  painter: DropdownArrowPainter(color: Colors.green),
+        Padding(
+          padding: EdgeInsets.only(top: 15),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                'Ver por: ',
+                style: TextStyle(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 19,
+                  color: Colors.black,
                 ),
               ),
-            ),
-            dropdownOptions: DropdownOptions(
-              width: 140,
-            ),
-            dropdownItemOptions: DropdownItemOptions(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              selectedBoxDecoration: BoxDecoration(
-                color: Color(0XFFEFFAF0),
+              SizedBox(
+                width: 16,
               ),
-            ),
+              CoolDropdown<String>(
+                controller: pokemonDropdownController,
+                dropdownList: dropdownItems,
+                defaultItem:
+                    dropdownItems.isNotEmpty ? dropdownItems.last : null,
+                onChange: (String selectedItem) {
+                  print(selectedItem);
+                  //handleStatefulBackdropContent(context); // Muestra el valor seleccionado en la consola
+                  _showModalSheet(selectedItem);
+                  pokemonDropdownController.close();
+                },
+                resultOptions: ResultOptions(
+                  width: 200,
+                  render: ResultRender.all,
+                  placeholder: 'Concepto',
+                  isMarquee: true,
+                  icon: SizedBox(
+                    width: 10,
+                    height: 10,
+                    child: CustomPaint(
+                      painter: DropdownArrowPainter(color: Colors.green),
+                    ),
+                  ),
+                ),
+                dropdownOptions: DropdownOptions(
+                  width: 180,
+                ),
+                dropdownItemOptions: DropdownItemOptions(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  selectedBoxDecoration: BoxDecoration(
+                    color: Color(0XFFEFFAF0),
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
         SizedBox(
