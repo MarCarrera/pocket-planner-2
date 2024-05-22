@@ -1,5 +1,6 @@
 // ignore_for_file: non_constant_identifier_names
 
+import 'package:custom_navigation_bar/custom_navigation_bar.dart';
 import 'package:prueba_realse_apk/Home/Bank/home_view.dart';
 import 'package:prueba_realse_apk/statistics.dart';
 import 'package:prueba_realse_apk/widgets/add_screen.dart';
@@ -23,10 +24,51 @@ class _ButtomNavState extends State<ButtomNav> {
   late int index_color;
   _ButtomNavState({required this.index_color});
 
-  List Screen = [const Home(), const Statistics(), const HomeCash(), Test()];
+  List Screen = [const Home(), const Statistics()];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      body: Screen[index_color],
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.only(bottom: 12),
+        child: CustomNavigationBar(
+          iconSize: 30.0,
+          selectedColor: Color.fromARGB(255, 11, 57, 54),
+          strokeColor: Colors.white,
+          unSelectedColor: const Color.fromARGB(255, 255, 255, 255),
+          backgroundColor: Color(0xff368983),
+          borderRadius: Radius.circular(20.0),
+          blurEffect: true,
+          opacity: 0.4,
+          items: [
+            CustomNavigationBarItem(
+              icon: Icon(
+                Icons.home,
+              ),
+            ),
+            CustomNavigationBarItem(
+              icon: Icon(
+                Icons.shopping_cart,
+              ),
+            ),
+            // CustomNavigationBarItem(
+            //   icon: Icon(
+            //     Icons.cloud,
+            //   ),
+            // ),
+          ],
+          currentIndex: index_color,
+          onTap: (index) {
+            setState(() {
+              index_color = index;
+            });
+          },
+          isFloating: true,
+        ),
+      ),
+    );
+
+    /*Scaffold(
       body: Screen[index_color],
       bottomNavigationBar: BottomAppBar(
         shape: const CircularNotchedRectangle(),
@@ -75,7 +117,7 @@ class _ButtomNavState extends State<ButtomNav> {
                       : Colors.white,
                 ),
               ),
-              GestureDetector(
+              /*GestureDetector(
                 onTap: () {
                   setState(() {
                     index_color = 3;
@@ -88,11 +130,11 @@ class _ButtomNavState extends State<ButtomNav> {
                       ? Color.fromARGB(255, 56, 128, 195)
                       : Colors.white,
                 ),
-              ),
+              ),*/
             ],
           ),
         ),
       ),
-    );
+    );*/
   }
 }
