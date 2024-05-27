@@ -7,7 +7,6 @@ import 'package:prueba_realse_apk/widgets/add_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:prueba_realse_apk/widgets/test.dart';
 
-import '../Home/Cash/home_view.dart';
 import '../statisticsCash.dart';
 import '../modal_data.dart';
 

@@ -17,6 +17,7 @@ import '../../data/request/api_request_2.dart';
 import '../../modal_data.dart';
 import '../../utils/showConfirm.dart';
 import '../../utils/showDelete.dart';
+import '../../widgets/add_screen_cash.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -62,6 +63,7 @@ class _HomeState extends State<Home> {
 
   final pokemonDropdownController = DropdownController();
   List<CoolDropdownItem<String>> dropdownItems = [];
+  TextEditingController abonoC = TextEditingController();
 
   final List<String> _item = [
     'Ahorro Cuenta',
@@ -129,17 +131,6 @@ class _HomeState extends State<Home> {
     'saturday',
     'sunday'
   ];
-
-  // final List<String> _item = [
-  //   'Ahorro Cuenta',
-  //   'Ahorro Efectivo',
-  //   'Gastos Diarios Cuenta',
-  //   'Gastos Diarios Efectivo',
-  //   "Ganancia Netflix",
-  //   "Pago Netflix",
-  //   'Odontologo',
-  //   'Renta'
-  // ];
   String obtenerSaludo() {
     DateTime ahora = DateTime.now();
     int hora = ahora.hour;
@@ -291,6 +282,100 @@ class _HomeState extends State<Home> {
     }
   }
 
+  void _showModalSheetBono(
+      int idFinance, String type, String concepto, String amount) async {
+    if (type != null) {
+      var data = await mostrarDataConcept(concept: type.toString());
+      var totalData = await mostrarTotalDataConcept(concept: type.toString());
+      //var cant = finance.amount;
+      //int amount = int.parse(totalData);
+      NumberFormat formatoMoneda = NumberFormat.currency(symbol: '\$');
+      showCupertinoModalPopup(
+        context: context,
+        builder: (BuildContext context) {
+          return CupertinoActionSheet(
+            title: Text(
+              'Abonar al concepto: $type \nDetalles: $concepto',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+                color: const Color(0xff368983),
+              ),
+            ),
+            actions: <Widget>[
+              CupertinoActionSheetAction(
+                child: const Text('Cerrar'),
+                onPressed: () {
+                  setState(() {});
+                  Navigator.pop(context);
+                },
+              )
+            ],
+            message: Container(
+              height: MediaQuery.of(context).size.height * 0.6,
+              child: Material(
+                child: Container(
+                  child: Column(
+                    children: [
+                      Text('Cantidad máxima a abonar:'),
+                      Text(amount),
+                      TextFormField(
+                        controller: abonoC,
+                        decoration: InputDecoration(
+                            enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Color.fromARGB(255, 11, 57, 54),
+                                ),
+                                borderRadius: BorderRadius.circular(30)),
+                            focusedBorder: OutlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: Colors.green.shade500),
+                                borderRadius: BorderRadius.circular(30)),
+                            prefixIcon: Icon(Icons.monetization_on_rounded),
+                            hintText: '00.0',
+                            filled: true,
+                            fillColor: Colors.grey.shade200),
+                      ),
+                      GestureDetector(
+                        onTap: () async {
+                          await abonarGasto(
+                              bono: abonoC.text, idFinance: idFinance.toString());
+                          await ShowConfirm().showConfirmDialog2(context);
+                          // Llamar a setState para reconstruir la vista y mostrar los nuevos datos
+                          setState(() {});
+                          // Navegar de regreso a la vista de inicio y reemplazar la vista actual
+                          // Navigator.of(context).pop();
+                        },
+                        child: Container(
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15),
+                            color: Color.fromARGB(255, 55, 77, 162),
+                          ),
+                          width: 120,
+                          height: 50,
+                          child: const Text(
+                            'Guardar',
+                            style: TextStyle(
+                              fontFamily: 'f',
+                              fontWeight: FontWeight.w600,
+                              color: Colors.white,
+                              fontSize: 17,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          );
+        },
+      );
+    }
+  }
+
   Positioned search() {
     return Positioned(
       top: -20,
@@ -302,48 +387,6 @@ class _HomeState extends State<Home> {
               'Mostrar por:',
               style: TextStyle(fontSize: 18),
             ),
-            //name(),
-            /*GestureDetector(
-              onTap: () {
-                //handleStatefulBackdropContent(context);
-              },
-              child: 
-              
-              // Center(
-              //   child: CoolDropdown<String>(
-              //     controller: pokemonDropdownController,
-              //     dropdownList: dropdownItems,
-              //     defaultItem:
-              //         dropdownItems.isNotEmpty ? dropdownItems.last : null,
-              //     onChange: (String selectedItem) {
-              //     print(selectedItem); 
-              //     handleStatefulBackdropContent(context); // Muestra el valor seleccionado en la consola
-              //     pokemonDropdownController.close();
-              //   },
-              //     resultOptions: ResultOptions(
-              //       width: 70,
-              //       render: ResultRender.icon,
-              //       icon: SizedBox(
-              //         width: 10,
-              //         height: 10,
-              //         child: CustomPaint(
-              //           painter: DropdownArrowPainter(color: Colors.green),
-              //         ),
-              //       ),
-              //     ),
-              //     dropdownOptions: DropdownOptions(
-              //       width: 140,
-              //     ),
-              //     dropdownItemOptions: DropdownItemOptions(
-              //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //       selectedBoxDecoration: BoxDecoration(
-              //         color: Color(0XFFEFFAF0),
-              //       ),
-              //     ),
-              //   ),
-              // ),
-              //SearchButton(),
-            )*/
           ]),
     );
   }
@@ -798,10 +841,10 @@ class _HomeState extends State<Home> {
                 },
                 child: GestureDetector(
                   onLongPress: () async {
-                    
-                    await abonarGasto(bono: '100', idFinance: '174');
-                    await ShowConfirm().showConfirmDialog2(context);
+                    _showModalSheetBono(finance.idFinance, finance.type,
+                        finance.concept, finance.amount);
 
+                    
                   },
                   child: ListTile(
                     leading: ClipRRect(
