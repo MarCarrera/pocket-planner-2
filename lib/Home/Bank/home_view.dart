@@ -295,7 +295,7 @@ class _HomeState extends State<Home> {
         builder: (BuildContext context) {
           return CupertinoActionSheet(
             title: Text(
-              'Abonar al concepto: $type \nDetalles: $concepto',
+              'Abonar al concepto: ${type == 'Expense' ? 'Gasto' : 'Ingreso'} \nDetalles: $concepto',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 20,
@@ -312,34 +312,63 @@ class _HomeState extends State<Home> {
               )
             ],
             message: Container(
-              height: MediaQuery.of(context).size.height * 0.6,
+              height: MediaQuery.of(context).size.height * 0.26,
               child: Material(
                 child: Container(
                   child: Column(
                     children: [
-                      Text('Cantidad máxima a abonar:'),
-                      Text(amount),
-                      TextFormField(
-                        controller: abonoC,
-                        decoration: InputDecoration(
-                            enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Color.fromARGB(255, 11, 57, 54),
-                                ),
-                                borderRadius: BorderRadius.circular(30)),
-                            focusedBorder: OutlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: Colors.green.shade500),
-                                borderRadius: BorderRadius.circular(30)),
-                            prefixIcon: Icon(Icons.monetization_on_rounded),
-                            hintText: '00.0',
-                            filled: true,
-                            fillColor: Colors.grey.shade200),
+                      Text(
+                        'Cantidad máxima a abonar:',
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.w500,
+                          color: Color.fromRGBO(47, 125, 121, 0.9),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      Text(
+                        '\$$amount.00',
+                        style: TextStyle(
+                          fontSize: 80,
+                          fontWeight: FontWeight.w500,
+                          color: Color.fromRGBO(47, 125, 121, 0.9),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 40, right: 40),
+                        child: TextFormField(
+                          keyboardType: TextInputType.number,
+                          controller: abonoC,
+                          decoration: InputDecoration(
+                              enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Color.fromARGB(255, 11, 57, 54),
+                                  ),
+                                  borderRadius: BorderRadius.circular(30)),
+                              focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Color.fromRGBO(47, 125, 121, 0.9),
+                                  ),
+                                  borderRadius: BorderRadius.circular(30)),
+                              prefixIcon: Icon(
+                                Icons.monetization_on_rounded,
+                                color: Color.fromRGBO(47, 125, 121, 0.9),
+                              ),
+                              hintText: '00.0',
+                              filled: true,
+                              fillColor: Colors.transparent),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 15,
                       ),
                       GestureDetector(
                         onTap: () async {
                           await abonarGasto(
-                              bono: abonoC.text, idFinance: idFinance.toString());
+                              bono: abonoC.text,
+                              idFinance: idFinance.toString());
                           await ShowConfirm().showConfirmDialog2(context);
                           // Llamar a setState para reconstruir la vista y mostrar los nuevos datos
                           setState(() {});
@@ -350,7 +379,7 @@ class _HomeState extends State<Home> {
                           alignment: Alignment.center,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(15),
-                            color: Color.fromARGB(255, 55, 77, 162),
+                            color: const Color(0xff368983),
                           ),
                           width: 120,
                           height: 50,
@@ -843,8 +872,6 @@ class _HomeState extends State<Home> {
                   onLongPress: () async {
                     _showModalSheetBono(finance.idFinance, finance.type,
                         finance.concept, finance.amount);
-
-                    
                   },
                   child: ListTile(
                     leading: ClipRRect(
