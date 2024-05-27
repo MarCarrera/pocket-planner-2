@@ -15,6 +15,7 @@ import '../../data/models/add_date.dart';
 import '../../data/models/view_model.dart';
 import '../../data/request/api_request_2.dart';
 import '../../modal_data.dart';
+import '../../utils/showConfirm.dart';
 import '../../utils/showDelete.dart';
 
 class Home extends StatefulWidget {
@@ -111,7 +112,6 @@ class _HomeState extends State<Home> {
       print('Verifique su conexion a internet');
     }
   }
-
   //-------------------------------------------------------------------------
 
   // ignore: prefer_typing_uninitialized_variables
@@ -796,46 +796,54 @@ class _HomeState extends State<Home> {
                     }
                   });
                 },
-                child: ListTile(
-                  leading: ClipRRect(
-                    borderRadius: BorderRadius.circular(5),
-                    child: Image.asset('assets/images/${finance.concept}.png',
-                        height: 40),
-                  ),
-                  title: Text(
-                    finance.concept,
-                    style: const TextStyle(
-                      fontSize: 17,
-                      fontWeight: FontWeight.w600,
+                child: GestureDetector(
+                  onLongPress: () async {
+                    
+                    await abonarGasto(bono: '100', idFinance: '174');
+                    await ShowConfirm().showConfirmDialog2(context);
+
+                  },
+                  child: ListTile(
+                    leading: ClipRRect(
+                      borderRadius: BorderRadius.circular(5),
+                      child: Image.asset('assets/images/${finance.concept}.png',
+                          height: 40),
                     ),
-                  ),
-                  subtitle: Text(
-                    '${finance.reason}',
-                    style: const TextStyle(
-                      fontWeight: FontWeight.w600,
+                    title: Text(
+                      finance.concept,
+                      style: const TextStyle(
+                        fontSize: 17,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
-                  ),
-                  trailing: Column(
-                    children: [
-                      Text(
-                        finance.type == 'Income'
-                            ? formatoMoneda.format(amount)
-                            : '-' + formatoMoneda.format(amount),
-                        style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 19,
-                          color: finance.type == 'Income'
-                              ? Colors.green
-                              : Colors.red,
-                        ),
+                    subtitle: Text(
+                      '${finance.reason}',
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w600,
                       ),
-                      Text(
-                        '${finance.date}',
-                        style: const TextStyle(
-                          fontWeight: FontWeight.w600,
+                    ),
+                    trailing: Column(
+                      children: [
+                        Text(
+                          finance.type == 'Income'
+                              ? formatoMoneda.format(amount)
+                              : '-' + formatoMoneda.format(amount),
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 19,
+                            color: finance.type == 'Income'
+                                ? Colors.green
+                                : Colors.red,
+                          ),
                         ),
-                      ),
-                    ],
+                        Text(
+                          '${finance.date}',
+                          style: const TextStyle(
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               );

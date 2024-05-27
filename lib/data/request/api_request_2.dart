@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_typing_uninitialized_variables
 
 import 'dart:convert';
+import 'dart:ffi';
 import 'package:http/http.dart' as http;
 
 final url =
@@ -218,9 +219,9 @@ Future<void> eliminarFinanza({required String idFinance}) async {
   }
 }
 
-// CONSULTAS DE CUENTAS ------------------------------------------------------------------
-Future<dynamic> mostrarCash() async {
-  var data = {'opc': '33'};
+Future<void> abonarGasto(
+    {required String bono, required String idFinance}) async {
+  var data = {'opc': '33', 'bono': bono, 'idFinance': idFinance};
 
   try {
     final response = await http.post(
@@ -229,95 +230,6 @@ Future<dynamic> mostrarCash() async {
     );
 
     if (response.statusCode == 200) {
-      var jsonResponse = jsonDecode(response.body);
-      //print('Respuesta Api JSON: ${jsonResponse}');
-      return jsonResponse;
-    }
-  } catch (e) {
-    return "err_internet_conex";
-  }
-}
-
-Future<int> mostrarTotalIngresoCash() async {
-  final response = await http.post(
-    url,
-    body: {'opc': '33.1'},
-  );
-  if (response.statusCode == 200) {
-    List<dynamic> data = json.decode(response.body);
-    if (data.isNotEmpty) {
-      // Extraer el valor totalIncome del primer mapa en la lista
-      dynamic totalIncome = data[0]['totalIncome'];
-      // Convertir el valor a entero y devolverlo
-      return totalIncome;
-    } else {
-      // Si no hay datos disponibles, lanzar una excepción
-      throw Exception('No se encontraron datos de ingreso');
-    }
-  } else {
-    // Si hay un error en la solicitud HTTP, lanzar una excepción
-    throw Exception('Error al cargar los datos');
-  }
-}
-
-Future<int> mostrarTotalGastoCash() async {
-  final response = await http.post(
-    url,
-    body: {'opc': '33.2'},
-  );
-  if (response.statusCode == 200) {
-    List<dynamic> data = json.decode(response.body);
-    if (data.isNotEmpty) {
-      // Extraer el valor totalIncome del primer mapa en la lista
-      dynamic totalIncome = data[0]['totalExpense'];
-      // Convertir el valor a entero y devolverlo
-      return totalIncome;
-    } else {
-      // Si no hay datos disponibles, lanzar una excepción
-      throw Exception('No se encontraron datos de gasto');
-    }
-  } else {
-    // Si hay un error en la solicitud HTTP, lanzar una excepción
-    throw Exception('Error al cargar los datos');
-  }
-}
-
-Future<int> mostrarDiferenciaTotalCash() async {
-  final response = await http.post(
-    url,
-    body: {'opc': '33.3'}, // Opción para calcular la diferencia
-  );
-  if (response.statusCode == 200) {
-    Map<String, dynamic> data = json.decode(response.body);
-    // Extraer el valor de la diferencia del mapa
-    int diferencia = data['diferencia'];
-    // Devolver el valor de la diferencia
-    return diferencia;
-  } else {
-    // Si hay un error en la solicitud HTTP, lanzar una excepción
-    throw Exception('Error al cargar la diferencia');
-  }
-}
-
-Future<void> agregarGastoCash(
-    {required String concepto,
-    required String motivo,
-    required String monto,
-    required String tipo,
-    required String fecha}) async {
-  try {
-    final response = await http.post(
-      url,
-      body: {
-        'opc': '34',
-        'concept': concepto,
-        'reason': motivo,
-        'amount': monto,
-        'type': tipo,
-        'date': fecha,
-      },
-    );
-    if (response.statusCode == 200) {
       print('Registro insertado exitosamente');
     } else {
       throw Exception('Error al insertar el registro');
@@ -325,25 +237,5 @@ Future<void> agregarGastoCash(
   } catch (error) {
     print('Error: $error');
     throw Exception('Error al insertar el registro');
-  }
-}
-
-Future<void> eliminarGastoCash({required String idCash}) async {
-  try {
-    final response = await http.post(
-      url,
-      body: {
-        'opc': '35',
-        'idCash': idCash,
-      },
-    );
-    if (response.statusCode == 200) {
-      print('Registro eliminado exitosamente');
-    } else {
-      throw Exception('Error al eliminar el registro');
-    }
-  } catch (error) {
-    print('Error: $error');
-    throw Exception('Error al eliminar el registro');
   }
 }

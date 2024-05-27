@@ -104,12 +104,12 @@ class _AddScreenCashState extends State<AddScreenCash> {
   GestureDetector save() {
     return GestureDetector(
       onTap: () async {
-        await agregarGastoCash(
+        /*await agregarGastoCash(
             concepto: selctedItem!,
             motivo: expalin_C.text,
             monto: amount_c.text,
             tipo: selctedItemi!,
-            fecha: formattedDate != '' ? formattedDate : formattedDate2);
+            fecha: formattedDate != '' ? formattedDate : formattedDate2);*/
 
         await ShowConfirm().showConfirmDialog(context);
 
