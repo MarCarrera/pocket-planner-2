@@ -2,7 +2,70 @@
 
 import 'dart:convert';
 import 'dart:ffi';
+import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
+import 'package:local_auth/local_auth.dart';
+
+// final LocalAuthentication _autenticacion = LocalAuthentication();
+// bool _podemosUsarAutorizacion = false;
+// String _autorizado = "No autorizado";
+// List<BiometricType> _autorizacionesDisponibles = List<BiometricType>();
+
+// Future<void> _probarAutorizacion() async {
+//   bool podemosUsarAutorizacion = false;
+//   try {
+//     podemosUsarAutorizacion = await _autenticacion.canCheckBiometrics;
+//   } on PlatformException catch (e) {
+//     print(e);
+//   }
+
+//   if (!mounted) return;
+
+//   setState(() {
+//     _podemosUsarAutorizacion = podemosUsarAutorizacion;
+//     print("Podemos usar autentincacion $_podemosUsarAutorizacion");
+//   });
+// }
+// Future<void> _listaAutenticacionesDisponibles() async {
+//   List<BiometricType> listaAutenticacion;
+//   try {
+//     listaAutenticacion = await _autenticacion.getAvailableBiometrics();
+//   } on PlatformException catch (e) {
+//     print(e);
+//   }
+
+//   if (!mounted) return;
+
+//   setState(() {
+//     _autorizacionesDisponibles = listaAutenticacion;
+//     print("Podemos usar: ${_autorizacionesDisponibles.toString()}");
+//   });
+// }
+// Future<void> _autorizar() async {
+//   bool isAuthorized = false;
+//   try {
+//     isAuthorized = await _autenticacion.authenticateWithBiometrics(
+//       localizedReason: "Autentíquese para completar su transacción",
+//       useErrorDialogs: true,
+//       stickyAuth: true,
+//     );
+//   } on PlatformException catch (e) {
+//     print(e);
+//   }
+
+//   if (!mounted) return;
+
+//   setState(() {
+//     if (isAuthorized) {
+//       _autorizado = "Autorizado";
+//     } else {
+//       _autorizado = "No autorizado";
+//     }
+//     print("Autorizado? $_autorizado");
+//   });
+// }
+
+//==============================================================================================================
 
 final url =
     Uri.parse('https://mariehcarey.000webhostapp.com/api-accounts/consults');
