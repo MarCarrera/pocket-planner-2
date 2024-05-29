@@ -1,4 +1,5 @@
 import 'dart:ffi';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:prueba_realse_apk/data/models/add_date.dart';
 import 'package:prueba_realse_apk/main.dart';
 import 'package:flutter/material.dart';
@@ -140,14 +141,9 @@ class _AddScreenState extends State<AddScreen> {
         ),
         width: 120,
         height: 50,
-        child: const Text(
+        child: Text(
           'Guardar',
-          style: TextStyle(
-            fontFamily: 'f',
-            fontWeight: FontWeight.w600,
-            color: Colors.white,
-            fontSize: 17,
-          ),
+          style: GoogleFonts.fredoka(fontSize: 17, color: Colors.white),
         ),
       ),
     );
@@ -175,10 +171,7 @@ class _AddScreenState extends State<AddScreen> {
         },
         child: Text(
           'Fecha : ${date.year} / ${date.day} / ${date.month}',
-          style: const TextStyle(
-            fontSize: 15,
-            color: Colors.black,
-          ),
+          style: GoogleFonts.fredoka(fontSize: 15, color: Colors.black),
         ),
       ),
     );
@@ -212,7 +205,8 @@ class _AddScreenState extends State<AddScreen> {
                         children: [
                           Text(
                             e == 'Income' ? 'Ingreso' : 'Gasto',
-                            style: const TextStyle(fontSize: 18),
+                            style: GoogleFonts.fredoka(
+                                fontSize: 18, color: Colors.black),
                           )
                         ],
                       ),
@@ -225,11 +219,11 @@ class _AddScreenState extends State<AddScreen> {
                     children: [Text(e)],
                   ))
               .toList(),
-          hint: const Padding(
+          hint: Padding(
             padding: EdgeInsets.only(top: 12),
             child: Text(
               'Tipo',
-              style: TextStyle(color: Colors.grey),
+              style: GoogleFonts.fredoka(color: Colors.grey),
             ),
           ),
           dropdownColor: Colors.white,
@@ -251,7 +245,8 @@ class _AddScreenState extends State<AddScreen> {
           contentPadding:
               const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
           labelText: 'Monto',
-          labelStyle: TextStyle(fontSize: 17, color: Colors.grey.shade500),
+          labelStyle:
+              GoogleFonts.fredoka(fontSize: 17, color: Colors.grey.shade500),
           enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
               borderSide: const BorderSide(width: 2, color: Color(0xffC5C5C5))),
@@ -273,7 +268,7 @@ class _AddScreenState extends State<AddScreen> {
           contentPadding:
               const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
           labelText: 'Motivo',
-          labelStyle: TextStyle(fontSize: 17, color: Colors.grey.shade500),
+          labelStyle: GoogleFonts.fredoka(fontSize: 17, color: Colors.grey),
           enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
               borderSide: const BorderSide(width: 2, color: Color(0xffC5C5C5))),
@@ -318,7 +313,7 @@ class _AddScreenState extends State<AddScreen> {
                           const SizedBox(width: 10),
                           Text(
                             e,
-                            style: const TextStyle(fontSize: 18),
+                            style: GoogleFonts.fredoka(fontSize: 18),
                           )
                         ],
                       ),
@@ -338,11 +333,11 @@ class _AddScreenState extends State<AddScreen> {
                     ],
                   ))
               .toList(),
-          hint: const Padding(
+          hint: Padding(
             padding: EdgeInsets.only(top: 12),
             child: Text(
               'Concepto',
-              style: TextStyle(color: Colors.grey),
+              style: GoogleFonts.fredoka(color: Colors.grey),
             ),
           ),
           dropdownColor: Colors.white,
@@ -382,12 +377,10 @@ class _AddScreenState extends State<AddScreen> {
                       },
                       child: const Icon(Icons.arrow_back, color: Colors.white),
                     ),
-                    const Text(
+                    Text(
                       'Adding',
-                      style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.white),
+                      style: GoogleFonts.fredoka(
+                          fontSize: 20, color: Colors.white),
                     ),
                     const Icon(
                       Icons.attach_file_outlined,

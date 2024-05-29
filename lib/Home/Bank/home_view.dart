@@ -3,6 +3,7 @@
 import 'dart:async';
 import 'package:cool_dropdown/cool_dropdown.dart';
 import 'package:cool_dropdown/models/cool_dropdown_item.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:prueba_realse_apk/Home/Bank/components/concept_view.dart';
 import 'package:prueba_realse_apk/widgets/add_screen.dart';
 import 'package:flutter/cupertino.dart';
@@ -175,15 +176,15 @@ class _HomeState extends State<Home> {
           return CupertinoActionSheet(
             title: Text(
               'Total de $type: ${formatoMoneda.format(totalData)}',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 20,
-                color: const Color(0xff368983),
-              ),
+              style: GoogleFonts.fredoka(
+                  fontSize: 28, color: const Color(0xff368983)),
             ),
             actions: <Widget>[
               CupertinoActionSheetAction(
-                child: const Text('Cerrar'),
+                child: Text(
+                  'Cerrar',
+                  style: GoogleFonts.fredoka(fontSize: 22, color: Colors.white),
+                ),
                 onPressed: () {
                   Navigator.pop(context);
                 },
@@ -199,11 +200,8 @@ class _HomeState extends State<Home> {
                           children: [
                             Text(
                               'No existen movimientos para el concepto $type',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 25,
-                                color: Colors.black,
-                              ),
+                              style: GoogleFonts.fredoka(
+                                  fontSize: 25, color: Colors.black),
                             ),
                             Image.asset('assets/gifs/noData.gif'),
                           ],
@@ -235,16 +233,11 @@ class _HomeState extends State<Home> {
                                 ),
                                 title: Text(
                                   '${item['concept']}',
-                                  style: const TextStyle(
-                                    fontSize: 17,
-                                    fontWeight: FontWeight.w600,
-                                  ),
+                                  style: GoogleFonts.fredoka(fontSize: 17),
                                 ),
                                 subtitle: Text(
                                   '${item['reason']}',
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.w600,
-                                  ),
+                                  style: GoogleFonts.fredoka(fontSize: 15),
                                 ),
                                 trailing: Column(
                                   children: [
@@ -252,9 +245,8 @@ class _HomeState extends State<Home> {
                                       item['type'].toString() == 'Income'
                                           ? formatoMoneda.format(amount)
                                           : '-' + formatoMoneda.format(amount),
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 19,
+                                      style: GoogleFonts.fredoka(
+                                        fontSize: 17,
                                         color:
                                             item['type'].toString() == 'Income'
                                                 ? Colors.green
@@ -263,9 +255,7 @@ class _HomeState extends State<Home> {
                                     ),
                                     Text(
                                       '${item['date']}',
-                                      style: const TextStyle(
-                                        fontWeight: FontWeight.w600,
-                                      ),
+                                      style: GoogleFonts.fredoka(fontSize: 15),
                                     ),
                                   ],
                                 ),
@@ -296,15 +286,12 @@ class _HomeState extends State<Home> {
           return CupertinoActionSheet(
             title: Text(
               'Abonar al concepto: ${type == 'Expense' ? 'Gasto' : 'Ingreso'} \nDetalles: $concepto',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 20,
-                color: const Color(0xff368983),
-              ),
+              style: GoogleFonts.fredoka(
+                  fontSize: 20, color: const Color(0xff368983)),
             ),
             actions: <Widget>[
               CupertinoActionSheetAction(
-                child: const Text('Cerrar'),
+                child: Text('Cerrar', style: GoogleFonts.fredoka(fontSize: 16)),
                 onPressed: () {
                   setState(() {});
                   Navigator.pop(context);
@@ -317,25 +304,17 @@ class _HomeState extends State<Home> {
                 child: Container(
                   child: Column(
                     children: [
-                      Text(
-                        'Cantidad máxima a abonar:',
-                        style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.w500,
-                          color: Color.fromRGBO(47, 125, 121, 0.9),
-                        ),
-                      ),
+                      Text('Cantidad máxima a abonar:',
+                          style: GoogleFonts.fredoka(
+                              fontSize: 24,
+                              color: Color.fromRGBO(47, 125, 121, 0.9))),
                       SizedBox(
                         height: 15,
                       ),
-                      Text(
-                        '\$$amount.00',
-                        style: TextStyle(
-                          fontSize: 80,
-                          fontWeight: FontWeight.w500,
-                          color: Color.fromRGBO(47, 125, 121, 0.9),
-                        ),
-                      ),
+                      Text('\$$amount.00',
+                          style: GoogleFonts.fredoka(
+                              fontSize: 80,
+                              color: Color.fromRGBO(47, 125, 121, 0.9))),
                       Padding(
                         padding: const EdgeInsets.only(left: 40, right: 40),
                         child: TextFormField(
@@ -383,15 +362,9 @@ class _HomeState extends State<Home> {
                           ),
                           width: 120,
                           height: 50,
-                          child: const Text(
-                            'Guardar',
-                            style: TextStyle(
-                              fontFamily: 'f',
-                              fontWeight: FontWeight.w600,
-                              color: Colors.white,
-                              fontSize: 17,
-                            ),
-                          ),
+                          child: Text('Guardar',
+                              style: GoogleFonts.fredoka(
+                                  fontSize: 17, color: Colors.white)),
                         ),
                       ),
                     ],
@@ -414,7 +387,7 @@ class _HomeState extends State<Home> {
           children: [
             Text(
               'Mostrar por:',
-              style: TextStyle(fontSize: 18),
+              style: GoogleFonts.fredoka(fontSize: 18),
             ),
           ]),
     );
@@ -488,11 +461,7 @@ class _HomeState extends State<Home> {
             children: [
               Text(
                 'Ver por: ',
-                style: TextStyle(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 19,
-                  color: Colors.black,
-                ),
+                style: GoogleFonts.fredoka(fontSize: 19, color: Colors.black),
               ),
               SizedBox(
                 width: 16,
@@ -503,7 +472,7 @@ class _HomeState extends State<Home> {
                 defaultItem:
                     dropdownItems.isNotEmpty ? dropdownItems.last : null,
                 onChange: (String selectedItem) {
-                  print(selectedItem);
+                  //print(selectedItem);
                   //handleStatefulBackdropContent(context); // Muestra el valor seleccionado en la consola
                   _showModalSheet(selectedItem);
                   pokemonDropdownController.close();
@@ -512,6 +481,8 @@ class _HomeState extends State<Home> {
                   width: 200,
                   render: ResultRender.all,
                   placeholder: 'Concepto',
+                  textStyle:
+                      GoogleFonts.fredoka(fontSize: 17, color: Colors.black),
                   isMarquee: true,
                   icon: SizedBox(
                     width: 10,
@@ -539,11 +510,13 @@ class _HomeState extends State<Home> {
         ),
         Text(
           'Historial de Transacciones',
-          style: TextStyle(
-            fontWeight: FontWeight.w600,
-            fontSize: 19,
-            color: Colors.black,
-          ),
+          style: GoogleFonts.fredoka(fontSize: 22),
+
+          // TextStyle(
+          //   fontWeight: FontWeight.w600,
+          //   fontSize: 19,
+          //   color: Colors.black,
+          // ),
         ),
       ]),
     );
@@ -562,13 +535,9 @@ class _HomeState extends State<Home> {
             return const CircularProgressIndicator();
           } else if (snapshot.hasError) {
             // Muestra un mensaje de error si hay un error
-            return const Text(
+            return Text(
               '\$00.0',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 25,
-                color: Colors.white,
-              ),
+              style: GoogleFonts.fredoka(fontSize: 25, color: Colors.white),
             );
           } else if (snapshot.hasData) {
             ingresos = snapshot.data!;
@@ -577,11 +546,7 @@ class _HomeState extends State<Home> {
             // Muestra el valor devuelto en un widget Text
             return Text(
               '${cantidadFormateada}',
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 25,
-                color: Colors.white,
-              ),
+              style: GoogleFonts.fredoka(fontSize: 25, color: Colors.white),
             );
           } else {
             // Si no hay datos disponibles, muestra un mensaje indicando que no hay datos
@@ -605,13 +570,9 @@ class _HomeState extends State<Home> {
             return const CircularProgressIndicator();
           } else if (snapshot.hasError) {
             // Muestra un mensaje de error si hay un error
-            return const Text(
+            return Text(
               '\$00.0',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 25,
-                color: Colors.white,
-              ),
+              style: GoogleFonts.fredoka(fontSize: 25, color: Colors.white),
             );
           } else if (snapshot.hasData) {
             ingresos = snapshot.data!;
@@ -620,11 +581,7 @@ class _HomeState extends State<Home> {
             // Muestra el valor devuelto en un widget Text
             return Text(
               '${cantidadFormateada}',
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 25,
-                color: Colors.white,
-              ),
+              style: GoogleFonts.fredoka(fontSize: 25, color: Colors.white),
             );
           } else {
             // Si no hay datos disponibles, muestra un mensaje indicando que no hay datos
@@ -648,13 +605,9 @@ class _HomeState extends State<Home> {
             return const CircularProgressIndicator();
           } else if (snapshot.hasError) {
             // Muestra un mensaje de error si hay un error
-            return const Text(
+            return Text(
               '\$00.0',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 25,
-                color: Colors.white,
-              ),
+              style: GoogleFonts.fredoka(fontSize: 25, color: Colors.white),
             );
           } else if (snapshot.hasData) {
             ingresos = snapshot.data!;
@@ -663,15 +616,14 @@ class _HomeState extends State<Home> {
             // Muestra el valor devuelto en un widget Text
             return Text(
               '${cantidadFormateada}',
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 25,
-                color: Colors.white,
-              ),
+              style: GoogleFonts.fredoka(fontSize: 25, color: Colors.white),
             );
           } else {
             // Si no hay datos disponibles, muestra un mensaje indicando que no hay datos
-            return const Text('No hay datos disponibles');
+            return Text(
+              'No hay datos disponibles',
+              style: GoogleFonts.fredoka(fontSize: 24, color: Colors.black),
+            );
           }
         },
       ),
@@ -691,13 +643,9 @@ class _HomeState extends State<Home> {
             return const CircularProgressIndicator();
           } else if (snapshot.hasError) {
             // Muestra un mensaje de error si hay un error
-            return const Text(
+            return Text(
               '\$00.0',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 25,
-                color: Colors.white,
-              ),
+              style: GoogleFonts.fredoka(fontSize: 25, color: Colors.white),
             );
           } else if (snapshot.hasData) {
             gastos = snapshot.data!;
@@ -706,11 +654,7 @@ class _HomeState extends State<Home> {
             // Muestra el valor devuelto en un widget Text
             return Text(
               '-${cantidadFormateada}',
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 25,
-                color: Colors.white,
-              ),
+              style: GoogleFonts.fredoka(fontSize: 25, color: Colors.white),
             );
           } else {
             // Si no hay datos disponibles, muestra un mensaje indicando que no hay datos
@@ -734,13 +678,9 @@ class _HomeState extends State<Home> {
             return const CircularProgressIndicator();
           } else if (snapshot.hasError) {
             // Muestra un mensaje de error si hay un error
-            return const Text(
+            return Text(
               '\$00.0',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 25,
-                color: Colors.white,
-              ),
+              style: GoogleFonts.fredoka(fontSize: 25, color: Colors.white),
             );
           } else if (snapshot.hasData) {
             ingresos = snapshot.data!;
@@ -750,11 +690,7 @@ class _HomeState extends State<Home> {
             // Muestra el valor devuelto en un widget Text
             return Text(
               '${cantidadFormateada}',
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 25,
-                color: Colors.white,
-              ),
+              style: GoogleFonts.fredoka(fontSize: 25, color: Colors.white),
             );
           } else {
             // Si no hay datos disponibles, muestra un mensaje indicando que no hay datos
@@ -786,13 +722,10 @@ class _HomeState extends State<Home> {
                         SizedBox(
                           height: 60,
                         ),
-                        const Text(
+                        Text(
                           'Sin datos o problemas de red. \nVerifica tu conexión a internet.',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 25,
-                            color: Colors.black,
-                          ),
+                          style: GoogleFonts.fredoka(
+                              fontSize: 25, color: Colors.black),
                         ),
                         Image.asset('assets/gifs/noData.gif'),
                       ],
@@ -815,13 +748,9 @@ class _HomeState extends State<Home> {
               SizedBox(
                 height: 60,
               ),
-              const Text(
+              Text(
                 'Sin datos para mostrar.',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 25,
-                  color: Colors.black,
-                ),
+                style: GoogleFonts.fredoka(fontSize: 25, color: Colors.black),
               ),
               Image.asset('assets/gifs/noData.gif'),
             ],
@@ -881,16 +810,13 @@ class _HomeState extends State<Home> {
                     ),
                     title: Text(
                       finance.concept,
-                      style: const TextStyle(
-                        fontSize: 17,
-                        fontWeight: FontWeight.w600,
-                      ),
+                      style: GoogleFonts.fredoka(
+                          fontSize: 17, color: Colors.black),
                     ),
                     subtitle: Text(
                       '${finance.reason}',
-                      style: const TextStyle(
-                        fontWeight: FontWeight.w600,
-                      ),
+                      style: GoogleFonts.fredoka(
+                          fontSize: 15, color: Colors.black),
                     ),
                     trailing: Column(
                       children: [
@@ -898,8 +824,7 @@ class _HomeState extends State<Home> {
                           finance.type == 'Income'
                               ? formatoMoneda.format(amount)
                               : '-' + formatoMoneda.format(amount),
-                          style: TextStyle(
-                            fontWeight: FontWeight.w600,
+                          style: GoogleFonts.fredoka(
                             fontSize: 19,
                             color: finance.type == 'Income'
                                 ? Colors.green
@@ -908,9 +833,8 @@ class _HomeState extends State<Home> {
                         ),
                         Text(
                           '${finance.date}',
-                          style: const TextStyle(
-                            fontWeight: FontWeight.w600,
-                          ),
+                          style: GoogleFonts.fredoka(
+                              fontSize: 15, color: Colors.black),
                         ),
                       ],
                     ),
@@ -968,25 +892,34 @@ class _HomeState extends State<Home> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 70, left: 10),
+                      padding: const EdgeInsets.only(top: 48, left: 24),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
                             obtenerSaludo(),
-                            style: const TextStyle(
+                            style: GoogleFonts.fredoka(
+                              fontSize: 24,
+                              color: Colors.white,
+                            ),
+
+                            /*const TextStyle(
                               fontWeight: FontWeight.w500,
                               fontSize: 16,
                               color: Color.fromARGB(255, 224, 223, 223),
-                            ),
+                            ),*/
                           ),
-                          const Text(
+                          Text(
                             'Mar Carrera',
-                            style: TextStyle(
+                            style: GoogleFonts.fredoka(
+                              fontSize: 30,
+                              color: Colors.white,
+                            ),
+                            /*style: TextStyle(
                               fontWeight: FontWeight.w600,
                               fontSize: 20,
                               color: Colors.white,
-                            ),
+                            ),*/
                           ),
                         ],
                       ),
@@ -1017,15 +950,14 @@ class _HomeState extends State<Home> {
               child: Column(
                 children: [
                   const SizedBox(height: 10),
-                  const Padding(
+                  Padding(
                     padding: EdgeInsets.symmetric(horizontal: 15),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
                           'Balance Total Cuenta',
-                          style: TextStyle(
-                            fontWeight: FontWeight.w500,
+                          style: GoogleFonts.fredoka(
                             fontSize: 20,
                             color: Colors.white,
                           ),
@@ -1047,7 +979,7 @@ class _HomeState extends State<Home> {
                     ),
                   ),
                   const SizedBox(height: 25),
-                  const Padding(
+                  Padding(
                     padding: EdgeInsets.symmetric(horizontal: 15),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -1067,10 +999,9 @@ class _HomeState extends State<Home> {
                             SizedBox(width: 7),
                             Text(
                               'Ingresos',
-                              style: TextStyle(
-                                fontWeight: FontWeight.w500,
+                              style: GoogleFonts.fredoka(
                                 fontSize: 16,
-                                color: Color.fromARGB(255, 216, 216, 216),
+                                color: Colors.white,
                               ),
                             ),
                           ],
@@ -1089,10 +1020,9 @@ class _HomeState extends State<Home> {
                             SizedBox(width: 7),
                             Text(
                               'Egresos',
-                              style: TextStyle(
-                                fontWeight: FontWeight.w500,
+                              style: GoogleFonts.fredoka(
                                 fontSize: 16,
-                                color: Color.fromARGB(255, 216, 216, 216),
+                                color: Colors.white,
                               ),
                             ),
                           ],
@@ -1116,7 +1046,7 @@ class _HomeState extends State<Home> {
       print(totalGeneralCuenta);
       print(totalGeneralEfectivo); */
                   const SizedBox(height: 25),
-                  const Padding(
+                  Padding(
                     padding: EdgeInsets.symmetric(horizontal: 15),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -1135,10 +1065,9 @@ class _HomeState extends State<Home> {
                             SizedBox(width: 7),
                             Text(
                               'Banco',
-                              style: TextStyle(
-                                fontWeight: FontWeight.w500,
+                              style: GoogleFonts.fredoka(
                                 fontSize: 16,
-                                color: Color.fromARGB(255, 216, 216, 216),
+                                color: Colors.white,
                               ),
                             ),
                           ],
@@ -1157,10 +1086,9 @@ class _HomeState extends State<Home> {
                             SizedBox(width: 7),
                             Text(
                               'Efectivo',
-                              style: TextStyle(
-                                fontWeight: FontWeight.w500,
+                              style: GoogleFonts.fredoka(
                                 fontSize: 16,
-                                color: Color.fromARGB(255, 216, 216, 216),
+                                color: Colors.white,
                               ),
                             ),
                           ],
@@ -1187,78 +1115,4 @@ class _HomeState extends State<Home> {
       ),
     );
   }
-
-  // Padding name() {
-  //   return Padding(
-  //     padding: const EdgeInsets.symmetric(horizontal: 15),
-  //     child: Container(
-  //       padding: const EdgeInsets.symmetric(horizontal: 15),
-  //       width: 300,
-  //       decoration: BoxDecoration(
-  //         borderRadius: BorderRadius.circular(10),
-  //         border: Border.all(
-  //           width: 2,
-  //           color: const Color(0xffC5C5C5),
-  //         ),
-  //       ),
-  //       child: DropdownButton<String>(
-  //         value: selctedItem,
-  //         onChanged: noData
-  //             ? null
-  //             : ((value) {
-  //                 setState(() {
-  //                   selctedItem = value!;
-
-  //                 });
-  //               }),
-  //         items: _item
-  //             .map((e) => DropdownMenuItem(
-  //                   child: Container(
-  //                     alignment: Alignment.center,
-  //                     child: Row(
-  //                       children: [
-  //                         Container(
-  //                           width: 40,
-  //                           child: Image.asset('assets/images/${e}.png'),
-  //                         ),
-  //                         const SizedBox(width: 10),
-  //                         Text(
-  //                           e,
-  //                           style: const TextStyle(fontSize: 18),
-  //                         )
-  //                       ],
-  //                     ),
-  //                   ),
-  //                   value: e,
-  //                 ))
-  //             .toList(),
-  //         selectedItemBuilder: (BuildContext context) => _item
-  //             .map((e) => Row(
-  //                   children: [
-  //                     Container(
-  //                       width: 42,
-  //                       child: Image.asset('assets/images/${e}.png'),
-  //                     ),
-  //                     const SizedBox(width: 5),
-  //                     Text(e)
-  //                   ],
-  //                 ))
-  //             .toList(),
-  //         hint: const Padding(
-  //           padding: EdgeInsets.only(top: 12),
-  //           child: Text(
-  //             'Concepto',
-  //             style: TextStyle(color: Colors.grey),
-  //           ),
-  //         ),
-  //         dropdownColor: Colors.white,
-  //         isExpanded: true,
-  //         underline: Container(),
-  //         onTap: noData
-  //             ? () {}
-  //             : null, // Deshabilita el tap si noData es verdadero
-  //       ),
-  //     ),
-  //   );
-  // }
 }
