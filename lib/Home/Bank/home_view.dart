@@ -18,7 +18,7 @@ import '../../data/request/api_request_2.dart';
 import '../../modal_data.dart';
 import '../../utils/showConfirm.dart';
 import '../../utils/showDelete.dart';
-import '../../widgets/prueba.dart';
+import '../../widgets/Login.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -451,75 +451,84 @@ class _HomeState extends State<Home> {
   }
 
   Padding _title() {
-    return Padding(
-      padding: EdgeInsets.only(top: 426, left: 20),
-      child: Column(children: [
-        Padding(
-          padding: EdgeInsets.only(top: 15),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                'Ver por: ',
-                style: GoogleFonts.fredoka(fontSize: 19, color: Colors.black),
-              ),
-              SizedBox(
-                width: 16,
-              ),
-              CoolDropdown<String>(
-                controller: pokemonDropdownController,
-                dropdownList: dropdownItems,
-                defaultItem:
-                    dropdownItems.isNotEmpty ? dropdownItems.last : null,
-                onChange: (String selectedItem) {
-                  //print(selectedItem);
-                  //handleStatefulBackdropContent(context); // Muestra el valor seleccionado en la consola
-                  _showModalSheet(selectedItem);
-                  pokemonDropdownController.close();
-                },
-                resultOptions: ResultOptions(
-                  width: 200,
-                  render: ResultRender.all,
-                  placeholder: 'Concepto',
-                  textStyle:
-                      GoogleFonts.fredoka(fontSize: 17, color: Colors.black),
-                  isMarquee: true,
-                  icon: SizedBox(
-                    width: 10,
-                    height: 10,
-                    child: CustomPaint(
-                      painter: DropdownArrowPainter(color: Colors.green),
+    if (noData == false && finances.isEmpty) {
+      return Padding(
+        padding: const EdgeInsets.all(0.0),
+        child: SizedBox(
+          height: 0,
+        ),
+      );
+    } else {
+      return Padding(
+        padding: EdgeInsets.only(top: 426, left: 20),
+        child: Column(children: [
+          Padding(
+            padding: EdgeInsets.only(top: 15),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'Ver por: ',
+                  style: GoogleFonts.fredoka(fontSize: 19, color: Colors.black),
+                ),
+                SizedBox(
+                  width: 16,
+                ),
+                CoolDropdown<String>(
+                  controller: pokemonDropdownController,
+                  dropdownList: dropdownItems,
+                  defaultItem:
+                      dropdownItems.isNotEmpty ? dropdownItems.last : null,
+                  onChange: (String selectedItem) {
+                    //print(selectedItem);
+                    //handleStatefulBackdropContent(context); // Muestra el valor seleccionado en la consola
+                    _showModalSheet(selectedItem);
+                    pokemonDropdownController.close();
+                  },
+                  resultOptions: ResultOptions(
+                    width: 200,
+                    render: ResultRender.all,
+                    placeholder: 'Concepto',
+                    textStyle:
+                        GoogleFonts.fredoka(fontSize: 17, color: Colors.black),
+                    isMarquee: true,
+                    icon: SizedBox(
+                      width: 10,
+                      height: 10,
+                      child: CustomPaint(
+                        painter: DropdownArrowPainter(color: Colors.green),
+                      ),
+                    ),
+                  ),
+                  dropdownOptions: DropdownOptions(
+                    width: 180,
+                  ),
+                  dropdownItemOptions: DropdownItemOptions(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    selectedBoxDecoration: BoxDecoration(
+                      color: Color(0XFFEFFAF0),
                     ),
                   ),
                 ),
-                dropdownOptions: DropdownOptions(
-                  width: 180,
-                ),
-                dropdownItemOptions: DropdownItemOptions(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  selectedBoxDecoration: BoxDecoration(
-                    color: Color(0XFFEFFAF0),
-                  ),
-                ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-        SizedBox(
-          height: 16,
-        ),
-        Text(
-          'Historial de Transacciones',
-          style: GoogleFonts.fredoka(fontSize: 22),
+          SizedBox(
+            height: 16,
+          ),
+          Text(
+            'Historial de Transacciones',
+            style: GoogleFonts.fredoka(fontSize: 22),
 
-          // TextStyle(
-          //   fontWeight: FontWeight.w600,
-          //   fontSize: 19,
-          //   color: Colors.black,
-          // ),
-        ),
-      ]),
-    );
+            // TextStyle(
+            //   fontWeight: FontWeight.w600,
+            //   fontSize: 19,
+            //   color: Colors.black,
+            // ),
+          ),
+        ]),
+      );
+    }
   }
 
   Padding TotalEfectivo() {
@@ -741,7 +750,7 @@ class _HomeState extends State<Home> {
     //SI NO EXISTE DATA
     if (noData) {
       return Padding(
-        padding: const EdgeInsets.only(top: 400),
+        padding: const EdgeInsets.only(top: 420),
         child: Center(
           child: Column(
             children: [

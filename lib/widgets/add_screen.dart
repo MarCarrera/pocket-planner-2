@@ -8,6 +8,7 @@ import 'package:intl/intl.dart';
 import '../Home/Bank/home_view.dart';
 import '../data/request/api_request_2.dart';
 import '../utils/showConfirm.dart';
+import 'buttom_nav.dart';
 
 class AddScreen extends StatefulWidget {
   const AddScreen({super.key});
@@ -127,9 +128,7 @@ class _AddScreenState extends State<AddScreen> {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-              builder: (context) => MyApp(
-                    index_color: 0,
-                  )),
+              builder: (context) => ButtomNav(index_color: 0)),
         );
         // Navigator.of(context).pop();
       },
