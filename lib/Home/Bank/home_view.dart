@@ -451,7 +451,7 @@ class _HomeState extends State<Home> {
   }
 
   Padding _title() {
-    if (noData) {
+    if (noData == false && finances.isEmpty) {
       return Padding(
         padding: const EdgeInsets.all(0.0),
         child: SizedBox(
