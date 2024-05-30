@@ -18,7 +18,7 @@ import '../../data/request/api_request_2.dart';
 import '../../modal_data.dart';
 import '../../utils/showConfirm.dart';
 import '../../utils/showDelete.dart';
-import '../../widgets/prueba.dart';
+import '../../widgets/Login.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
