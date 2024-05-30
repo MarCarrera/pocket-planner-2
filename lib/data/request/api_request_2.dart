@@ -302,3 +302,7 @@ Future<void> abonarGasto(
     throw Exception('Error al insertar el registro');
   }
 }
+
+
+
+
