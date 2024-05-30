@@ -10,6 +10,7 @@ import 'package:prueba_realse_apk/widgets/test.dart';
 
 import '../statisticsCash.dart';
 import '../modal_data.dart';
+import '../utils/prueba.dart';
 
 class ButtomNav extends StatefulWidget {
   const ButtomNav({super.key, required this.index_color});
@@ -24,7 +25,7 @@ class _ButtomNavState extends State<ButtomNav> {
   late int index_color;
   _ButtomNavState({required this.index_color});
 
-  List Screen = [const Home(), LoginScreen()];
+  List Screen = [const Home(), Prueba()];
   @override
   Widget build(BuildContext context) {
     return Scaffold(

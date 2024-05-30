@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:prueba_realse_apk/widgets/Login.dart';
 import 'data/models/add_date.dart';
+import 'utils/prueba.dart';
 import 'widgets/buttom_nav.dart';
 
 void main() async {
@@ -28,7 +29,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: LoginScreen()
+        home: Prueba()
         //home: ButtomNav(index_color: index_color)
     );
   }

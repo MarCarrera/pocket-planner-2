@@ -5,12 +5,12 @@ import 'package:local_auth/local_auth.dart';
 
 import '../widgets/buttom_nav.dart';
 
-class LoginScreen extends StatefulWidget {
+class Prueba extends StatefulWidget {
   @override
-  _LoginScreenState createState() => _LoginScreenState();
+  _PruebaState createState() => _PruebaState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _PruebaState extends State<Prueba> {
   final LocalAuthentication auth = LocalAuthentication();
   bool _canCheckBiometrics = false;
   bool _isAuthenticating = false;
