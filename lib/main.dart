@@ -29,7 +29,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: Prueba()
+        home: LoginScreen()
         //home: ButtomNav(index_color: index_color)
     );
   }

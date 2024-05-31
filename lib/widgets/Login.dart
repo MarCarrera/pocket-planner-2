@@ -1,3 +1,4 @@
+// import 'package:animate_do/animate_do.dart';
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -67,6 +68,7 @@ class _LoginScreenState extends State<LoginScreen> {
       _authorized = authenticated ? 'Autenticado' : 'No Autenticado';
     });
     if (_authorized == 'Autenticado') {
+      print('Se ha pulsado autenticar');
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => ButtomNav(index_color: 0)),
@@ -247,7 +249,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   FadeInUp(
                       duration: Duration(milliseconds: 1900),
                       child: MaterialButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          _authenticate();
+                        },
                         color: Color.fromRGBO(49, 39, 79, 1),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(50),
