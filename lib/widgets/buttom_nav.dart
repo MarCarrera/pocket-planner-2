@@ -1,5 +1,6 @@
 // ignore_for_file: non_constant_identifier_names
 
+import 'package:animate_do/animate_do.dart';
 import 'package:custom_navigation_bar/custom_navigation_bar.dart';
 import 'package:prueba_realse_apk/Home/Bank/home_view.dart';
 import 'package:prueba_realse_apk/statistics.dart';
@@ -32,39 +33,42 @@ class _ButtomNavState extends State<ButtomNav> {
       body: Screen[index_color],
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.only(bottom: 12),
-        child: CustomNavigationBar(
-          iconSize: 30.0,
-          selectedColor: Color.fromARGB(255, 11, 57, 54),
-          strokeColor: Colors.white,
-          unSelectedColor: const Color.fromARGB(255, 255, 255, 255),
-          backgroundColor: Color(0xff368983),
-          borderRadius: Radius.circular(20.0),
-          blurEffect: true,
-          opacity: 0.4,
-          items: [
-            CustomNavigationBarItem(
-              icon: Icon(
-                Icons.home,
+        child: FadeInUp(
+          duration: Duration(milliseconds: 2000),
+          child: CustomNavigationBar(
+            iconSize: 30.0,
+            selectedColor: Color.fromARGB(255, 11, 57, 54),
+            strokeColor: Colors.white,
+            unSelectedColor: const Color.fromARGB(255, 255, 255, 255),
+            backgroundColor: Color(0xff368983),
+            borderRadius: Radius.circular(20.0),
+            blurEffect: true,
+            opacity: 0.4,
+            items: [
+              CustomNavigationBarItem(
+                icon: Icon(
+                  Icons.home,
+                ),
               ),
-            ),
-            CustomNavigationBarItem(
-              icon: Icon(
-                Icons.shopping_cart,
+              CustomNavigationBarItem(
+                icon: Icon(
+                  Icons.shopping_cart,
+                ),
               ),
-            ),
-            // CustomNavigationBarItem(
-            //   icon: Icon(
-            //     Icons.cloud,
-            //   ),
-            // ),
-          ],
-          currentIndex: index_color,
-          onTap: (index) {
-            setState(() {
-              index_color = index;
-            });
-          },
-          isFloating: true,
+              // CustomNavigationBarItem(
+              //   icon: Icon(
+              //     Icons.cloud,
+              //   ),
+              // ),
+            ],
+            currentIndex: index_color,
+            onTap: (index) {
+              setState(() {
+                index_color = index;
+              });
+            },
+            isFloating: true,
+          ),
         ),
       ),
     );

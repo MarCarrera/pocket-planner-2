@@ -239,10 +239,13 @@ class _LoginScreenState extends State<LoginScreen> {
                   Center(
                     child: Padding(
                       padding: const EdgeInsets.only(bottom: 30),
-                      child: Text(
-                        'O entrar con',
-                        style: GoogleFonts.fredoka(
-                            fontSize: 20, color: Colors.black),
+                      child: FadeInUp(
+                        duration: Duration(milliseconds: 1900),
+                        child: Text(
+                          'O entrar con',
+                          style: GoogleFonts.fredoka(
+                              fontSize: 20, color: Colors.black),
+                        ),
                       ),
                     ),
                   ),

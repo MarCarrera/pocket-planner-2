@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously, prefer_interpolation_to_compose_strings, depend_on_referenced_packages, unnecessary_import
 
 import 'dart:async';
+import 'package:animate_do/animate_do.dart';
 import 'package:cool_dropdown/cool_dropdown.dart';
 import 'package:cool_dropdown/models/cool_dropdown_item.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -413,34 +414,37 @@ class _HomeState extends State<Home> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          ElevatedButton(
-            onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) {
-                    return const AddScreen();
-                  },
+          FadeInUp(
+            duration: Duration(milliseconds: 2100),
+            child: ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return const AddScreen();
+                    },
+                  ),
+                );
+              },
+              style: ElevatedButton.styleFrom(
+                foregroundColor: Colors.white,
+                backgroundColor: const Color(0xff368983),
+                padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(14),
                 ),
-              );
-            },
-            style: ElevatedButton.styleFrom(
-              foregroundColor: Colors.white,
-              backgroundColor: const Color(0xff368983),
-              padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(14),
               ),
-            ),
-            child: Container(
-              width: 20,
-              height: 40,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(25),
-              ),
-              child: const Center(
-                child: Icon(
-                  Icons.add,
-                  size: 24,
+              child: Container(
+                width: 20,
+                height: 40,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(25),
+                ),
+                child: const Center(
+                  child: Icon(
+                    Icons.add,
+                    size: 24,
+                  ),
                 ),
               ),
             ),
@@ -464,67 +468,73 @@ class _HomeState extends State<Home> {
         child: Column(children: [
           Padding(
             padding: EdgeInsets.only(top: 15),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  'Ver por: ',
-                  style: GoogleFonts.fredoka(fontSize: 19, color: Colors.black),
-                ),
-                SizedBox(
-                  width: 16,
-                ),
-                CoolDropdown<String>(
-                  controller: pokemonDropdownController,
-                  dropdownList: dropdownItems,
-                  defaultItem:
-                      dropdownItems.isNotEmpty ? dropdownItems.last : null,
-                  onChange: (String selectedItem) {
-                    //print(selectedItem);
-                    //handleStatefulBackdropContent(context); // Muestra el valor seleccionado en la consola
-                    _showModalSheet(selectedItem);
-                    pokemonDropdownController.close();
-                  },
-                  resultOptions: ResultOptions(
-                    width: 200,
-                    render: ResultRender.all,
-                    placeholder: 'Concepto',
-                    textStyle:
-                        GoogleFonts.fredoka(fontSize: 17, color: Colors.black),
-                    isMarquee: true,
-                    icon: SizedBox(
-                      width: 10,
-                      height: 10,
-                      child: CustomPaint(
-                        painter: DropdownArrowPainter(color: Colors.green),
+            child: FadeInUp(
+              duration: Duration(milliseconds: 1700),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Ver por: ',
+                    style: GoogleFonts.fredoka(fontSize: 19, color: Colors.black),
+                  ),
+                  SizedBox(
+                    width: 16,
+                  ),
+                  CoolDropdown<String>(
+                    controller: pokemonDropdownController,
+                    dropdownList: dropdownItems,
+                    defaultItem:
+                        dropdownItems.isNotEmpty ? dropdownItems.last : null,
+                    onChange: (String selectedItem) {
+                      //print(selectedItem);
+                      //handleStatefulBackdropContent(context); // Muestra el valor seleccionado en la consola
+                      _showModalSheet(selectedItem);
+                      pokemonDropdownController.close();
+                    },
+                    resultOptions: ResultOptions(
+                      width: 200,
+                      render: ResultRender.all,
+                      placeholder: 'Concepto',
+                      textStyle:
+                          GoogleFonts.fredoka(fontSize: 17, color: Colors.black),
+                      isMarquee: true,
+                      icon: SizedBox(
+                        width: 10,
+                        height: 10,
+                        child: CustomPaint(
+                          painter: DropdownArrowPainter(color: Colors.green),
+                        ),
+                      ),
+                    ),
+                    dropdownOptions: DropdownOptions(
+                      width: 180,
+                    ),
+                    dropdownItemOptions: DropdownItemOptions(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      selectedBoxDecoration: BoxDecoration(
+                        color: Color(0XFFEFFAF0),
                       ),
                     ),
                   ),
-                  dropdownOptions: DropdownOptions(
-                    width: 180,
-                  ),
-                  dropdownItemOptions: DropdownItemOptions(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    selectedBoxDecoration: BoxDecoration(
-                      color: Color(0XFFEFFAF0),
-                    ),
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
           SizedBox(
             height: 16,
           ),
-          Text(
-            'Historial de Transacciones',
-            style: GoogleFonts.fredoka(fontSize: 22),
-
-            // TextStyle(
-            //   fontWeight: FontWeight.w600,
-            //   fontSize: 19,
-            //   color: Colors.black,
-            // ),
+          FadeInUp(
+            duration: Duration(milliseconds: 1700),
+            child: Text(
+              'Historial de Transacciones',
+              style: GoogleFonts.fredoka(fontSize: 22),
+            
+              // TextStyle(
+              //   fontWeight: FontWeight.w600,
+              //   fontSize: 19,
+              //   color: Colors.black,
+              // ),
+            ),
           ),
         ]),
       );
@@ -726,18 +736,21 @@ class _HomeState extends State<Home> {
                 return Padding(
                   padding: const EdgeInsets.only(top: 46),
                   child: Center(
-                    child: Column(
-                      children: [
-                        SizedBox(
-                          height: 60,
-                        ),
-                        Text(
-                          'Sin datos o problemas de red. \nVerifica tu conexión a internet.',
-                          style: GoogleFonts.fredoka(
-                              fontSize: 25, color: Colors.black),
-                        ),
-                        Image.asset('assets/gifs/noData.gif'),
-                      ],
+                    child: FadeInUp(
+                      duration: Duration(milliseconds: 2100),
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: 60,
+                          ),
+                          Text(
+                            'Sin datos o problemas de red. \nVerifica tu conexión a internet.',
+                            style: GoogleFonts.fredoka(
+                                fontSize: 25, color: Colors.black),
+                          ),
+                          Image.asset('assets/gifs/noData.gif'),
+                        ],
+                      ),
                     ),
                   ), // Cambia 'assets/error.gif' al path de tu GIF
                 ); // Aquí debes reemplazar YourRegularContentWidget con tu widget habitual
@@ -887,14 +900,17 @@ class _HomeState extends State<Home> {
                               _loadData();
                             });
                           },
-                          child: Container(
-                            height: 40,
-                            width: 40,
-                            color: const Color.fromRGBO(250, 250, 250, 0.1),
-                            child: const Icon(
-                              Icons.change_circle,
-                              size: 30,
-                              color: Colors.white,
+                          child: FadeInUp(
+                            duration: Duration(milliseconds: 1500),
+                            child: Container(
+                              height: 40,
+                              width: 40,
+                              color: const Color.fromRGBO(250, 250, 250, 0.1),
+                              child: const Icon(
+                                Icons.change_circle,
+                                size: 30,
+                                color: Colors.white,
+                              ),
                             ),
                           ),
                         ),
@@ -905,30 +921,36 @@ class _HomeState extends State<Home> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            obtenerSaludo(),
-                            style: GoogleFonts.fredoka(
-                              fontSize: 24,
-                              color: Colors.white,
+                          FadeInUp(
+                            duration: Duration(milliseconds: 1500),
+                            child: Text(
+                              obtenerSaludo(),
+                              style: GoogleFonts.fredoka(
+                                fontSize: 24,
+                                color: Colors.white,
+                              ),
+                            
+                              /*const TextStyle(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 16,
+                                color: Color.fromARGB(255, 224, 223, 223),
+                              ),*/
                             ),
-
-                            /*const TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 16,
-                              color: Color.fromARGB(255, 224, 223, 223),
-                            ),*/
                           ),
-                          Text(
-                            'Mar Carrera',
-                            style: GoogleFonts.fredoka(
-                              fontSize: 30,
-                              color: Colors.white,
+                          FadeInUp(
+                            duration: Duration(milliseconds: 1500),
+                            child: Text(
+                              'Mar Carrera',
+                              style: GoogleFonts.fredoka(
+                                fontSize: 30,
+                                color: Colors.white,
+                              ),
+                              /*style: TextStyle(
+                                fontWeight: FontWeight.w600,
+                                fontSize: 20,
+                                color: Colors.white,
+                              ),*/
                             ),
-                            /*style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 20,
-                              color: Colors.white,
-                            ),*/
                           ),
                         ],
                       ),
@@ -941,182 +963,185 @@ class _HomeState extends State<Home> {
           Positioned(
             top: MediaQuery.of(context).size.height * 0.14,
             left: MediaQuery.of(context).size.width * 0.15,
-            child: Container(
-              height: MediaQuery.of(context).size.height * 0.253,
-              width: MediaQuery.of(context).size.width * 0.7,
-              decoration: BoxDecoration(
-                boxShadow: const [
-                  BoxShadow(
-                    color: Color.fromRGBO(47, 125, 121, 0.3),
-                    offset: Offset(0, 6),
-                    blurRadius: 12,
-                    spreadRadius: 6,
-                  ),
-                ],
-                color: const Color.fromARGB(255, 47, 125, 121),
-                borderRadius: BorderRadius.circular(15),
-              ),
-              child: Column(
-                children: [
-                  const SizedBox(height: 10),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 15),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Balance Total Cuenta',
-                          style: GoogleFonts.fredoka(
-                            fontSize: 20,
+            child: FadeInUp(
+              duration: Duration(milliseconds: 1700),
+              child: Container(
+                height: MediaQuery.of(context).size.height * 0.253,
+                width: MediaQuery.of(context).size.width * 0.7,
+                decoration: BoxDecoration(
+                  boxShadow: const [
+                    BoxShadow(
+                      color: Color.fromRGBO(47, 125, 121, 0.3),
+                      offset: Offset(0, 6),
+                      blurRadius: 12,
+                      spreadRadius: 6,
+                    ),
+                  ],
+                  color: const Color.fromARGB(255, 47, 125, 121),
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child: Column(
+                  children: [
+                    const SizedBox(height: 10),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 15),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Balance Total Cuenta',
+                            style: GoogleFonts.fredoka(
+                              fontSize: 20,
+                              color: Colors.white,
+                            ),
+                          ),
+                          Icon(
+                            Icons.more_horiz,
                             color: Colors.white,
                           ),
-                        ),
-                        Icon(
-                          Icons.more_horiz,
-                          color: Colors.white,
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 7),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 15),
-                    child: Row(
-                      children: [
-                        DiferenciaTotal(),
-                      ],
+                    const SizedBox(height: 7),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 15),
+                      child: Row(
+                        children: [
+                          DiferenciaTotal(),
+                        ],
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 25),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 15),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          children: [
-                            CircleAvatar(
-                              radius: 13,
-                              backgroundColor:
-                                  Color.fromARGB(255, 56, 128, 195),
-                              child: Icon(
-                                Icons.arrow_downward,
-                                color: Colors.white,
-                                size: 19,
+                    const SizedBox(height: 25),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 15),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              CircleAvatar(
+                                radius: 13,
+                                backgroundColor:
+                                    Color.fromARGB(255, 56, 128, 195),
+                                child: Icon(
+                                  Icons.arrow_downward,
+                                  color: Colors.white,
+                                  size: 19,
+                                ),
                               ),
-                            ),
-                            SizedBox(width: 7),
-                            Text(
-                              'Ingresos',
-                              style: GoogleFonts.fredoka(
-                                fontSize: 16,
-                                color: Colors.white,
+                              SizedBox(width: 7),
+                              Text(
+                                'Ingresos',
+                                style: GoogleFonts.fredoka(
+                                  fontSize: 16,
+                                  color: Colors.white,
+                                ),
                               ),
-                            ),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            CircleAvatar(
-                              radius: 13,
-                              backgroundColor: Color.fromARGB(255, 164, 60, 59),
-                              child: Icon(
-                                Icons.arrow_upward,
-                                color: Colors.white,
-                                size: 19,
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              CircleAvatar(
+                                radius: 13,
+                                backgroundColor: Color.fromARGB(255, 164, 60, 59),
+                                child: Icon(
+                                  Icons.arrow_upward,
+                                  color: Colors.white,
+                                  size: 19,
+                                ),
                               ),
-                            ),
-                            SizedBox(width: 7),
-                            Text(
-                              'Egresos',
-                              style: GoogleFonts.fredoka(
-                                fontSize: 16,
-                                color: Colors.white,
+                              SizedBox(width: 7),
+                              Text(
+                                'Egresos',
+                                style: GoogleFonts.fredoka(
+                                  fontSize: 16,
+                                  color: Colors.white,
+                                ),
                               ),
-                            ),
-                          ],
-                        ),
-                      ],
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 6),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 30),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        TotalIncome(),
-                        TotalExpense(),
-                      ],
+                    const SizedBox(height: 6),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 30),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          TotalIncome(),
+                          TotalExpense(),
+                        ],
+                      ),
                     ),
-                  ),
-                  /*var totalGeneralCuenta = await mostrarTotalDinero(opc: '30.6');
-      var totalGeneralEfectivo = await mostrarTotalDinero(opc: '30.7');
-      print(totalGeneralCuenta);
-      print(totalGeneralEfectivo); */
-                  const SizedBox(height: 25),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 15),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          children: [
-                            CircleAvatar(
-                              radius: 13,
-                              backgroundColor: Color.fromARGB(255, 164, 153, 3),
-                              child: Icon(
-                                Icons.monetization_on,
-                                color: Colors.white,
-                                size: 19,
+                    /*var totalGeneralCuenta = await mostrarTotalDinero(opc: '30.6');
+                    var totalGeneralEfectivo = await mostrarTotalDinero(opc: '30.7');
+                    print(totalGeneralCuenta);
+                    print(totalGeneralEfectivo); */
+                    const SizedBox(height: 25),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 15),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              CircleAvatar(
+                                radius: 13,
+                                backgroundColor: Color.fromARGB(255, 164, 153, 3),
+                                child: Icon(
+                                  Icons.monetization_on,
+                                  color: Colors.white,
+                                  size: 19,
+                                ),
                               ),
-                            ),
-                            SizedBox(width: 7),
-                            Text(
-                              'Banco',
-                              style: GoogleFonts.fredoka(
-                                fontSize: 16,
-                                color: Colors.white,
+                              SizedBox(width: 7),
+                              Text(
+                                'Banco',
+                                style: GoogleFonts.fredoka(
+                                  fontSize: 16,
+                                  color: Colors.white,
+                                ),
                               ),
-                            ),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            CircleAvatar(
-                              radius: 13,
-                              backgroundColor: Color.fromARGB(255, 164, 153, 3),
-                              child: Icon(
-                                Icons.monetization_on,
-                                color: Colors.white,
-                                size: 19,
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              CircleAvatar(
+                                radius: 13,
+                                backgroundColor: Color.fromARGB(255, 164, 153, 3),
+                                child: Icon(
+                                  Icons.monetization_on,
+                                  color: Colors.white,
+                                  size: 19,
+                                ),
                               ),
-                            ),
-                            SizedBox(width: 7),
-                            Text(
-                              'Efectivo',
-                              style: GoogleFonts.fredoka(
-                                fontSize: 16,
-                                color: Colors.white,
+                              SizedBox(width: 7),
+                              Text(
+                                'Efectivo',
+                                style: GoogleFonts.fredoka(
+                                  fontSize: 16,
+                                  color: Colors.white,
+                                ),
                               ),
-                            ),
-                          ],
-                        ),
-                      ],
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 6),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 30),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        TotalBanco(),
-                        TotalEfectivo(),
-                      ],
+                    const SizedBox(height: 6),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 30),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          TotalBanco(),
+                          TotalEfectivo(),
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           )
