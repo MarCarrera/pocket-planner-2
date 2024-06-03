@@ -26,7 +26,7 @@ class _ButtomNavState extends State<ButtomNav> {
   late int index_color;
   _ButtomNavState({required this.index_color});
 
-  List Screen = [const Home(), Home()];
+  List Screen = [const Home()];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,16 +50,11 @@ class _ButtomNavState extends State<ButtomNav> {
                   Icons.home,
                 ),
               ),
-              CustomNavigationBarItem(
+              /*CustomNavigationBarItem(
                 icon: Icon(
                   Icons.shopping_cart,
                 ),
-              ),
-              // CustomNavigationBarItem(
-              //   icon: Icon(
-              //     Icons.cloud,
-              //   ),
-              // ),
+              ),*/
             ],
             currentIndex: index_color,
             onTap: (index) {
@@ -72,74 +67,5 @@ class _ButtomNavState extends State<ButtomNav> {
         ),
       ),
     );
-
-    /*Scaffold(
-      body: Screen[index_color],
-      bottomNavigationBar: BottomAppBar(
-        shape: const CircularNotchedRectangle(),
-        child: Padding(
-          padding: const EdgeInsets.only(top: 7.5, bottom: 7.5),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              GestureDetector(
-                onTap: () {
-                  setState(() {
-                    index_color = 0;
-                  });
-                },
-                child: Icon(
-                  Icons.credit_card_rounded,
-                  size: 30,
-                  color:
-                      index_color == 0 ? const Color(0xff368983) : Colors.white,
-                ),
-              ),
-              GestureDetector(
-                onTap: () {
-                  setState(() {
-                    index_color = 1;
-                  });
-                },
-                child: Icon(
-                  Icons.bar_chart_outlined,
-                  size: 30,
-                  color:
-                      index_color == 1 ? const Color(0xff368983) : Colors.white,
-                ),
-              ),
-              GestureDetector(
-                onTap: () {
-                  setState(() {
-                    index_color = 2;
-                  });
-                },
-                child: Icon(
-                  Icons.monetization_on_rounded,
-                  size: 30,
-                  color: index_color == 2
-                      ? Color.fromARGB(255, 56, 128, 195)
-                      : Colors.white,
-                ),
-              ),
-              /*GestureDetector(
-                onTap: () {
-                  setState(() {
-                    index_color = 3;
-                  });
-                },
-                child: Icon(
-                  Icons.bar_chart_outlined,
-                  size: 30,
-                  color: index_color == 3
-                      ? Color.fromARGB(255, 56, 128, 195)
-                      : Colors.white,
-                ),
-              ),*/
-            ],
-          ),
-        ),
-      ),
-    );*/
   }
 }
