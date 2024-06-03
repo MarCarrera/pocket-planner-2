@@ -26,7 +26,7 @@ class _ButtomNavState extends State<ButtomNav> {
   late int index_color;
   _ButtomNavState({required this.index_color});
 
-  List Screen = [const Home(), Prueba()];
+  List Screen = [const Home(), Home()];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
