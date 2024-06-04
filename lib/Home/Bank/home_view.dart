@@ -475,7 +475,8 @@ class _HomeState extends State<Home> {
                 children: [
                   Text(
                     'Ver por: ',
-                    style: GoogleFonts.fredoka(fontSize: 19, color: Colors.black),
+                    style:
+                        GoogleFonts.fredoka(fontSize: 19, color: Colors.black),
                   ),
                   SizedBox(
                     width: 16,
@@ -495,8 +496,8 @@ class _HomeState extends State<Home> {
                       width: 200,
                       render: ResultRender.all,
                       placeholder: 'Concepto',
-                      textStyle:
-                          GoogleFonts.fredoka(fontSize: 17, color: Colors.black),
+                      textStyle: GoogleFonts.fredoka(
+                          fontSize: 17, color: Colors.black),
                       isMarquee: true,
                       icon: SizedBox(
                         width: 10,
@@ -528,7 +529,7 @@ class _HomeState extends State<Home> {
             child: Text(
               'Historial de Transacciones',
               style: GoogleFonts.fredoka(fontSize: 22),
-            
+
               // TextStyle(
               //   fontWeight: FontWeight.w600,
               //   fontSize: 19,
@@ -780,7 +781,10 @@ class _HomeState extends State<Home> {
         ), // Cambia 'assets/error.gif' al path de tu GIF
       );
     } else {
-      return Padding(
+      return 
+      
+      
+      Padding(
         padding: const EdgeInsets.only(top: 538, right: 16, left: 16),
         child: Stack(children: [
           ListView.builder(
@@ -929,7 +933,7 @@ class _HomeState extends State<Home> {
                                 fontSize: 24,
                                 color: Colors.white,
                               ),
-                            
+
                               /*const TextStyle(
                                 fontWeight: FontWeight.w500,
                                 fontSize: 16,
@@ -1043,7 +1047,8 @@ class _HomeState extends State<Home> {
                             children: [
                               CircleAvatar(
                                 radius: 13,
-                                backgroundColor: Color.fromARGB(255, 164, 60, 59),
+                                backgroundColor:
+                                    Color.fromARGB(255, 164, 60, 59),
                                 child: Icon(
                                   Icons.arrow_upward,
                                   color: Colors.white,
@@ -1088,7 +1093,8 @@ class _HomeState extends State<Home> {
                             children: [
                               CircleAvatar(
                                 radius: 13,
-                                backgroundColor: Color.fromARGB(255, 164, 153, 3),
+                                backgroundColor:
+                                    Color.fromARGB(255, 164, 153, 3),
                                 child: Icon(
                                   Icons.monetization_on,
                                   color: Colors.white,
@@ -1109,7 +1115,8 @@ class _HomeState extends State<Home> {
                             children: [
                               CircleAvatar(
                                 radius: 13,
-                                backgroundColor: Color.fromARGB(255, 164, 153, 3),
+                                backgroundColor:
+                                    Color.fromARGB(255, 164, 153, 3),
                                 child: Icon(
                                   Icons.monetization_on,
                                   color: Colors.white,
