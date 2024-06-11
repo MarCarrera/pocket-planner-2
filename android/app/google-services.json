@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "603345631516",
+    "project_id": "pocketplanner-da279",
+    "storage_bucket": "pocketplanner-da279.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:603345631516:android:01c50fdd53b04580e922d9",
+        "android_client_info": {
+          "package_name": "com.mardev.pocketplanner"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCUMy6UBlbrlTyEUzy9pD55yH3Wo24VY_A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

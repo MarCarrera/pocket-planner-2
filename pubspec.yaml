@@ -21,18 +21,12 @@ version: 1.0.0+1
 environment:
   sdk: ">=3.3.4 <4.0.0"
 
-# Dependencies specify other packages that your package needs in order to work.
-# To automatically upgrade your package dependencies to the latest versions
-# consider running `flutter pub upgrade --major-versions`. Alternatively,
-# dependencies can be manually updated by changing the version numbers below to
-# the latest version available on pub.dev. To see which dependencies have newer
-# versions available, run `flutter pub outdated`.
+
 dependencies:
   flutter:
     sdk: flutter
 
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
+
   cupertino_icons: ^1.0.6
   syncfusion_flutter_charts: #https://pub.dev/packages/syncfusion_flutter_charts
   hive: #https://pub.dev/packages/hive
@@ -49,6 +43,10 @@ dependencies:
   cool_dropdown: ^2.1.0
   custom_navigation_bar: ^0.8.2
   animate_do: ^3.1.2
+
+  firebase_core: #https://pub.dev/packages/firebase_core
+  flutter_local_notifications: #https://pub.dev/packages/flutter_local_notifications
+  firebase_messaging: #https://pub.dev/packages/firebase_messaging
 
 dev_dependencies:
   flutter_test:

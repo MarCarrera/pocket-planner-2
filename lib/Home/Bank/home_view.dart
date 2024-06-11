@@ -1,17 +1,21 @@
 // ignore_for_file: use_build_context_synchronously, prefer_interpolation_to_compose_strings, depend_on_referenced_packages, unnecessary_import
 
 import 'dart:async';
+import 'dart:io';
 import 'package:animate_do/animate_do.dart';
 import 'package:cool_dropdown/cool_dropdown.dart';
 import 'package:cool_dropdown/models/cool_dropdown_item.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
+import 'package:pocket_planner/background_modal_route.dart';
 import 'package:pocket_planner/widgets/add_screen.dart';
-import '../../background_modal_route.dart';
+
 import '../../data/models/add_date.dart';
 import '../../data/models/view_model.dart';
 import '../../data/request/api_request_2.dart';
@@ -26,10 +30,74 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  //FinanceController _controller = FinanceController();
+  late AndroidNotificationChannel channel;
+  late FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
+  bool isFlutterLocalNotificationsInitialized = false;
+
+  Future<void> setupFlutterNotifications() async {
+    if (isFlutterLocalNotificationsInitialized) {
+      return;
+    }
+    channel = const AndroidNotificationChannel(
+      'high_importance_channel', // id
+      'High Importance Notifications', // title
+      description:
+          'This channel is used for important notifications.', // description
+      importance: Importance.high,
+    );
+
+    flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+
+    /// Crear un canal de notificación
+    /// We use this channel in the `AndroidManifest.xml` file to override the
+    /// default FCM channel to enable heads up notifications.
+    await flutterLocalNotificationsPlugin
+        .resolvePlatformSpecificImplementation<
+            AndroidFlutterLocalNotificationsPlugin>()
+        ?.createNotificationChannel(channel);
+
+    /// Update the iOS foreground notification presentation options to allow
+    /// heads up notifications.
+    await FirebaseMessaging.instance
+        .setForegroundNotificationPresentationOptions(
+      alert: true,
+      badge: true,
+      sound: true,
+    );
+    isFlutterLocalNotificationsInitialized = true;
+  }
+
+  void showFlutterNotification(RemoteMessage message) {
+    RemoteNotification? notification = message.notification;
+    AndroidNotification? android = message.notification?.android;
+    if (notification != null &&
+        android != null &&
+        (Platform.isAndroid || Platform.isIOS)) {
+      flutterLocalNotificationsPlugin.show(
+        notification.hashCode,
+        notification.title,
+        notification.body,
+        NotificationDetails(
+          android: AndroidNotificationDetails(
+            channel.id,
+            channel.name,
+            channelDescription: channel.description,
+            // TODO Personalizar para no utilizar el por defecto
+            icon: 'launch_background',
+          ),
+        ),
+      );
+    }
+  }
+
+//-------------------------------------------------------------------
   @override
   void initState() {
     super.initState();
+    setupFlutterNotifications().then((value) {
+      FirebaseMessaging.onMessage.listen(showFlutterNotification);
+    });
+
     cargarFinanzas();
     dropdownItems = _item.map((item) {
       return CoolDropdownItem<String>(
@@ -778,10 +846,7 @@ class _HomeState extends State<Home> {
         ), // Cambia 'assets/error.gif' al path de tu GIF
       );
     } else {
-      return 
-      
-      
-      Padding(
+      return Padding(
         padding: const EdgeInsets.only(top: 538, right: 16, left: 16),
         child: Stack(children: [
           ListView.builder(

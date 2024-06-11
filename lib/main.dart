@@ -1,3 +1,5 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:pocket_planner/widgets/Login.dart';
@@ -6,10 +8,19 @@ import 'utils/prueba.dart';
 import 'widgets/buttom_nav.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  Firebase.initializeApp().then((app) {
+    print("Initialized $app");
+    FirebaseMessaging.instance.getToken().then((token) {
+      print("My token is: $token");
+    });
+  });
+
   await Hive.initFlutter();
   Hive.registerAdapter(AdddataAdapter());
   await Hive.openBox<Add_data>('data');
-  runApp(MyApp(
+  
+  runApp(const MyApp(
     index_color: 0,
   ));
 }

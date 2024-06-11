@@ -1,12 +1,17 @@
 buildscript {
-    ext.kotlin_version = '1.6.10' // Asegúrate de usar la versión correcta de Kotlin
+    ext.kotlin_version = '1.9.0' // Asegúrate de usar la versión correcta de Kotlin
     repositories {
         google()
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.0.2'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        //classpath 'com.android.tools.build:gradle:7.0.2'
+        //classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        //classpath 'com.google.gms:google-services:4.3.13'
+
+         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath 'com.android.tools.build:gradle:8.0.2'
+        classpath 'com.google.gms:google-services:4.3.15'
     }
 }
 allprojects {
