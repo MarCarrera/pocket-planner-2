@@ -21,11 +21,9 @@ version: 1.0.0+1
 environment:
   sdk: ">=3.3.4 <4.0.0"
 
-
 dependencies:
   flutter:
     sdk: flutter
-
 
   cupertino_icons: ^1.0.6
   syncfusion_flutter_charts: #https://pub.dev/packages/syncfusion_flutter_charts
@@ -46,7 +44,7 @@ dependencies:
 
   firebase_core: #https://pub.dev/packages/firebase_core
   flutter_local_notifications: #https://pub.dev/packages/flutter_local_notifications
-  firebase_messaging: #https://pub.dev/packages/firebase_messaging
+  firebase_messaging: ^15.0.1
 
 dev_dependencies:
   flutter_test:

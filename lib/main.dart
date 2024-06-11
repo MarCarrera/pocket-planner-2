@@ -2,24 +2,25 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
+import 'package:pocket_planner/src/push_providers/push_notifications.dart';
 import 'package:pocket_planner/widgets/Login.dart';
 import 'data/models/add_date.dart';
 import 'utils/prueba.dart';
 import 'widgets/buttom_nav.dart';
 
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Firebase.initializeApp().then((app) {
     print("Initialized $app");
-    FirebaseMessaging.instance.getToken().then((token) {
-      print("My token is: $token");
-    });
+    
   });
 
   await Hive.initFlutter();
   Hive.registerAdapter(AdddataAdapter());
   await Hive.openBox<Add_data>('data');
-  
+FirebaseMessaging.onBackgroundMessage(
+      PushNotifications.firebaseMessagingBackgroundHandler);
   runApp(const MyApp(
     index_color: 0,
   ));
@@ -34,15 +35,22 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  @override
+  void initState() {
+    super.initState();
+    
+  }
+
   late int index_color;
   _MyAppState({required this.index_color});
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: LoginScreen()
+    final pushNotifications = PushNotifications();
+    pushNotifications.initNotifications(); // Inicializar notificaciones
+    
+    return MaterialApp(debugShowCheckedModeBanner: false, home: LoginScreen()
         //home: ButtomNav(index_color: index_color)
-    );
+        );
   }
 }
 
