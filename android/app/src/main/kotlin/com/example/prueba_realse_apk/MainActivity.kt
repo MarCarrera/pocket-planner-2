@@ -1,4 +1,4 @@
-package com.example.prueba_realse_apk
+package com.mardev.pocketplanner
 
 //import io.flutter.embedding.android.FlutterActivity
 

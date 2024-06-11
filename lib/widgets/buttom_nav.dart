@@ -2,12 +2,9 @@
 
 import 'package:animate_do/animate_do.dart';
 import 'package:custom_navigation_bar/custom_navigation_bar.dart';
-import 'package:prueba_realse_apk/Home/Bank/home_view.dart';
-import 'package:prueba_realse_apk/statistics.dart';
-import 'package:prueba_realse_apk/widgets/add_screen.dart';
+import 'package:pocket_planner/Home/Bank/home_view.dart';
 import 'package:flutter/material.dart';
-import 'package:prueba_realse_apk/widgets/Login.dart';
-import 'package:prueba_realse_apk/widgets/test.dart';
+
 
 import '../statisticsCash.dart';
 import '../modal_data.dart';

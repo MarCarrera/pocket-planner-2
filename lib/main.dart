@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
-import 'package:prueba_realse_apk/widgets/Login.dart';
+import 'package:pocket_planner/widgets/Login.dart';
 import 'data/models/add_date.dart';
 import 'utils/prueba.dart';
 import 'widgets/buttom_nav.dart';

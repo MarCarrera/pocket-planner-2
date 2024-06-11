@@ -5,13 +5,12 @@ import 'package:animate_do/animate_do.dart';
 import 'package:cool_dropdown/cool_dropdown.dart';
 import 'package:cool_dropdown/models/cool_dropdown_item.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:prueba_realse_apk/Home/Bank/components/concept_view.dart';
-import 'package:prueba_realse_apk/widgets/add_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
+import 'package:pocket_planner/widgets/add_screen.dart';
 import '../../background_modal_route.dart';
 import '../../data/models/add_date.dart';
 import '../../data/models/view_model.dart';
@@ -19,11 +18,9 @@ import '../../data/request/api_request_2.dart';
 import '../../modal_data.dart';
 import '../../utils/showConfirm.dart';
 import '../../utils/showDelete.dart';
-import '../../widgets/Login.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
-
   @override
   State<Home> createState() => _HomeState();
 }
