@@ -40,7 +40,7 @@ class _MyAppState extends State<MyApp> {
     super.initState();
     //acceso al messageStream de la notificacion
     PushNotifications.messagesStream.listen((message) {
-      print('MyApp: $message');
+      print('Argumento: $message');
     });
   }
 
