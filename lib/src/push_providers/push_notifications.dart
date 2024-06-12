@@ -1,6 +1,4 @@
-//e_oE7sfeSY2QrZQPaxJ_to:APA91bEgVKJlplQ9qoqgQWjW2f3-UbAyLO35qqjAWFDrq2AmYDsQOj7Fogvb5GyC2IZU-eCV8Ud1nW48Dtra0Elx6Ncuycn6ry2Z1ioIlcJ9J8MABPZXYhWn2ccENLVBJ-ZtTA0z_G9M
-
-//eIspWC4LQZWmYTrrpfLDDm:APA91bFUCQQzKw4PFxP9dS_aW0bT0z1tA-bXmJzBucRK_S2t5RQNhSCzqKI3iHs5lSrg96KbZkSfSTsaQ0OunZ3KKyGfrdzqOnW4S0QWnrbRcGvaxhmgJOBy_OjDRUJcMxETnUStWq0_
+//cFrrpmW4QUWtFGDp_fksW5:APA91bEJXVqPkGDeyifIw7VKssNe6UJJar9ruBHbmXOmbTEkO6ejurdu3D2lJeU7I5CM-RVrRJHlPk2R70exWCE-UQWFaKV8ACY5AJeSvaQe8gcCf7NUtJA4v8NCCslRxGvHIJpmnyzH
 
 import 'dart:async';
 import 'dart:io';
@@ -25,7 +23,7 @@ class PushNotifications {
 
     String argumento = 'no-data';
     if (Platform.isAndroid) {
-      argumento = message.data['userId'] ?? 'no-data';
+      argumento = message.data['idUser'] ?? 'no-data';
     }
     _messageStream.add(argumento);
   }
@@ -36,7 +34,7 @@ class PushNotifications {
     //_messageStream.add(message.notification?.body ?? 'Sin titulo');
     String argumento = 'no-data';
     if (Platform.isAndroid) {
-      argumento = message.data['userId'] ?? 'no-data';
+      argumento = message.data['idUser'] ?? 'no-data';
     }
     _messageStream.add(argumento);
   }
@@ -47,7 +45,7 @@ class PushNotifications {
     //_messageStream.add(message.notification?.body ?? 'Sin titulo');
     String argumento = 'no-data';
     if (Platform.isAndroid) {
-      argumento = message.data['userId'] ?? 'no-data';
+      argumento = message.data['idUser'] ?? 'no-data';
     }
     _messageStream.add(argumento);
   }

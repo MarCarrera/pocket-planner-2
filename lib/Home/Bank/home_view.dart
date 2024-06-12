@@ -14,6 +14,7 @@ import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:pocket_planner/background_modal_route.dart';
+import 'package:pocket_planner/utils/prueba.dart';
 import 'package:pocket_planner/widgets/add_screen.dart';
 
 import '../../data/models/add_date.dart';
@@ -958,6 +959,37 @@ class _HomeState extends State<Home> {
                     Positioned(
                       top: 70,
                       left: MediaQuery.of(context).size.width * 0.89,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(7),
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) {
+                                  return const Prueba();
+                                },
+                              ),
+                            );
+                          },
+                          child: FadeInUp(
+                            duration: Duration(milliseconds: 1500),
+                            child: Container(
+                              height: 40,
+                              width: 40,
+                              color: const Color.fromRGBO(250, 250, 250, 0.1),
+                              child: const Icon(
+                                Icons.notifications,
+                                size: 30,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      top: 70,
+                      left: MediaQuery.of(context).size.width * 0.74,
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(7),
                         child: GestureDetector(
