@@ -38,13 +38,21 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   //instancia de navigatorKey para navegar al contexto despues de recibir la notificacion
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+  final List<String> _notifications = []; // Lista para almacenar las notificaciones
 
   @override
   void initState() {
     super.initState();
     //acceso al messageStream de la notificacion
-    PushNotifications.messagesStream.listen((data) {
+    /*PushNotifications.messagesStream.listen((data) {
       //print('Argumento: $data');
+
+      navigatorKey.currentState?.pushNamed('addPay', arguments: data);
+    });*/
+    PushNotifications.messagesStream.listen((data) {
+      setState(() {
+        _notifications.add(data); // Agregar la notificación a la lista
+      });
 
       navigatorKey.currentState?.pushNamed('addPay', arguments: data);
     });
@@ -62,7 +70,7 @@ class _MyAppState extends State<MyApp> {
       routes: {
         'login':(BuildContext context)=>LoginScreen(),
         'navBar':(BuildContext context)=>ButtomNav(index_color: 0),
-        'addPay':(BuildContext context)=>const Prueba(),
+        'addPay':(BuildContext context)=>Prueba(notifications: _notifications),
       },
     );
   }
