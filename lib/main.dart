@@ -8,19 +8,19 @@ import 'data/models/add_date.dart';
 import 'utils/prueba.dart';
 import 'widgets/buttom_nav.dart';
 
-
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  /*WidgetsFlutterBinding.ensureInitialized();
   Firebase.initializeApp().then((app) {
     print("Initialized $app");
     
-  });
+  });*/
+  WidgetsFlutterBinding.ensureInitialized();  
+  await PushNotifications.initializeApp();
 
   await Hive.initFlutter();
   Hive.registerAdapter(AdddataAdapter());
   await Hive.openBox<Add_data>('data');
-FirebaseMessaging.onBackgroundMessage(
-      PushNotifications.firebaseMessagingBackgroundHandler);
+
   runApp(const MyApp(
     index_color: 0,
   ));
@@ -35,19 +35,10 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  @override
-  void initState() {
-    super.initState();
-    
-  }
-
   late int index_color;
   _MyAppState({required this.index_color});
   @override
   Widget build(BuildContext context) {
-    final pushNotifications = PushNotifications();
-    pushNotifications.initNotifications(); // Inicializar notificaciones
-    
     return MaterialApp(debugShowCheckedModeBanner: false, home: LoginScreen()
         //home: ButtomNav(index_color: index_color)
         );
