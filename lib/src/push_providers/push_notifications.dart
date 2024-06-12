@@ -21,7 +21,7 @@ class PushNotifications {
 
     //cuando se recibe una notificacion se añade al stream, en este caso el titulo
     print('Data recibida: ${message.data}');
-   _messageStream.add(message.notification?.body ?? 'Sin titulo');
+    //_messageStream.add(message.notification?.body ?? 'Sin titulo');
 
     String argumento = 'no-data';
     if (Platform.isAndroid) {
@@ -33,7 +33,7 @@ class PushNotifications {
   static Future _onMessageHandler(RemoteMessage message) async {
     //print('onMessage Handler ${message.messageId}');
     print('Data recibida: ${message.data}');
-     _messageStream.add(message.notification?.body ?? 'Sin titulo');
+    //_messageStream.add(message.notification?.body ?? 'Sin titulo');
     String argumento = 'no-data';
     if (Platform.isAndroid) {
       argumento = message.data['userId'] ?? 'no-data';
@@ -44,7 +44,7 @@ class PushNotifications {
   static Future _onMessageOpenApp(RemoteMessage message) async {
     //print('onMessageOpenApp Handler ${message.messageId}');
     print('Data recibida: ${message.data}');
-     _messageStream.add(message.notification?.body ?? 'Sin titulo');
+    //_messageStream.add(message.notification?.body ?? 'Sin titulo');
     String argumento = 'no-data';
     if (Platform.isAndroid) {
       argumento = message.data['userId'] ?? 'no-data';
