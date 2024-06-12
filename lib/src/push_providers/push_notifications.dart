@@ -2,6 +2,8 @@
 
 //eIspWC4LQZWmYTrrpfLDDm:APA91bFUCQQzKw4PFxP9dS_aW0bT0z1tA-bXmJzBucRK_S2t5RQNhSCzqKI3iHs5lSrg96KbZkSfSTsaQ0OunZ3KKyGfrdzqOnW4S0QWnrbRcGvaxhmgJOBy_OjDRUJcMxETnUStWq0_
 
+import 'dart:async';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -9,17 +11,25 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 class PushNotifications {
   static FirebaseMessaging messaging = FirebaseMessaging.instance;
   static String? token;
+  static StreamController<String> _messageStream = StreamController.broadcast();
+//get estatico que retorna el messageStream
+  static Stream<String> get messagesStream => _messageStream.stream;
 
   static Future _backgroundHandler(RemoteMessage message) async {
-    print('Background Handler ${message.messageId}');
+    // print('Background Handler ${message.messageId}');
+
+    //cuando se recibe una notificacion se añade al stream, en este caso el titulo
+    _messageStream.add(message.notification?.title ?? 'Sin titulo');
   }
 
   static Future _onMessageHandler(RemoteMessage message) async {
-    print('onMessage Handler ${message.messageId}');
+    //print('onMessage Handler ${message.messageId}');
+    _messageStream.add(message.notification?.title ?? 'Sin titulo');
   }
 
   static Future _onMessageOpenApp(RemoteMessage message) async {
-    print('onMessageOpenApp Handler ${message.messageId}');
+    //print('onMessageOpenApp Handler ${message.messageId}');
+    _messageStream.add(message.notification?.title ?? 'Sin titulo');
   }
 
   static Future initializeApp() async {
@@ -35,5 +45,9 @@ class PushNotifications {
     FirebaseMessaging.onMessage.listen(_onMessageHandler);
     //cuando la app esta cerrada y se debe abrir
     FirebaseMessaging.onMessageOpenedApp.listen(_onMessageOpenApp);
+  }
+
+  static closeStreams() {
+    _messageStream.close();
   }
 }

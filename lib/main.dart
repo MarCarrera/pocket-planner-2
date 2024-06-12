@@ -14,7 +14,7 @@ void main() async {
     print("Initialized $app");
     
   });*/
-  WidgetsFlutterBinding.ensureInitialized();  
+  WidgetsFlutterBinding.ensureInitialized();
   await PushNotifications.initializeApp();
 
   await Hive.initFlutter();
@@ -35,6 +35,15 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  @override
+  void initState() {
+    super.initState();
+    //acceso al messageStream de la notificacion
+    PushNotifications.messagesStream.listen((message) {
+      print('MyApp: $message');
+    });
+  }
+
   late int index_color;
   _MyAppState({required this.index_color});
   @override
