@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:pocket_planner/src/push_providers/push_notifications.dart';
 import 'package:pocket_planner/widgets/Login.dart';
+import 'package:pocket_planner/widgets/add_screen.dart';
 import 'data/models/add_date.dart';
 import 'utils/prueba.dart';
 import 'widgets/buttom_nav.dart';
@@ -35,12 +36,17 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  //instancia de navigatorKey para navegar al contexto despues de recibir la notificacion
+  final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
   @override
   void initState() {
     super.initState();
     //acceso al messageStream de la notificacion
-    PushNotifications.messagesStream.listen((message) {
-      print('Argumento: $message');
+    PushNotifications.messagesStream.listen((data) {
+      //print('Argumento: $data');
+
+      navigatorKey.currentState?.pushNamed('addPay', arguments: data);
     });
   }
 
@@ -48,9 +54,17 @@ class _MyAppState extends State<MyApp> {
   _MyAppState({required this.index_color});
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(debugShowCheckedModeBanner: false, home: LoginScreen()
-        //home: ButtomNav(index_color: index_color)
-        );
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      navigatorKey: navigatorKey,
+      //home: LoginScreen()
+      initialRoute: 'login',
+      routes: {
+        'login':(BuildContext context)=>LoginScreen(),
+        'navBar':(BuildContext context)=>ButtomNav(index_color: 0),
+        'addPay':(BuildContext context)=>const Prueba(),
+      },
+    );
   }
 }
 
