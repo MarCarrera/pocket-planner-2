@@ -13,6 +13,7 @@ import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
+import 'package:local_auth/local_auth.dart';
 import 'package:pocket_planner/background_modal_route.dart';
 import 'package:pocket_planner/src/push_providers/push_notifications.dart';
 import 'package:pocket_planner/utils/prueba.dart';
@@ -32,12 +33,58 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  final LocalAuthentication auth = LocalAuthentication();
+  bool _canCheckBiometrics = false;
+  bool _isAuthenticating = false;
+  bool showData = false;
+  String _authorized = 'No autenticado';
+
   late AndroidNotificationChannel channel;
   late FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
   bool isFlutterLocalNotificationsInitialized = false;
   //final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
   final List<String> _notifications =
       []; // Lista para almacenar las notificaciones
+
+  Future<void> _authenticate() async {
+    bool authenticated = false;
+    try {
+      setState(() {
+        _isAuthenticating = true;
+      });
+      authenticated = await auth.authenticate(
+        localizedReason:
+            'Escanee su huella dactilar o patrón para autenticarse.',
+        options: const AuthenticationOptions(
+          useErrorDialogs: true,
+          stickyAuth: true,
+        ),
+      );
+      setState(() {
+        _isAuthenticating = false;
+      });
+    } catch (e) {
+      setState(() {
+        _isAuthenticating = false;
+        //_authorized = 'Error: ${e.toString()}';
+        print('Error: ${e.toString()}');
+      });
+      return;
+    }
+    if (!mounted) return;
+
+    setState(() {
+      _authorized = authenticated ? 'Autenticado' : 'No Autenticado';
+    });
+    if (_authorized == 'Autenticado') {
+      print('Se ha pulsado autenticar');
+      showData = true;
+      /*Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => ButtomNav(index_color: 0)),
+      );*/
+    }
+  }
 
   Future<void> setupFlutterNotifications() async {
     if (isFlutterLocalNotificationsInitialized) {
@@ -643,7 +690,7 @@ class _HomeState extends State<Home> {
             String cantidadFormateada = formatoMoneda.format(ingresos);
             // Muestra el valor devuelto en un widget Text
             return Text(
-              '${cantidadFormateada}',
+              showData == true ? '${cantidadFormateada}' : '\$***',
               style: GoogleFonts.fredoka(fontSize: 25, color: Colors.white),
             );
           } else {
@@ -678,7 +725,7 @@ class _HomeState extends State<Home> {
             String cantidadFormateada = formatoMoneda.format(ingresos);
             // Muestra el valor devuelto en un widget Text
             return Text(
-              '${cantidadFormateada}',
+              showData == true ? '${cantidadFormateada}' : '\$***',
               style: GoogleFonts.fredoka(fontSize: 25, color: Colors.white),
             );
           } else {
@@ -713,7 +760,7 @@ class _HomeState extends State<Home> {
             String cantidadFormateada = formatoMoneda.format(ingresos);
             // Muestra el valor devuelto en un widget Text
             return Text(
-              '${cantidadFormateada}',
+              showData == true ? '${cantidadFormateada}' : '\$***',
               style: GoogleFonts.fredoka(fontSize: 25, color: Colors.white),
             );
           } else {
@@ -751,7 +798,7 @@ class _HomeState extends State<Home> {
             String cantidadFormateada = formatoMoneda.format(gastos);
             // Muestra el valor devuelto en un widget Text
             return Text(
-              '-${cantidadFormateada}',
+              showData == true ? '-${cantidadFormateada}' : '\$***',
               style: GoogleFonts.fredoka(fontSize: 25, color: Colors.white),
             );
           } else {
@@ -787,7 +834,7 @@ class _HomeState extends State<Home> {
 
             // Muestra el valor devuelto en un widget Text
             return Text(
-              '${cantidadFormateada}',
+              showData == true ? '${cantidadFormateada}' : '\$***',
               style: GoogleFonts.fredoka(fontSize: 25, color: Colors.white),
             );
           } else {
@@ -921,17 +968,27 @@ class _HomeState extends State<Home> {
                     ),
                     trailing: Column(
                       children: [
-                        Text(
-                          finance.type == 'Income'
-                              ? formatoMoneda.format(amount)
-                              : '-' + formatoMoneda.format(amount),
-                          style: GoogleFonts.fredoka(
-                            fontSize: 19,
-                            color: finance.type == 'Income'
-                                ? Colors.green
-                                : Colors.red,
-                          ),
-                        ),
+                        showData == true
+                            ? Text(
+                                finance.type == 'Income'
+                                    ? formatoMoneda.format(amount)
+                                    : '-' + formatoMoneda.format(amount),
+                                style: GoogleFonts.fredoka(
+                                  fontSize: 19,
+                                  color: finance.type == 'Income'
+                                      ? Colors.green
+                                      : Colors.red,
+                                ),
+                              )
+                            : Text(
+                                finance.type == 'Income' ? '\$***' : '-\$***',
+                                style: GoogleFonts.fredoka(
+                                  fontSize: 19,
+                                  color: finance.type == 'Income'
+                                      ? Colors.green
+                                      : Colors.red,
+                                ),
+                              ),
                         Text(
                           '${finance.date}',
                           style: GoogleFonts.fredoka(
@@ -1105,9 +1162,21 @@ class _HomeState extends State<Home> {
                               color: Colors.white,
                             ),
                           ),
-                          Icon(
-                            Icons.more_horiz,
-                            color: Colors.white,
+                          GestureDetector(
+                            onTap: () {
+                              if (_authorized != 'Autenticado') {
+                                _authenticate();
+                              } else {
+                                setState(() {
+                                  showData = false;
+                                  _authorized = 'No autenticado';
+                                });
+                              }
+                            },
+                            child: Icon(
+                              Icons.remove_red_eye,
+                              color: Colors.white,
+                            ),
                           ),
                         ],
                       ),

@@ -3,7 +3,6 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:local_auth/local_auth.dart';
-
 import '../widgets/buttom_nav.dart';
 
 class LoginScreen extends StatefulWidget {
