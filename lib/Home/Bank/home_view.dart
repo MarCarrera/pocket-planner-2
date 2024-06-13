@@ -14,6 +14,7 @@ import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:pocket_planner/background_modal_route.dart';
+import 'package:pocket_planner/src/push_providers/push_notifications.dart';
 import 'package:pocket_planner/utils/prueba.dart';
 import 'package:pocket_planner/widgets/add_screen.dart';
 
@@ -34,6 +35,9 @@ class _HomeState extends State<Home> {
   late AndroidNotificationChannel channel;
   late FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
   bool isFlutterLocalNotificationsInitialized = false;
+  //final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+  final List<String> _notifications =
+      []; // Lista para almacenar las notificaciones
 
   Future<void> setupFlutterNotifications() async {
     if (isFlutterLocalNotificationsInitialized) {
@@ -106,6 +110,14 @@ class _HomeState extends State<Home> {
         value: item,
       );
     }).toList();
+
+    PushNotifications.messagesStream.listen((data) {
+      setState(() {
+        _notifications.add(data); // Agregar la notificación a la lista
+      });
+
+      //navigatorKey.currentState?.pushNamed('addPay', arguments: data);
+    });
   }
 
   Future<void> _loadData() async {
@@ -966,7 +978,7 @@ class _HomeState extends State<Home> {
                             Navigator.of(context).push(
                               MaterialPageRoute(
                                 builder: (context) {
-                                  return const Prueba();
+                                  return Prueba(notifications: _notifications);
                                 },
                               ),
                             );

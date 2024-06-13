@@ -37,8 +37,8 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   //instancia de navigatorKey para navegar al contexto despues de recibir la notificacion
-  final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
-  final List<String> _notifications = []; // Lista para almacenar las notificaciones
+  //final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+  //final List<String> _notifications = []; // Lista para almacenar las notificaciones
 
   @override
   void initState() {
@@ -49,13 +49,14 @@ class _MyAppState extends State<MyApp> {
 
       navigatorKey.currentState?.pushNamed('addPay', arguments: data);
     });*/
-    PushNotifications.messagesStream.listen((data) {
-      setState(() {
-        _notifications.add(data); // Agregar la notificación a la lista
-      });
 
-      navigatorKey.currentState?.pushNamed('addPay', arguments: data);
-    });
+    // PushNotifications.messagesStream.listen((data) {
+    //   setState(() {
+    //     _notifications.add(data); // Agregar la notificación a la lista
+    //   });
+
+    //   navigatorKey.currentState?.pushNamed('addPay', arguments: data);
+    // });
   }
 
   late int index_color;
@@ -64,14 +65,14 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      navigatorKey: navigatorKey,
-      //home: LoginScreen()
-      initialRoute: 'login',
-      routes: {
+     // navigatorKey: navigatorKey,
+      home: LoginScreen()
+     // initialRoute: 'login',
+      /*routes: {
         'login':(BuildContext context)=>LoginScreen(),
         'navBar':(BuildContext context)=>ButtomNav(index_color: 0),
         'addPay':(BuildContext context)=>Prueba(notifications: _notifications),
-      },
+      },*/
     );
   }
 }
