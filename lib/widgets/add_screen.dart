@@ -102,6 +102,8 @@ class _AddScreenState extends State<AddScreen> {
           date_time(),
           const Spacer(),
           save(),
+          const SizedBox(height: 30),
+          save2(),
           const SizedBox(height: 25),
         ],
       ),
@@ -126,8 +128,7 @@ class _AddScreenState extends State<AddScreen> {
         // Navegar de regreso a la vista de inicio y reemplazar la vista actual
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(
-              builder: (context) => ButtomNav(index_color: 0)),
+          MaterialPageRoute(builder: (context) => ButtomNav(index_color: 0)),
         );
         // Navigator.of(context).pop();
       },
@@ -142,6 +143,31 @@ class _AddScreenState extends State<AddScreen> {
         child: Text(
           'Guardar',
           style: GoogleFonts.fredoka(fontSize: 17, color: Colors.white),
+        ),
+      ),
+    );
+  }
+
+  GestureDetector save2() {
+    return GestureDetector(
+      onTap: () async {
+        await sendNotification(
+           deviceToken : 'e7KCYiRqQgW1h2Cf7LAsyT:APA91bG2S6HgbjUhXBJ7xvqD0MADI715hFoX1rg7a3-IzfmPWzbQif8982F0-E6lfwPpQ_iU6A7ewSjKHyQ9stxqptCribArZC9O0NOZ7p5dv8kyF1QcJnJwao3QDlbr_zlNsHJtmCIT',
+            title: 'Mar Carrera',
+            body: 'Cuerpo de notificacion');
+        setState(() {});
+      },
+      child: Container(
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(15),
+          color: const Color(0xff368983),
+        ),
+        width: 120,
+        height: 50,
+        child: Text(
+          'Enviar notificacion',
+          style: GoogleFonts.fredoka(fontSize: 13, color: Colors.white),
         ),
       ),
     );

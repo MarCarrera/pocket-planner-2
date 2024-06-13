@@ -303,6 +303,33 @@ Future<void> abonarGasto(
   }
 }
 
+//NOTIFICACIONES =====================================
+Future<void> sendNotification(
+    {required String deviceToken, required String title, required String body}) async {
+       var data = {'opc': '34',
+      'token': deviceToken,
+      'title': title,
+      'body': body,};
 
+  final response = await http.post(
+    url,
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+    body: data,
+    
+    
+    /*jsonEncode(<String, String>{
+      'opc': '34',
+      'token': deviceToken,
+      'title': title,
+      'body': body,
+    }),*/
+  );
 
-
+  if (response.statusCode == 200) {
+    print('Notificación enviada exitosamente');
+  } else {
+    print('Error al enviar la notificación: ${response.reasonPhrase}');
+  }
+}
