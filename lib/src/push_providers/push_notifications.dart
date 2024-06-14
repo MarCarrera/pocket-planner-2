@@ -56,8 +56,12 @@ class PushNotifications {
     // Pedir permisos para notificaciones
     await _requestPermissions();
 
-    token = await FirebaseMessaging.instance.getToken();
-    print('Token: $token');
+    try {
+        token = await FirebaseMessaging.instance.getToken();
+        print('Token: $token');
+    } catch (e) {
+        print('Error obteniendo el token: $e');
+    }
 
 //Handlers
 //cuando la aplicacion esta en segundo plano pero no se ha destruido o cerrado
