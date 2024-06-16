@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../data/request/api_request_2.dart';
+
 class Prueba extends StatefulWidget {
   final List<String> notifications; // Recibir las notificaciones
 
@@ -11,6 +13,52 @@ class Prueba extends StatefulWidget {
 }
 
 class _PruebaState extends State<Prueba> {
+  @override
+  void initState() {
+    super.initState();
+    cargarNotificaciones();
+  }
+
+  bool noData = false;
+
+  Future<void> cargarNotificaciones() async {
+    //parametros = {"opcion": "1.1"};
+    //reload = true;
+    var respuesta = await mostrarNotificaciones();
+    // reload = false;
+    if (respuesta != "err_internet_conex") {
+      setState(() {
+        if (respuesta == 'empty') {
+          noData = true;
+          print('no hay datos');
+        } else {
+          noData = false;
+          print('Respuesta en vista ::::: ${respuesta}');
+          /*finances.clear();
+          if (respuesta.isNotEmpty) {
+            for (int i = 0; i < respuesta.length; i++) {
+              finances.add(Finance(
+                  idFinance: respuesta[i]['idFinance'],
+                  concept: respuesta[i]['concept'],
+                  reason: respuesta[i]['reason'],
+                  amount: respuesta[i]['amount'],
+                  type: respuesta[i]['type'],
+                  date: respuesta[i]['date']));
+            }
+            //print('Arreglo idFinance:');
+            // Itera sobre la lista finances y accede al idFinance de cada objeto Finance
+            for (var finance in finances) {
+              //print(finance.idFinance);
+            }
+          }*/
+        }
+      });
+    } else {
+      noData = true;
+      print('Verifique su conexion a internet');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
