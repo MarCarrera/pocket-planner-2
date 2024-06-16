@@ -1,25 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
+import '../data/models/view_model.dart';
 import '../data/request/api_request_2.dart';
+import 'showDelete.dart';
 
 class Prueba extends StatefulWidget {
-  final List<String> notifications; // Recibir las notificaciones
-
-  const Prueba({Key? key, required this.notifications}) : super(key: key);
+  const Prueba({Key? key}) : super(key: key);
 
   @override
   State<Prueba> createState() => _PruebaState();
 }
 
 class _PruebaState extends State<Prueba> {
-  @override
-  void initState() {
-    super.initState();
-    cargarNotificaciones();
-  }
-
   bool noData = false;
+  List<MyNotification> notifications = [];
 
   Future<void> cargarNotificaciones() async {
     //parametros = {"opcion": "1.1"};
@@ -34,23 +28,23 @@ class _PruebaState extends State<Prueba> {
         } else {
           noData = false;
           print('Respuesta en vista ::::: ${respuesta}');
-          /*finances.clear();
+          notifications.clear();
           if (respuesta.isNotEmpty) {
             for (int i = 0; i < respuesta.length; i++) {
-              finances.add(Finance(
-                  idFinance: respuesta[i]['idFinance'],
-                  concept: respuesta[i]['concept'],
-                  reason: respuesta[i]['reason'],
-                  amount: respuesta[i]['amount'],
-                  type: respuesta[i]['type'],
-                  date: respuesta[i]['date']));
+              notifications.add(MyNotification(
+                  idNot: respuesta[i]['idNot'],
+                  projectId: respuesta[i]['projectId'],
+                  tokenUser: respuesta[i]['tokenUser'],
+                  messageId: respuesta[i]['messageId'],
+                  title: respuesta[i]['title'],
+                  body: respuesta[i]['body']));
             }
             //print('Arreglo idFinance:');
             // Itera sobre la lista finances y accede al idFinance de cada objeto Finance
-            for (var finance in finances) {
+            for (var notification in notifications) {
               //print(finance.idFinance);
             }
-          }*/
+          }
         }
       });
     } else {
@@ -60,14 +54,21 @@ class _PruebaState extends State<Prueba> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    cargarNotificaciones();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Notificaciones'),
       ),
       body: ListView.builder(
-        itemCount: widget.notifications.length,
+        itemCount: notifications.length,
         itemBuilder: (context, index) {
+          final notif = notifications[index];
           return Center(
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 15),
@@ -84,20 +85,20 @@ class _PruebaState extends State<Prueba> {
                   ),
                 ),
                 onDismissed: (direction) async {
-                  var idFinance = 5;
+                  var idNot = notif.idNot;
                   // Eliminar el elemento de la lista de datos
-                  //finances.removeWhere((element) => element.idFinance == idFinance);
-                  String idFinanceString = idFinance.toString();
-                  //await eliminarFinanza(idFinance: idFinanceString);
+                  notifications.removeWhere((element) => element.idNot == idNot);
+                  String idNotifString = idNot.toString();
+                  //await eliminarFinanza(idNot: idNotifString);
                   // Esperar a que se muestre el diálogo y se cierre completamente
-                  /*await ShowDelete().showDeleteDialog(context).then((_) {
+                  await ShowDelete().showDeleteDialog(context).then((_) {
                // Llamar a setState para reconstruir la vista y mostrar los nuevos datos
                // Verificar si el widget todavía está montado
                if (mounted) {
                  // Llamar a setState solo si el widget está montado
                  setState(() {});
                }
-             });*/
+             });
                 },
                 child: Container(
                   decoration: BoxDecoration(
@@ -142,14 +143,14 @@ class _PruebaState extends State<Prueba> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      'Titulo de notificacion',
+                                      '${notif.title}',
                                       style: GoogleFonts.fredoka(
                                         fontSize: 22,
                                         color: Color(0xff368983),
                                       ),
                                     ),
                                     Text(
-                                      'Descripción de notificacion  ${widget.notifications[index]}',
+                                      '${notif.body}',
                                       style: GoogleFonts.fredoka(
                                         fontSize: 19,
                                         color: Colors.black,

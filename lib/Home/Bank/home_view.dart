@@ -1035,7 +1035,7 @@ class _HomeState extends State<Home> {
                             Navigator.of(context).push(
                               MaterialPageRoute(
                                 builder: (context) {
-                                  return Prueba(notifications: _notifications);
+                                  return Prueba();
                                 },
                               ),
                             );
