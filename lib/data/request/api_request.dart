@@ -317,14 +317,6 @@ Future<void> sendNotification(
       'Content-Type': 'application/json; charset=UTF-8',
     },
     body: data,
-    
-    
-    /*jsonEncode(<String, String>{
-      'opc': '34',
-      'token': deviceToken,
-      'title': title,
-      'body': body,
-    }),*/
   );
 
   if (response.statusCode == 200) {

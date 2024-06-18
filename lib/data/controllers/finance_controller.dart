@@ -3,7 +3,7 @@ import 'dart:convert';
 import '../models/view_model.dart';
 import 'package:http/http.dart' as http;
 
-import '../request/api_request_2.dart';
+import '../request/api_request.dart';
 
 final url =
     Uri.parse('https://mariehcarey.000webhostapp.com/api-accounts/consults');

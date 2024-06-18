@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../data/models/view_model.dart';
-import '../data/request/api_request_2.dart';
+import '../data/request/api_request.dart';
 import 'showDelete.dart';
 
 class Prueba extends StatefulWidget {
