@@ -259,10 +259,11 @@ Future<void> sendNotification(
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },
-    body: data,
+    body: jsonEncode(data),
   );
 
   if (response.statusCode == 200) {
+    print('Respuesta envio notificacion: ${response.body}');
     print('Notificación enviada exitosamente');
   } else {
     print('Error al enviar la notificación: ${response.reasonPhrase}');

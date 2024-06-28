@@ -152,7 +152,7 @@ class _AddScreenState extends State<AddScreen> {
     return GestureDetector(
       onTap: () async {
         await sendNotification(
-           deviceToken : 'e7KCYiRqQgW1h2Cf7LAsyT:APA91bG2S6HgbjUhXBJ7xvqD0MADI715hFoX1rg7a3-IzfmPWzbQif8982F0-E6lfwPpQ_iU6A7ewSjKHyQ9stxqptCribArZC9O0NOZ7p5dv8kyF1QcJnJwao3QDlbr_zlNsHJtmCIT',
+           deviceToken : 'cegCucV-Qwq3-yO_RXGUeL:APA91bFJ7KisyPkjX1bx1FEkAhmuRHTzCPb53-nIUsvh53afyQh76Y72jLJb0YMJZGRudQnXVsrHQnH8A4QolCBbb0rOg7_jujafYOjj_XkqwJh9Byf9Lp9gHFqE42PlMbdzehdk6VV0',
             title: 'Mar Carrera',
             body: 'Cuerpo de notificacion');
         setState(() {});
