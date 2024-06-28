@@ -246,12 +246,13 @@ Future<void> abonarGasto(
 Future<void> sendNotification(
     {required String deviceToken,
     required String title,
-    required String body}) async {
+    required String body, required String fecha}) async {
   var data = {
     'opc': '34',
     'token': deviceToken,
     'title': title,
     'body': body,
+    'fecha': fecha,
   };
 
   final response = await http.post(

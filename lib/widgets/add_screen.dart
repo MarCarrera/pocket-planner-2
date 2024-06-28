@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
 import 'package:pocket_planner/data/models/add_date.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import '../Home/Bank/home_view.dart';
 import '../data/request/api_request.dart';
 import '../utils/showConfirm.dart';
@@ -52,6 +54,13 @@ class _AddScreenState extends State<AddScreen> {
       setState(() {});
     });
     formattedDate = DateFormat('yyyy-MM-dd').format(date);
+
+//
+  }
+
+  static Future<String?> getTokenFromPreferences() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString('UserToken');
   }
 
   Widget build(BuildContext context) {
@@ -102,15 +111,13 @@ class _AddScreenState extends State<AddScreen> {
           date_time(),
           const Spacer(),
           save(),
-          const SizedBox(height: 30),
-          save2(),
           const SizedBox(height: 25),
         ],
       ),
     );
   }
 
-  GestureDetector save() {
+  GestureDetector save2() {
     return GestureDetector(
       onTap: () async {
         await agregarFinanza(
@@ -148,14 +155,45 @@ class _AddScreenState extends State<AddScreen> {
     );
   }
 
-  GestureDetector save2() {
+  GestureDetector save() {
     return GestureDetector(
       onTap: () async {
+        String? token = await getTokenFromPreferences();
+        print('Token from SharedPreferences: $token');
+
+        await agregarFinanza(
+            concepto: selctedItem!,
+            motivo: expalin_C.text,
+            monto: amount_c.text,
+            tipo: selctedItemi!,
+            fecha: formattedDate != '' ? formattedDate : formattedDate2);
+
+        //Inicializar la configuración regional para español
+        await initializeDateFormatting('es_ES', null);
+        DateTime now = DateTime.now();
+        // Formato para la fecha
+        String dateNotif = DateFormat('d \'de\' MMMM', 'es_ES').format(now);
+        // Formato para la hora
+        String timeNotif = DateFormat('h:mm a', 'es_ES').format(now);
+        // Combinar fecha y hora en el formato requerido
+        String formattedDateTime = '$dateNotif a las $timeNotif';
+        // Imprimir en consola
+        print(formattedDateTime);
+
+        String tipoMov = selctedItemi == 'Income' ? 'Ingreso' : 'Gasto';
+
         await sendNotification(
-           deviceToken : 'cegCucV-Qwq3-yO_RXGUeL:APA91bFJ7KisyPkjX1bx1FEkAhmuRHTzCPb53-nIUsvh53afyQh76Y72jLJb0YMJZGRudQnXVsrHQnH8A4QolCBbb0rOg7_jujafYOjj_XkqwJh9Byf9Lp9gHFqE42PlMbdzehdk6VV0',
-            title: 'Mar Carrera',
-            body: 'Cuerpo de notificacion');
+          deviceToken: token!,
+          title: 'Nuevo ${tipoMov}',
+          body: 'En ${selctedItem} por la \ncantidad de \$${amount_c.text}',
+          fecha: formattedDateTime.toString(),
+        );
+        await ShowConfirm().showConfirmDialog(context);
         setState(() {});
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => ButtomNav(index_color: 0)),
+        );
       },
       child: Container(
         alignment: Alignment.center,
@@ -166,7 +204,7 @@ class _AddScreenState extends State<AddScreen> {
         width: 120,
         height: 50,
         child: Text(
-          'Enviar notificacion',
+          'Guardar',
           style: GoogleFonts.fredoka(fontSize: 13, color: Colors.white),
         ),
       ),

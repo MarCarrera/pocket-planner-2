@@ -38,7 +38,8 @@ class _NotificationScreenState extends State<NotificationScreen> {
                   tokenUser: respuesta[i]['tokenUser'],
                   messageId: respuesta[i]['messageId'],
                   title: respuesta[i]['title'],
-                  body: respuesta[i]['body']));
+                  body: respuesta[i]['body'],
+                  fecha: respuesta[i]['fecha']));
             }
             //print('Arreglo idFinance:');
             // Itera sobre la lista finances y accede al idFinance de cada objeto Finance
@@ -66,10 +67,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
       appBar: AppBar(
         title: Text('Notificaciones'),
       ),
-      body: 
-      
-      
-      ListView.builder(
+      body: ListView.builder(
         itemCount: notifications.length,
         itemBuilder: (context, index) {
           final notif = notifications[index];
@@ -123,7 +121,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                       ),
                     ],
                   ),
-                  height: MediaQuery.of(context).size.width * 0.24,
+                  height: MediaQuery.of(context).size.height * 0.12,
                   width: MediaQuery.of(context).size.width * 0.9,
                   child: Column(
                     children: [
@@ -136,8 +134,8 @@ class _NotificationScreenState extends State<NotificationScreen> {
                             Row(
                               children: [
                                 Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 10),
+                                  padding:
+                                      const EdgeInsets.symmetric(horizontal: 8),
                                   child: Container(
                                     height: MediaQuery.of(context).size.width *
                                         0.17,
@@ -159,12 +157,12 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                     Text(
                                       '${notif.body}',
                                       style: GoogleFonts.fredoka(
-                                        fontSize: 19,
+                                        fontSize: 17,
                                         color: Colors.black,
                                       ),
                                     ),
                                     Text(
-                                      '05 de Junio a las 14:30 pm',
+                                      '${notif.fecha}',
                                       style: GoogleFonts.fredoka(
                                         fontSize: 17,
                                         color: Colors.grey.shade600,

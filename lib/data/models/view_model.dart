@@ -15,6 +15,7 @@ class Finance {
     required this.date,
   });
 }
+
 class MyNotification {
   final int idNot;
   final String projectId;
@@ -22,14 +23,16 @@ class MyNotification {
   final String messageId;
   final String title;
   final String body;
+  final String fecha;
 
-  MyNotification({
-  required this.idNot, 
-  required this.projectId, 
-  required this.tokenUser, 
-  required this.messageId, 
-  required this.title, 
-  required this.body
+  MyNotification( 
+      {required this.idNot,
+      required this.projectId,
+      required this.tokenUser,
+      required this.messageId,
+      required this.title,
+      required this.body,
+      required this.fecha
   });
 }
 

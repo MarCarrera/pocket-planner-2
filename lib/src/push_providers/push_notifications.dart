@@ -4,6 +4,8 @@ import 'dart:async';
 import 'dart:io';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 
 class PushNotifications {
   static FirebaseMessaging messaging = FirebaseMessaging.instance;
@@ -57,6 +59,10 @@ class PushNotifications {
     try {
         token = await FirebaseMessaging.instance.getToken();
         print('Token: $token');
+
+        // Guardar el token en SharedPreferences
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString('UserToken', token ?? '');
     } catch (e) {
         print('Error obteniendo el token: $e');
     }
