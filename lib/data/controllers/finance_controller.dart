@@ -9,33 +9,36 @@ final url =
     Uri.parse('https://mariehcarey.000webhostapp.com/api-accounts/consults');
 //--------------------------------------------------------------------
 
-class FinanceController {
-  List<Finance> finances = []; // Lista de finanzas obtenidas de la API
-
-  Future<void> fetchFinanceData() async {
-    try {
-      final List apiData = await mostrarFinanzas();
-
-      // Limpiar la lista de finanzas antes de agregar nuevas
-      finances.clear();
-
-      // Iterar sobre los datos de la API y crear objetos Finance
-      for (Map<String, dynamic> data in apiData) {
-        final finance = Finance(
-          idFinance: data['idFinance'],
-          concept: data['concept'],
-          reason: data['reason'],
-          amount: data['amount']
-              .toString(), // Asegúrate de convertir a String si es necesario
-          type: data['type'],
-          date: data['date'],
-        );
-        finances.add(finance);
-        print('Objeto: ${finances}');
+class HomeService {
+  Future<List<Finance>> cargarFinanzas() async {
+    List<Finance> finances = [];
+    var respuesta = await mostrarFinanzas();
+    if (respuesta != "err_internet_conex") {
+      if (respuesta == 'empty') {
+        print('no hay datos');
+      } else {
+        //print('Respuesta en vista ::::: ${respuesta}');
+        if (respuesta.isNotEmpty) {
+          finances.clear();
+          for (int i = 0; i < respuesta.length; i++) {
+            finances.add(Finance(
+                idFinance: respuesta[i]['idFinance'],
+                concept: respuesta[i]['concept'],
+                reason: respuesta[i]['reason'],
+                amount: respuesta[i]['amount'],
+                type: respuesta[i]['type'],
+                date: respuesta[i]['date']));
+          }
+          //print('Arreglo idFinance:');
+          // Itera sobre la lista finances y accede al idFinance de cada objeto Finance
+          for (var finance in finances) {
+            //print(finance.idFinance);
+          }
+        }
       }
-    } catch (e) {
-      print('Error al obtener datos de la API: $e');
-      throw Exception('Error al cargar los datos');
+    } else {
+      print('Verifique su conexion a internet');
     }
+    return finances;
   }
 }

@@ -4,14 +4,14 @@ import '../data/models/view_model.dart';
 import '../data/request/api_request.dart';
 import 'showDelete.dart';
 
-class Prueba extends StatefulWidget {
-  const Prueba({Key? key}) : super(key: key);
+class NotificationScreen extends StatefulWidget {
+  const NotificationScreen({Key? key}) : super(key: key);
 
   @override
-  State<Prueba> createState() => _PruebaState();
+  State<NotificationScreen> createState() => _NotificationScreenState();
 }
 
-class _PruebaState extends State<Prueba> {
+class _NotificationScreenState extends State<NotificationScreen> {
   bool noData = false;
   List<MyNotification> notifications = [];
 
@@ -28,8 +28,9 @@ class _PruebaState extends State<Prueba> {
         } else {
           noData = false;
           print('Respuesta en vista ::::: ${respuesta}');
-          notifications.clear();
+
           if (respuesta.isNotEmpty) {
+            notifications.clear();
             for (int i = 0; i < respuesta.length; i++) {
               notifications.add(MyNotification(
                   idNot: respuesta[i]['idNot'],
@@ -65,7 +66,10 @@ class _PruebaState extends State<Prueba> {
       appBar: AppBar(
         title: Text('Notificaciones'),
       ),
-      body: ListView.builder(
+      body: 
+      
+      
+      ListView.builder(
         itemCount: notifications.length,
         itemBuilder: (context, index) {
           final notif = notifications[index];
@@ -73,7 +77,7 @@ class _PruebaState extends State<Prueba> {
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 15),
               child: Dismissible(
-                key: Key('5'),
+                key: Key(notif.idNot.toString()),
                 direction: DismissDirection.endToStart,
                 background: Container(
                   alignment: Alignment.centerRight,
@@ -85,20 +89,23 @@ class _PruebaState extends State<Prueba> {
                   ),
                 ),
                 onDismissed: (direction) async {
-                  var idNot = notif.idNot;
+                  //var idNot = notif.idNot;
                   // Eliminar el elemento de la lista de datos
-                  notifications.removeWhere((element) => element.idNot == idNot);
-                  String idNotifString = idNot.toString();
-                  //await eliminarFinanza(idNot: idNotifString);
+                  setState(() {
+                    notifications.removeAt(
+                        index); // Usar removeAt para eliminar por índice
+                  });
+                  //String idNotifString = idNot.toString();
+                  await eliminarNotificacion(idNot: notif.idNot.toString());
                   // Esperar a que se muestre el diálogo y se cierre completamente
-                  await ShowDelete().showDeleteDialog(context).then((_) {
-               // Llamar a setState para reconstruir la vista y mostrar los nuevos datos
-               // Verificar si el widget todavía está montado
-               if (mounted) {
-                 // Llamar a setState solo si el widget está montado
-                 setState(() {});
-               }
-             });
+                  await ShowDelete().showDeleteNotif(context).then((_) {
+                    // Llamar a setState para reconstruir la vista y mostrar los nuevos datos
+                    // Verificar si el widget todavía está montado
+                    if (mounted) {
+                      // Llamar a setState solo si el widget está montado
+                      setState(() {});
+                    }
+                  });
                 },
                 child: Container(
                   decoration: BoxDecoration(
@@ -178,20 +185,6 @@ class _PruebaState extends State<Prueba> {
               ),
             ),
           );
-
-          /*Card(
-            margin: EdgeInsets.all(10),
-            child: Padding(
-              padding: EdgeInsets.all(15),
-              child: Text(
-                'Descripción de notificación ${widget.notifications[index]}',
-                style: GoogleFonts.fredoka(
-                  fontSize: 19,
-                  color: Colors.black,
-                ),
-              ),
-            ),
-          );*/
         },
       ),
     );

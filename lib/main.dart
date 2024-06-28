@@ -6,7 +6,7 @@ import 'package:pocket_planner/src/push_providers/push_notifications.dart';
 import 'package:pocket_planner/widgets/Login.dart';
 import 'package:pocket_planner/widgets/add_screen.dart';
 import 'data/models/add_date.dart';
-import 'utils/prueba.dart';
+import 'utils/NotificationScreen.dart';
 import 'widgets/buttom_nav.dart';
 
 void main() async {

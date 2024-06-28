@@ -1,6 +1,5 @@
-// ignore_for_file: use_build_context_synchronously, prefer_interpolation_to_compose_strings, depend_on_referenced_packages, unnecessary_import
-
 import 'dart:async';
+import 'dart:developer';
 import 'dart:io';
 import 'package:animate_do/animate_do.dart';
 import 'package:cool_dropdown/cool_dropdown.dart';
@@ -16,15 +15,16 @@ import 'package:hive_flutter/adapters.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:pocket_planner/background_modal_route.dart';
 import 'package:pocket_planner/src/push_providers/push_notifications.dart';
-import 'package:pocket_planner/utils/prueba.dart';
+import 'package:pocket_planner/utils/NotificationScreen.dart';
 import 'package:pocket_planner/widgets/add_screen.dart';
-
+import '../../data/controllers/finance_controller.dart';
 import '../../data/models/add_date.dart';
 import '../../data/models/view_model.dart';
 import '../../data/request/api_request.dart';
 import '../../modal_data.dart';
 import '../../utils/showConfirm.dart';
 import '../../utils/showDelete.dart';
+import '../../widgets/loading_dots.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -39,10 +39,12 @@ class _HomeState extends State<Home> {
   bool showData = false;
   String _authorized = 'No autenticado';
 
+  final HomeService service = HomeService();
+  late Future<List<Finance>> futureFinance;
+
   late AndroidNotificationChannel channel;
   late FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
   bool isFlutterLocalNotificationsInitialized = false;
-  //final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
   final List<String> _notifications =
       []; // Lista para almacenar las notificaciones
 
@@ -146,11 +148,12 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     super.initState();
+    futureFinance = service.cargarFinanzas();
+
     setupFlutterNotifications().then((value) {
       FirebaseMessaging.onMessage.listen(showFlutterNotification);
     });
 
-    cargarFinanzas();
     dropdownItems = _item.map((item) {
       return CoolDropdownItem<String>(
         label: item,
@@ -168,13 +171,14 @@ class _HomeState extends State<Home> {
   }
 
   Future<void> _loadData() async {
-    await cargarFinanzas();
-    setState(() {}); // Actualizar la vista después de cargar los datos
+    setState(() {
+      futureFinance = service.cargarFinanzas();
+    }); // Actualizar la vista después de cargar los datos
   }
 
   //--------------------------------------------------------------------
-  List<Finance> finances = [];
-  List<Finance> data = [];
+  //List<Finance> finances = [];
+  // List<Finance> data = [];
 
   String? idFinance;
   String? concept;
@@ -204,43 +208,7 @@ class _HomeState extends State<Home> {
   ];
 
   //-------------------------------------------------------------------
-  Future<void> cargarFinanzas() async {
-    //parametros = {"opcion": "1.1"};
-    reload = true;
-    var respuesta = await mostrarFinanzas();
-    reload = false;
-    if (respuesta != "err_internet_conex") {
-      setState(() {
-        if (respuesta == 'empty') {
-          noData = true;
-          print('no hay datos');
-        } else {
-          noData = false;
-          //print('Respuesta en vista ::::: ${respuesta}');
-          finances.clear();
-          if (respuesta.isNotEmpty) {
-            for (int i = 0; i < respuesta.length; i++) {
-              finances.add(Finance(
-                  idFinance: respuesta[i]['idFinance'],
-                  concept: respuesta[i]['concept'],
-                  reason: respuesta[i]['reason'],
-                  amount: respuesta[i]['amount'],
-                  type: respuesta[i]['type'],
-                  date: respuesta[i]['date']));
-            }
-            //print('Arreglo idFinance:');
-            // Itera sobre la lista finances y accede al idFinance de cada objeto Finance
-            for (var finance in finances) {
-              //print(finance.idFinance);
-            }
-          }
-        }
-      });
-    } else {
-      noData = true;
-      print('Verifique su conexion a internet');
-    }
-  }
+
   //-------------------------------------------------------------------------
 
   // ignore: prefer_typing_uninitialized_variables
@@ -279,7 +247,7 @@ class _HomeState extends State<Home> {
         body: SafeArea(
           child: Stack(children: [
             _head(),
-            _title(),
+
             Data(),
             AddButtom(context),
             //const ConceptView(),
@@ -504,21 +472,6 @@ class _HomeState extends State<Home> {
     }
   }
 
-  Positioned search() {
-    return Positioned(
-      top: -20,
-      child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text(
-              'Mostrar por:',
-              style: GoogleFonts.fredoka(fontSize: 18),
-            ),
-          ]),
-    );
-  }
-
   void handleStatefulBackdropContent(BuildContext context) async {
     final result = await Navigator.push(
       context,
@@ -580,91 +533,81 @@ class _HomeState extends State<Home> {
   }
 
   Padding _title() {
-    if (noData == false && finances.isEmpty) {
-      return Padding(
-        padding: const EdgeInsets.all(0.0),
-        child: SizedBox(
-          height: 0,
+    return Padding(
+      padding: EdgeInsets.only(top: 426, left: 20),
+      child: Column(children: [
+        Padding(
+          padding: EdgeInsets.only(top: 15),
+          child: FadeInUp(
+            duration: Duration(milliseconds: 1000),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'Ver por: ',
+                  style: GoogleFonts.fredoka(fontSize: 19, color: Colors.black),
+                ),
+                SizedBox(
+                  width: 16,
+                ),
+                CoolDropdown<String>(
+                  controller: pokemonDropdownController,
+                  dropdownList: dropdownItems,
+                  defaultItem:
+                      dropdownItems.isNotEmpty ? dropdownItems.last : null,
+                  onChange: (String selectedItem) {
+                    //print(selectedItem);
+                    //handleStatefulBackdropContent(context); // Muestra el valor seleccionado en la consola
+                    _showModalSheet(selectedItem);
+                    pokemonDropdownController.close();
+                  },
+                  resultOptions: ResultOptions(
+                    width: 200,
+                    render: ResultRender.all,
+                    placeholder: 'Concepto',
+                    textStyle:
+                        GoogleFonts.fredoka(fontSize: 17, color: Colors.black),
+                    isMarquee: true,
+                    icon: SizedBox(
+                      width: 10,
+                      height: 10,
+                      child: CustomPaint(
+                        painter: DropdownArrowPainter(color: Colors.green),
+                      ),
+                    ),
+                  ),
+                  dropdownOptions: DropdownOptions(
+                    width: 180,
+                  ),
+                  dropdownItemOptions: DropdownItemOptions(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    selectedBoxDecoration: BoxDecoration(
+                      color: Color(0XFFEFFAF0),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
         ),
-      );
-    } else {
-      return Padding(
-        padding: EdgeInsets.only(top: 426, left: 20),
-        child: Column(children: [
-          Padding(
-            padding: EdgeInsets.only(top: 15),
-            child: FadeInUp(
-              duration: Duration(milliseconds: 1700),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Ver por: ',
-                    style:
-                        GoogleFonts.fredoka(fontSize: 19, color: Colors.black),
-                  ),
-                  SizedBox(
-                    width: 16,
-                  ),
-                  CoolDropdown<String>(
-                    controller: pokemonDropdownController,
-                    dropdownList: dropdownItems,
-                    defaultItem:
-                        dropdownItems.isNotEmpty ? dropdownItems.last : null,
-                    onChange: (String selectedItem) {
-                      //print(selectedItem);
-                      //handleStatefulBackdropContent(context); // Muestra el valor seleccionado en la consola
-                      _showModalSheet(selectedItem);
-                      pokemonDropdownController.close();
-                    },
-                    resultOptions: ResultOptions(
-                      width: 200,
-                      render: ResultRender.all,
-                      placeholder: 'Concepto',
-                      textStyle: GoogleFonts.fredoka(
-                          fontSize: 17, color: Colors.black),
-                      isMarquee: true,
-                      icon: SizedBox(
-                        width: 10,
-                        height: 10,
-                        child: CustomPaint(
-                          painter: DropdownArrowPainter(color: Colors.green),
-                        ),
-                      ),
-                    ),
-                    dropdownOptions: DropdownOptions(
-                      width: 180,
-                    ),
-                    dropdownItemOptions: DropdownItemOptions(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      selectedBoxDecoration: BoxDecoration(
-                        color: Color(0XFFEFFAF0),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          SizedBox(
-            height: 16,
-          ),
-          FadeInUp(
-            duration: Duration(milliseconds: 1700),
-            child: Text(
-              'Historial de Transacciones',
-              style: GoogleFonts.fredoka(fontSize: 22),
+        SizedBox(
+          height: 16,
+        ),
+        FadeInUp(
+          duration: Duration(milliseconds: 1700),
+          child: Text(
+            'Historial de Transacciones',
+            style: GoogleFonts.fredoka(fontSize: 22),
 
-              // TextStyle(
-              //   fontWeight: FontWeight.w600,
-              //   fontSize: 19,
-              //   color: Colors.black,
-              // ),
-            ),
+            // TextStyle(
+            //   fontWeight: FontWeight.w600,
+            //   fontSize: 19,
+            //   color: Colors.black,
+            // ),
           ),
-        ]),
-      );
-    }
+        ),
+      ]),
+    );
   }
 
   Padding TotalEfectivo() {
@@ -677,7 +620,7 @@ class _HomeState extends State<Home> {
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             // Muestra un indicador de carga mientras espera la respuesta
-            return const CircularProgressIndicator();
+            return LoadingDots();
           } else if (snapshot.hasError) {
             // Muestra un mensaje de error si hay un error
             return Text(
@@ -712,7 +655,7 @@ class _HomeState extends State<Home> {
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             // Muestra un indicador de carga mientras espera la respuesta
-            return const CircularProgressIndicator();
+            return LoadingDots();
           } else if (snapshot.hasError) {
             // Muestra un mensaje de error si hay un error
             return Text(
@@ -747,7 +690,7 @@ class _HomeState extends State<Home> {
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             // Muestra un indicador de carga mientras espera la respuesta
-            return const CircularProgressIndicator();
+            return LoadingDots();
           } else if (snapshot.hasError) {
             // Muestra un mensaje de error si hay un error
             return Text(
@@ -785,7 +728,7 @@ class _HomeState extends State<Home> {
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             // Muestra un indicador de carga mientras espera la respuesta
-            return const CircularProgressIndicator();
+            return LoadingDots();
           } else if (snapshot.hasError) {
             // Muestra un mensaje de error si hay un error
             return Text(
@@ -820,7 +763,7 @@ class _HomeState extends State<Home> {
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             // Muestra un indicador de carga mientras espera la respuesta
-            return const CircularProgressIndicator();
+            return LoadingDots();
           } else if (snapshot.hasError) {
             // Muestra un mensaje de error si hay un error
             return Text(
@@ -847,163 +790,178 @@ class _HomeState extends State<Home> {
   }
 
   Padding Data() {
-    //mientras carga la data
-    if (noData == false && finances.isEmpty || reload) {
-      return Padding(
-        padding: const EdgeInsets.only(top: 378),
-        child: Center(
-          child: FutureBuilder<void>(
-            future: Future.delayed(Duration(seconds: 4)),
-            builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                // Si estamos esperando, mostramos el CircularProgressIndicator
-                return CircularProgressIndicator();
-              } else {
-                return Padding(
-                  padding: const EdgeInsets.only(top: 46),
-                  child: Center(
-                    child: FadeInUp(
-                      duration: Duration(milliseconds: 2100),
-                      child: Column(
-                        children: [
-                          SizedBox(
-                            height: 60,
-                          ),
-                          Text(
-                            'Sin datos o problemas de red. \nVerifica tu conexión a internet.',
-                            style: GoogleFonts.fredoka(
-                                fontSize: 25, color: Colors.black),
-                          ),
-                          Image.asset('assets/gifs/noData.gif'),
-                        ],
-                      ),
-                    ),
-                  ), // Cambia 'assets/error.gif' al path de tu GIF
-                ); // Aquí debes reemplazar YourRegularContentWidget con tu widget habitual
-              }
-            },
-          ),
-        ),
-      );
-    } else
-    //SI NO EXISTE DATA
-    if (noData) {
-      return Padding(
-        padding: const EdgeInsets.only(top: 420),
-        child: Center(
-          child: Column(
-            children: [
-              SizedBox(
-                height: 60,
-              ),
-              Text(
-                'Sin datos para mostrar.',
-                style: GoogleFonts.fredoka(fontSize: 25, color: Colors.black),
-              ),
-              Image.asset('assets/gifs/noData.gif'),
-            ],
-          ),
-        ), // Cambia 'assets/error.gif' al path de tu GIF
-      );
-    } else {
-      return Padding(
-        padding: const EdgeInsets.only(top: 538, right: 16, left: 16),
-        child: Stack(children: [
-          ListView.builder(
-            itemCount: finances.length,
-            itemBuilder: (context, index) {
-              final finance = finances[index];
-              var cant = finance.amount;
-              int amount = int.parse(cant);
-              NumberFormat formatoMoneda = NumberFormat.currency(symbol: '\$');
-              return Dismissible(
-                key: Key(finance.idFinance.toString()),
-                direction: DismissDirection.endToStart,
-                background: Container(
-                  alignment: Alignment.centerRight,
-                  padding: const EdgeInsets.only(right: 20.0),
-                  color: Colors.red,
-                  child: const Icon(
-                    Icons.delete,
-                    color: Colors.white,
-                  ),
-                ),
-                onDismissed: (direction) async {
-                  var idFinance = finance.idFinance;
-                  // Eliminar el elemento de la lista de datos
-                  finances
-                      .removeWhere((element) => element.idFinance == idFinance);
-                  String idFinanceString = idFinance.toString();
-                  await eliminarFinanza(idFinance: idFinanceString);
-                  // Esperar a que se muestre el diálogo y se cierre completamente
-                  await ShowDelete().showDeleteDialog(context).then((_) {
-                    // Llamar a setState para reconstruir la vista y mostrar los nuevos datos
-                    // Verificar si el widget todavía está montado
-                    if (mounted) {
-                      // Llamar a setState solo si el widget está montado
-                      setState(() {});
-                    }
-                  });
-                },
-                child: GestureDetector(
-                  onLongPress: () async {
-                    _showModalSheetBono(finance.idFinance, finance.type,
-                        finance.concept, finance.amount);
-                  },
-                  child: ListTile(
-                    leading: ClipRRect(
-                      borderRadius: BorderRadius.circular(5),
-                      child: Image.asset('assets/images/${finance.concept}.png',
-                          height: 40),
-                    ),
-                    title: Text(
-                      finance.concept,
-                      style: GoogleFonts.fredoka(
-                          fontSize: 17, color: Colors.black),
-                    ),
-                    subtitle: Text(
-                      '${finance.reason}',
-                      style: GoogleFonts.fredoka(
-                          fontSize: 15, color: Colors.black),
-                    ),
-                    trailing: Column(
+    return Padding(
+      padding: const EdgeInsets.only(top: 8),
+      child: Center(
+        child: FutureBuilder<List<Finance>>(
+          future: futureFinance,
+          builder:
+              (BuildContext context, AsyncSnapshot<List<Finance>> snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              // Si estamos esperando, mostramos el CircularProgressIndicator
+              return CircularProgressIndicator();
+            } else if (snapshot.hasError) {
+              return Padding(
+                padding: const EdgeInsets.only(top: 46),
+                child: Center(
+                  child: FadeInUp(
+                    duration: Duration(milliseconds: 2100),
+                    child: Column(
                       children: [
-                        showData == true
-                            ? Text(
-                                finance.type == 'Income'
-                                    ? formatoMoneda.format(amount)
-                                    : '-' + formatoMoneda.format(amount),
-                                style: GoogleFonts.fredoka(
-                                  fontSize: 19,
-                                  color: finance.type == 'Income'
-                                      ? Colors.green
-                                      : Colors.red,
-                                ),
-                              )
-                            : Text(
-                                finance.type == 'Income' ? '\$***' : '-\$***',
-                                style: GoogleFonts.fredoka(
-                                  fontSize: 19,
-                                  color: finance.type == 'Income'
-                                      ? Colors.green
-                                      : Colors.red,
-                                ),
-                              ),
-                        Text(
-                          '${finance.date}',
-                          style: GoogleFonts.fredoka(
-                              fontSize: 15, color: Colors.black),
+                        SizedBox(
+                          height: 60,
                         ),
+                        Text(
+                          'Sin datos o problemas de red. \nVerifica tu conexión a internet.',
+                          style: GoogleFonts.fredoka(
+                              fontSize: 25, color: Colors.black),
+                        ),
+                        Image.asset('assets/gifs/noData.gif'),
                       ],
                     ),
                   ),
-                ),
+                ), // Cambia 'assets/error.gif' al path de tu GIF
+              ); // Aquí debes reemplazar YourRegularContentWidget con tu widget habitual
+            } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+              return Padding(
+                padding: const EdgeInsets.only(top: 400),
+                child: Center(
+                  child: FadeInUp(
+                    duration: Duration(milliseconds: 2100),
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          height: 60,
+                        ),
+                        Text(
+                          'Sin datos o problemas de red. \nVerifica tu conexión a internet.',
+                          style: GoogleFonts.fredoka(
+                              fontSize: 25, color: Colors.black),
+                        ),
+                        Image.asset('assets/gifs/noData.gif'),
+                      ],
+                    ),
+                  ),
+                ), // Cambia 'assets/error.gif' al path de tu GIF
               );
-            },
-          ),
-        ]),
-      );
-    }
+            } else {
+              final finance = snapshot.data!.toList();
+              return Stack(
+                children: [
+                  _title(),
+                  Padding(
+                    padding:
+                        const EdgeInsets.only(top: 538, right: 16, left: 16),
+                    child: Stack(children: [
+                      ListView.builder(
+                        itemCount: finance.length,
+                        itemBuilder: (context, index) {
+                          final fin = finance[index];
+                          var cant = fin.amount;
+                          int amount = int.parse(cant);
+                          NumberFormat formatoMoneda =
+                              NumberFormat.currency(symbol: '\$');
+                          return Dismissible(
+                            key: Key(fin.idFinance.toString()),
+                            direction: DismissDirection.endToStart,
+                            background: Container(
+                              alignment: Alignment.centerRight,
+                              padding: const EdgeInsets.only(right: 20.0),
+                              color: Colors.red,
+                              child: const Icon(
+                                Icons.delete,
+                                color: Colors.white,
+                              ),
+                            ),
+                            onDismissed: (direction) async {
+                              var idFinance = fin.idFinance;
+                              // Eliminar el elemento de la lista de datos
+                              finance.removeWhere(
+                                  (element) => element.idFinance == idFinance);
+                              String idFinanceString = idFinance.toString();
+                              await eliminarFinanza(idFinance: idFinanceString);
+                              // Esperar a que se muestre el diálogo y se cierre completamente
+                              await ShowDelete()
+                                  .showDeleteDialog(context)
+                                  .then((_) {
+                                // Llamar a setState para reconstruir la vista y mostrar los nuevos datos
+                                // Verificar si el widget todavía está montado
+                                if (mounted) {
+                                  // Llamar a setState solo si el widget está montado
+                                  setState(() {});
+                                }
+                              });
+                            },
+                            child: GestureDetector(
+                              onLongPress: () async {
+                                _showModalSheetBono(fin.idFinance, fin.type,
+                                    fin.concept, fin.amount);
+                              },
+                              child: ListTile(
+                                leading: ClipRRect(
+                                  borderRadius: BorderRadius.circular(5),
+                                  child: Image.asset(
+                                      'assets/images/${fin.concept}.png',
+                                      height: 40),
+                                ),
+                                title: Text(
+                                  fin.concept,
+                                  style: GoogleFonts.fredoka(
+                                      fontSize: 17, color: Colors.black),
+                                ),
+                                subtitle: Text(
+                                  '${fin.reason}',
+                                  style: GoogleFonts.fredoka(
+                                      fontSize: 15, color: Colors.black),
+                                ),
+                                trailing: Column(
+                                  children: [
+                                    showData == true
+                                        ? Text(
+                                            fin.type == 'Income'
+                                                ? formatoMoneda.format(amount)
+                                                : '-' +
+                                                    formatoMoneda
+                                                        .format(amount),
+                                            style: GoogleFonts.fredoka(
+                                              fontSize: 19,
+                                              color: fin.type == 'Income'
+                                                  ? Colors.green
+                                                  : Colors.red,
+                                            ),
+                                          )
+                                        : Text(
+                                            fin.type == 'Income'
+                                                ? '\$***'
+                                                : '-\$***',
+                                            style: GoogleFonts.fredoka(
+                                              fontSize: 19,
+                                              color: fin.type == 'Income'
+                                                  ? Colors.green
+                                                  : Colors.red,
+                                            ),
+                                          ),
+                                    Text(
+                                      '${fin.date}',
+                                      style: GoogleFonts.fredoka(
+                                          fontSize: 15, color: Colors.black),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    ]),
+                  )
+                ],
+              );
+            }
+          },
+        ),
+      ),
+    );
   }
 
   Widget _head() {
@@ -1035,7 +993,7 @@ class _HomeState extends State<Home> {
                             Navigator.of(context).push(
                               MaterialPageRoute(
                                 builder: (context) {
-                                  return Prueba();
+                                  return NotificationScreen();
                                 },
                               ),
                             );

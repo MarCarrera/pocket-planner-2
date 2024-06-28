@@ -17,4 +17,17 @@ class ShowDelete {
     // Esperar 2 segundos antes de cerrar el diálogo
     await Future.delayed(Duration(seconds: 2));
   }
+  Future<void> showDeleteNotif(BuildContext context) async {
+    await QuickAlert.show(
+      context: context,
+      type: QuickAlertType.success,
+      autoCloseDuration: const Duration(seconds: 2),
+      showConfirmBtn: false,
+      title: 'Notificación Eliminada!',
+      titleColor: Colors.purple.shade300,
+    );
+
+    // Esperar 2 segundos antes de cerrar el diálogo
+    await Future.delayed(Duration(seconds: 2));
+  }
 }

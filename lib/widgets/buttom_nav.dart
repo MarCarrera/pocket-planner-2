@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 
 import '../statisticsCash.dart';
 import '../modal_data.dart';
-import '../utils/prueba.dart';
+import '../utils/NotificationScreen.dart';
 
 class ButtomNav extends StatefulWidget {
   const ButtomNav({super.key, required this.index_color});
