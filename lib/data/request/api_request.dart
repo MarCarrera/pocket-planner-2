@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 import 'package:local_auth/local_auth.dart';
 
 final url =
-    Uri.parse('https://mariehcarey.000webhostapp.com/api-accounts/consults');
+    Uri.parse('https://marcarrera.site/api/controller.php');
 // CONSULTAS DE FINANZAS ------------------------------------------------------------------
 Future<dynamic> mostrarFinanzas() async {
   var data = {'opc': '30'};
