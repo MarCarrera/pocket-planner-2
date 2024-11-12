@@ -481,6 +481,9 @@ class _HomeState extends State<Home> {
                                           ),
                                         ),
                                         onDismissed: (direction) async {
+                                          setState(() {
+                items.removeAt(index);
+              });
                                           var idFinance = fin.idFinance;
                                           finance.removeWhere((element) =>
                                               element.idFinance == idFinance);
