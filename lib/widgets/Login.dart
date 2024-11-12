@@ -3,6 +3,7 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:local_auth/local_auth.dart';
+import '../Home/Bank/home_view.dart';
 import '../widgets/buttom_nav.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -70,7 +71,7 @@ class _LoginScreenState extends State<LoginScreen> {
       print('Se ha pulsado autenticar');
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => ButtomNav(index_color: 0)),
+        MaterialPageRoute(builder: (context) =>Home() )// ButtomNav(index_color: 0)),
       );
     }
   }
