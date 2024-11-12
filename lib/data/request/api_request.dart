@@ -6,8 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:local_auth/local_auth.dart';
 
-final url =
-    Uri.parse('https://marcarrera.site/api/controller.php');
+final url = Uri.parse('https://marcarrera.site/api/controller.php');
 // CONSULTAS DE FINANZAS ------------------------------------------------------------------
 Future<dynamic> mostrarFinanzas() async {
   var data = {'opc': '30'};
@@ -246,7 +245,8 @@ Future<void> abonarGasto(
 Future<void> sendNotification(
     {required String deviceToken,
     required String title,
-    required String body, required String fecha}) async {
+    required String body,
+    required String fecha}) async {
   var data = {
     'opc': '34',
     'token': deviceToken,
