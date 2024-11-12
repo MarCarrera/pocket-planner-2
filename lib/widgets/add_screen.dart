@@ -220,7 +220,7 @@ class _AddScreenState extends State<AddScreen> {
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
             border: Border.all(width: 2, color: const Color(0xffC5C5C5))),
-        width: 300,
+        width: 340,
         child: TextButton(
           onPressed: () async {
             DateTime? newDate = await showDatePicker(
@@ -245,10 +245,10 @@ class _AddScreenState extends State<AddScreen> {
 
   Padding How() {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 18),
+      padding: const EdgeInsets.symmetric(horizontal: 0),
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 15),
-        width: 300,
+        width: 340,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           border: Border.all(
@@ -302,7 +302,7 @@ class _AddScreenState extends State<AddScreen> {
 
   Padding amount() {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 18),
+      padding: const EdgeInsets.symmetric(horizontal: 44),
       child: TextField(
         keyboardType: TextInputType.number,
         focusNode: amount_,
@@ -326,7 +326,7 @@ class _AddScreenState extends State<AddScreen> {
 
   Padding explain() {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 18),
+      padding: const EdgeInsets.symmetric(horizontal: 44),
       child: TextField(
         focusNode: ex,
         controller: expalin_C,
@@ -351,7 +351,7 @@ class _AddScreenState extends State<AddScreen> {
       padding: const EdgeInsets.symmetric(horizontal: 18),
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 15),
-        width: 300,
+        width: 340,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           border: Border.all(
