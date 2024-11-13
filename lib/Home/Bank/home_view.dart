@@ -205,7 +205,7 @@ class _HomeState extends State<Home> {
     'Gastos Diarios Efectivo',
     "Ganancia Netflix",
     "Pago Netflix",
-    "Pago Spotify", 
+    "Pago Spotify",
     'Odontologo',
     'Renta'
   ];
@@ -255,7 +255,8 @@ class _HomeState extends State<Home> {
             child: Stack(
               children: [
                 // Imagen de fondo
-                BackgroundImage(screenHeight: screenHeight, screenWidth: screenWidth),
+                BackgroundImage(
+                    screenHeight: screenHeight, screenWidth: screenWidth),
                 // Aquí está tu contenido (lo que tenía la función Padding Data)
                 Padding(
                   padding: EdgeInsets.only(top: screenHeight * 0.04),
@@ -317,32 +318,34 @@ class _HomeState extends State<Home> {
                                 top: screenHeight * 0.12,
                                 left: screenWidth * 0.78,
                                 child: ClipRRect(
-                        borderRadius: BorderRadius.circular(7),
-                        child: GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              _loadData();
-                            });
-                          },
-                          child: FadeInUp(
-                            duration: Duration(milliseconds: 1500),
-                            child: Container(
-                              height: 40,
-                              width: 40,
-                              color: const Color.fromRGBO(250, 250, 250, 0.1),
-                              child: const Icon(
-                                Icons.change_circle,
-                                size: 30,
-                                color: Colors.black,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
+                                  borderRadius: BorderRadius.circular(7),
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        _loadData();
+                                      });
+                                    },
+                                    child: FadeInUp(
+                                      duration: Duration(milliseconds: 1500),
+                                      child: Container(
+                                        height: 40,
+                                        width: 40,
+                                        color: const Color.fromRGBO(
+                                            250, 250, 250, 0.1),
+                                        child: const Icon(
+                                          Icons.change_circle,
+                                          size: 30,
+                                          color: Colors.black,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
                               ),
                               _title(screenHeight, screenWidth, fontSize),
-                              Transactions(screenHeight, screenWidth, fontSize, finance),
-                              AddButtom(context,screenHeight, screenWidth)
+                              Transactions(
+                                  screenHeight, screenWidth, fontSize, finance),
+                              AddButtom(context, screenHeight, screenWidth)
                             ],
                           );
                         }
@@ -358,229 +361,217 @@ class _HomeState extends State<Home> {
 
   Positioned Balances(double screenWidth, double fontSize) {
     return Positioned(
-          right: screenWidth * 0.004,
-          child: FadeInUp(
-            duration: Duration(milliseconds: 1700),
-            child: Column(
+      right: screenWidth * 0.004,
+      child: FadeInUp(
+        duration: Duration(milliseconds: 1700),
+        child: Column(
+          children: [
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 0),
+              child: Row(
                 children: [
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 0),
-                    child: Row(
-                      children: [
-                        Row(
-                          children: [
-                            CircleAvatar(
-                              radius: fontSize * 0.7,
-                              backgroundColor:
-                                  Color.fromARGB(255, 56, 128, 195),
-                              child: Icon(
-                                Icons.arrow_downward,
-                                color: Colors.white,
-                                size: fontSize,
-                              ),
-                            ),
-                            SizedBox(width: 7),
-                            Text(
-                              'Ingresos',
-                              style: GoogleFonts.fredoka(
-                                fontSize: fontSize * 0.9,
-                                color: Colors.black,
-                              ),
-                            ),
-                          ],
+                  Row(
+                    children: [
+                      CircleAvatar(
+                        radius: fontSize * 0.7,
+                        backgroundColor: Color.fromARGB(255, 56, 128, 195),
+                        child: Icon(
+                          Icons.arrow_downward,
+                          color: Colors.white,
+                          size: fontSize,
                         ),
-                        SizedBox(width: screenWidth * 0.42),
-                        Row(
-                          children: [
-                            CircleAvatar(
-                              radius: fontSize * 0.7,
-                              backgroundColor:
-                                  Color.fromARGB(255, 164, 60, 59),
-                              child: Icon(
-                                Icons.arrow_upward,
-                                color: Colors.white,
-                                size: fontSize ,
-                              ),
-                            ),
-                            SizedBox(width: 7),
-                            Text(
-                              'Egresos',
-                              style: GoogleFonts.fredoka(
-                                fontSize: fontSize * 0.9,
-                                color: Colors.black,
-                              ),
-                            ),
-                          ],
+                      ),
+                      SizedBox(width: 7),
+                      Text(
+                        'Ingresos',
+                        style: GoogleFonts.fredoka(
+                          fontSize: fontSize * 0.9,
+                          color: Colors.black,
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-                  const SizedBox(height: 6),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 30),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        TotalIncome(fontSize),
-                        SizedBox(width: screenWidth * 0.4),
-                        TotalExpense(fontSize),
-                      ],
-                    ),
+                  SizedBox(width: screenWidth * 0.42),
+                  Row(
+                    children: [
+                      CircleAvatar(
+                        radius: fontSize * 0.7,
+                        backgroundColor: Color.fromARGB(255, 164, 60, 59),
+                        child: Icon(
+                          Icons.arrow_upward,
+                          color: Colors.white,
+                          size: fontSize,
+                        ),
+                      ),
+                      SizedBox(width: 7),
+                      Text(
+                        'Egresos',
+                        style: GoogleFonts.fredoka(
+                          fontSize: fontSize * 0.9,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ],
                   ),
-                  SizedBox(width: screenWidth * 0.00001),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 0),
-                    child: Column(
-                      children: [
-                        DiferenciaTotal(fontSize),
-                        Text(
-                              'Balance',
-                              style: GoogleFonts.fredoka(
-                                fontSize: fontSize * 0.9,
-                                color: Colors.black,
-                              ),
-                            ),
-                      ],
+                ],
+              ),
+            ),
+            const SizedBox(height: 6),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 30),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  TotalIncome(fontSize),
+                  SizedBox(width: screenWidth * 0.4),
+                  TotalExpense(fontSize),
+                ],
+              ),
+            ),
+            SizedBox(width: screenWidth * 0.00001),
+            Padding(
+              padding: const EdgeInsets.only(left: 0),
+              child: Column(
+                children: [
+                  DiferenciaTotal(fontSize),
+                  Text(
+                    'Balance',
+                    style: GoogleFonts.fredoka(
+                      fontSize: fontSize * 0.9,
+                      color: Colors.black,
                     ),
                   ),
                 ],
               ),
-          ),
-        );
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
-  Padding Transactions(double screenHeight, double screenWidth, double fontSize , List<Finance> finance) {
+  Padding Transactions(double screenHeight, double screenWidth, double fontSize,
+      List<Finance> finance) {
     return Padding(
-                              padding: EdgeInsets.only(
-                                  top: screenHeight * 0.3 , right: screenWidth * 0.04, left: screenWidth * 0.04, bottom: screenHeight * 0.03),
-                              child: Stack(
-                                children: [
-                                  ListView.builder(
-                                    itemCount: finance.length,
-                                    itemBuilder: (context, index) {
-                                      final fin = finance[index];
-                                      var cant = fin.amount;
-                                      int amount = int.parse(cant);
-                                      NumberFormat formatoMoneda =
-                                          NumberFormat.currency(symbol: '\$');
-                                      return Dismissible(
-                                        key: Key(fin.idFinance.toString()),
-                                        direction:
-                                            DismissDirection.endToStart,
-                                        background: Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Container(
-                                            alignment: Alignment.centerRight,
-                                            padding: const EdgeInsets.only(
-                                                right: 20.0),
-                                            color: Colors.red,
-                                            child: const Icon(
-                                              Icons.delete,
-                                              color: Colors.white,
-                                            ),
-                                          ),
-                                        ),
-                                        onDismissed: (direction) async {
-                                          setState(() {
-                items.removeAt(index);
-              });
-                                          var idFinance = fin.idFinance;
-                                          finance.removeWhere((element) =>
-                                              element.idFinance == idFinance);
-                                          String idFinanceString =
-                                              idFinance.toString();
-                                          await eliminarFinanza(
-                                              idFinance: idFinanceString);
-                                          await ShowDelete()
-                                              .showDeleteDialog(context)
-                                              .then((_) {
-                                            if (mounted) {
-                                              setState(() {});
-                                            }
-                                          });
-                                        },
-                                        child: GestureDetector(
-                                          onLongPress: () async {
-                                            _showModalSheetBono(
-                                                fin.idFinance,
-                                                fin.type,
-                                                fin.concept,
-                                                fin.amount);
-                                          },
-                                          child: ListTile(
-                                            leading: ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(5),
-                                              child: Image.asset(
-                                                'assets/images/${fin.concept}.png',
-                                                height: 40,
-                                              ),
-                                            ),
-                                            title: Text(
-                                              fin.concept,
-                                              style: GoogleFonts.fredoka(
-                                                  fontSize: fontSize * 0.9,
-                                                  color: Colors.black),
-                                            ),
-                                            subtitle: Text(
-                                              '${fin.reason}',
-                                              style: GoogleFonts.fredoka(
-                                                  fontSize: fontSize * 0.8,
-                                                  color: Colors.blue.shade700),
-                                            ),
-                                            trailing: Column(
-                                              children: [
-                                                showData == true
-                                                    ? Text(
-                                                        fin.type == 'Income'
-                                                            ? formatoMoneda
-                                                                .format(
-                                                                    amount)
-                                                            : '-' +
-                                                                formatoMoneda
-                                                                    .format(
-                                                                        amount),
-                                                        style: GoogleFonts
-                                                            .fredoka(
-                                                          fontSize:  fontSize * 0.76,
-                                                          color: fin.type ==
-                                                                  'Income'
-                                                              ? Colors.green
-                                                              : Colors.red,
-                                                        ),
-                                                      )
-                                                    : Text(
-                                                        fin.type == 'Income'
-                                                            ? '\$***'
-                                                            : '-\$***',
-                                                        style: GoogleFonts
-                                                            .fredoka(
-                                                          fontSize:  fontSize * 0.76,
-                                                          color: fin.type ==
-                                                                  'Income'
-                                                              ? Colors.green
-                                                              : Colors.red,
-                                                        ),
-                                                      ),
-                                                Text(
-                                                  '${fin.date}',
-                                                  style: GoogleFonts.fredoka(
-                                                      fontSize:  fontSize * 0.76,
-                                                      color: Colors.black),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      );
-                                    },
-                                  ),
-                                ],
+      padding: EdgeInsets.only(
+          top: screenHeight * 0.3,
+          right: screenWidth * 0.04,
+          left: screenWidth * 0.04,
+          bottom: screenHeight * 0.03),
+      child: Stack(
+        children: [
+          ListView.builder(
+            key: GlobalKey(),
+            itemCount: finance.length,
+            itemBuilder: (context, index) {
+              final fin = finance[index];
+              var cant = fin.amount;
+              int amount = int.parse(cant);
+              NumberFormat formatoMoneda = NumberFormat.currency(symbol: '\$');
+              return Dismissible(
+                key: Key(fin.idFinance.toString()),
+                direction: DismissDirection.endToStart,
+                background: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    alignment: Alignment.centerRight,
+                    padding: const EdgeInsets.only(right: 20.0),
+                    color: Colors.red,
+                    child: const Icon(
+                      Icons.delete,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+                onDismissed: (direction) async {
+                  var idFinance = fin.idFinance;
+                  String idFinanceString = idFinance.toString();
+
+                  // Muestra el diálogo de confirmación antes de actualizar el estado
+                  await ShowDelete().showDeleteDialog(context);
+
+                  // Luego de confirmar, eliminamos el elemento de la lista
+                  setState(() {
+                    finance.removeWhere(
+                        (element) => element.idFinance == idFinance);
+                  });
+
+                  // Después realizamos la operación de eliminación
+                  await eliminarFinanza(idFinance: idFinanceString);
+                  // Refresca la vista después de ejecutar eliminarFinanza
+                  if (mounted) {
+                    setState(() {
+                      // Este setState no necesita hacer nada específico
+                      // pero asegura que la vista se refresque después de eliminarFinanza.
+                    });
+                  }
+                },
+                child: GestureDetector(
+                  onLongPress: () async {
+                    _showModalSheetBono(
+                        fin.idFinance, fin.type, fin.concept, fin.amount);
+                  },
+                  child: ListTile(
+                    leading: ClipRRect(
+                      borderRadius: BorderRadius.circular(5),
+                      child: Image.asset(
+                        'assets/images/${fin.concept}.png',
+                        height: 40,
+                      ),
+                    ),
+                    title: Text(
+                      fin.concept,
+                      style: GoogleFonts.fredoka(
+                          fontSize: fontSize * 0.9, color: Colors.black),
+                    ),
+                    subtitle: Text(
+                      '${fin.reason}',
+                      style: GoogleFonts.fredoka(
+                          fontSize: fontSize * 0.8,
+                          color: Colors.blue.shade700),
+                    ),
+                    trailing: Column(
+                      children: [
+                        showData == true
+                            ? Text(
+                                fin.type == 'Income'
+                                    ? formatoMoneda.format(amount)
+                                    : '-' + formatoMoneda.format(amount),
+                                style: GoogleFonts.fredoka(
+                                  fontSize: fontSize * 0.76,
+                                  color: fin.type == 'Income'
+                                      ? Colors.green
+                                      : Colors.red,
+                                ),
+                              )
+                            : Text(
+                                fin.type == 'Income' ? '\$***' : '-\$***',
+                                style: GoogleFonts.fredoka(
+                                  fontSize: fontSize * 0.76,
+                                  color: fin.type == 'Income'
+                                      ? Colors.green
+                                      : Colors.red,
+                                ),
                               ),
-                            );
+                        Text(
+                          '${fin.date}',
+                          style: GoogleFonts.fredoka(
+                              fontSize: fontSize * 0.76, color: Colors.black),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              );
+            },
+          ),
+        ],
+      ),
+    );
   }
 
-  void _showModalSheet(String type, double screenHeight, double screenWidth, double fontSize ) async {
+  void _showModalSheet(String type, double screenHeight, double screenWidth,
+      double fontSize) async {
     if (type != null) {
       var data = await mostrarDataConcept(concept: type.toString());
       var totalData = await mostrarTotalDataConcept(concept: type.toString());
@@ -600,7 +591,8 @@ class _HomeState extends State<Home> {
               CupertinoActionSheetAction(
                 child: Text(
                   'Cerrar',
-                  style: GoogleFonts.fredoka(fontSize: 22, color: Colors.black54),
+                  style:
+                      GoogleFonts.fredoka(fontSize: 22, color: Colors.black54),
                 ),
                 onPressed: () {
                   Navigator.pop(context);
@@ -650,11 +642,13 @@ class _HomeState extends State<Home> {
                                 ),
                                 title: Text(
                                   '${item['concept']}',
-                                  style: GoogleFonts.fredoka(fontSize: fontSize * 0.9),
+                                  style: GoogleFonts.fredoka(
+                                      fontSize: fontSize * 0.9),
                                 ),
                                 subtitle: Text(
                                   '${item['reason']}',
-                                  style: GoogleFonts.fredoka(fontSize: fontSize * 0.8),
+                                  style: GoogleFonts.fredoka(
+                                      fontSize: fontSize * 0.8),
                                 ),
                                 trailing: Column(
                                   children: [
@@ -672,7 +666,8 @@ class _HomeState extends State<Home> {
                                     ),
                                     Text(
                                       '${item['date']}',
-                                      style: GoogleFonts.fredoka(fontSize: fontSize * 0.8),
+                                      style: GoogleFonts.fredoka(
+                                          fontSize: fontSize * 0.8),
                                     ),
                                   ],
                                 ),
@@ -808,7 +803,8 @@ class _HomeState extends State<Home> {
     });
   }
 
-  Positioned AddButtom(BuildContext context, double screenHeight, double screenWidth) {
+  Positioned AddButtom(
+      BuildContext context, double screenHeight, double screenWidth) {
     return Positioned(
       left: screenWidth * 0.75,
       top: screenHeight * 0.82,
@@ -857,7 +853,7 @@ class _HomeState extends State<Home> {
 
   Padding _title(double screenHeight, double screenWidth, double fontSize) {
     return Padding(
-      padding: EdgeInsets.only( top: screenHeight * 0.16),
+      padding: EdgeInsets.only(top: screenHeight * 0.16),
       child: Column(children: [
         Padding(
           padding: EdgeInsets.only(top: 15),
@@ -868,7 +864,8 @@ class _HomeState extends State<Home> {
               children: [
                 Text(
                   'Ver por: ',
-                  style: GoogleFonts.fredoka(fontSize: fontSize * 1.1, color: Colors.black),
+                  style: GoogleFonts.fredoka(
+                      fontSize: fontSize * 1.1, color: Colors.black),
                 ),
                 SizedBox(
                   width: 16,
@@ -881,7 +878,8 @@ class _HomeState extends State<Home> {
                   onChange: (String selectedItem) {
                     //print(selectedItem);
                     //handleStatefulBackdropContent(context); // Muestra el valor seleccionado en la consola
-                    _showModalSheet(selectedItem, screenHeight, screenWidth,  fontSize );
+                    _showModalSheet(
+                        selectedItem, screenHeight, screenWidth, fontSize);
                     pokemonDropdownController.close();
                   },
                   resultOptions: ResultOptions(
@@ -920,7 +918,7 @@ class _HomeState extends State<Home> {
           duration: Duration(milliseconds: 1700),
           child: Text(
             'Historial de Transacciones',
-            style: GoogleFonts.fredoka(fontSize:  fontSize * 1.1),
+            style: GoogleFonts.fredoka(fontSize: fontSize * 1.1),
 
             // TextStyle(
             //   fontWeight: FontWeight.w600,
@@ -1018,7 +1016,8 @@ class _HomeState extends State<Home> {
             // Muestra un mensaje de error si hay un error
             return Text(
               '\$00.0',
-              style: GoogleFonts.fredoka(fontSize: fontSize * 1.1, color: Colors.black),
+              style: GoogleFonts.fredoka(
+                  fontSize: fontSize * 1.1, color: Colors.black),
             );
           } else if (snapshot.hasData) {
             ingresos = snapshot.data!;
@@ -1027,13 +1026,15 @@ class _HomeState extends State<Home> {
             // Muestra el valor devuelto en un widget Text
             return Text(
               showData == true ? '${cantidadFormateada}' : '\$***',
-              style: GoogleFonts.fredoka(fontSize: fontSize * 1.1 , color: Colors.black),
+              style: GoogleFonts.fredoka(
+                  fontSize: fontSize * 1.1, color: Colors.black),
             );
           } else {
             // Si no hay datos disponibles, muestra un mensaje indicando que no hay datos
             return Text(
               'No hay datos disponibles',
-              style: GoogleFonts.fredoka(fontSize: fontSize * 1.1, color: Colors.black),
+              style: GoogleFonts.fredoka(
+                  fontSize: fontSize * 1.1, color: Colors.black),
             );
           }
         },
@@ -1056,7 +1057,8 @@ class _HomeState extends State<Home> {
             // Muestra un mensaje de error si hay un error
             return Text(
               '\$00.0',
-              style: GoogleFonts.fredoka(fontSize: fontSize * 1.1, color: Colors.black),
+              style: GoogleFonts.fredoka(
+                  fontSize: fontSize * 1.1, color: Colors.black),
             );
           } else if (snapshot.hasData) {
             gastos = snapshot.data!;
@@ -1065,7 +1067,8 @@ class _HomeState extends State<Home> {
             // Muestra el valor devuelto en un widget Text
             return Text(
               showData == true ? '-${cantidadFormateada}' : '\$***',
-              style: GoogleFonts.fredoka(fontSize: fontSize * 1.1, color: Colors.black),
+              style: GoogleFonts.fredoka(
+                  fontSize: fontSize * 1.1, color: Colors.black),
             );
           } else {
             // Si no hay datos disponibles, muestra un mensaje indicando que no hay datos
@@ -1091,7 +1094,8 @@ class _HomeState extends State<Home> {
             // Muestra un mensaje de error si hay un error
             return Text(
               '\$00.0',
-              style: GoogleFonts.fredoka(fontSize: fontSize * 1.4, color: Colors.black),
+              style: GoogleFonts.fredoka(
+                  fontSize: fontSize * 1.4, color: Colors.black),
             );
           } else if (snapshot.hasData) {
             ingresos = snapshot.data!;
@@ -1101,7 +1105,8 @@ class _HomeState extends State<Home> {
             // Muestra el valor devuelto en un widget Text
             return Text(
               showData == true ? '${cantidadFormateada}' : '\$***',
-              style: GoogleFonts.fredoka(fontSize: fontSize * 1.4, color: Colors.black),
+              style: GoogleFonts.fredoka(
+                  fontSize: fontSize * 1.4, color: Colors.black),
             );
           } else {
             // Si no hay datos disponibles, muestra un mensaje indicando que no hay datos
@@ -1111,8 +1116,6 @@ class _HomeState extends State<Home> {
       ),
     );
   }
-
-
 
   Widget _head() {
     return Padding(
@@ -1294,7 +1297,7 @@ class _HomeState extends State<Home> {
                       padding: const EdgeInsets.only(left: 15),
                       child: Row(
                         children: [
-                         // DiferenciaTotal(),
+                          // DiferenciaTotal(),
                         ],
                       ),
                     ),
@@ -1356,9 +1359,7 @@ class _HomeState extends State<Home> {
                       padding: const EdgeInsets.symmetric(horizontal: 30),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                    
-                        ],
+                        children: [],
                       ),
                     ),
                     const SizedBox(height: 25),
@@ -1458,8 +1459,7 @@ class BackgroundImage extends StatelessWidget {
             child: SizedBox.expand(
               child: Image.asset(
                 "assets/img/vector.png",
-                fit: BoxFit
-                    .cover, // La imagen se ajusta a toda la pantalla
+                fit: BoxFit.cover, // La imagen se ajusta a toda la pantalla
               ),
             ),
           ),
@@ -1468,7 +1468,6 @@ class BackgroundImage extends StatelessWidget {
     );
   }
 }
-
 
 /**import 'package:flutter/material.dart';
 
