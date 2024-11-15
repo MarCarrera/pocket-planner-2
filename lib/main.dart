@@ -5,6 +5,7 @@ import 'package:hive_flutter/adapters.dart';
 import 'package:pocket_planner/src/push_providers/push_notifications.dart';
 import 'package:pocket_planner/widgets/Login.dart';
 import 'package:pocket_planner/widgets/add_screen.dart';
+import 'Cards/cards_home.dart';
 import 'data/models/add_date.dart';
 import 'utils/NotificationScreen.dart';
 import 'widgets/buttom_nav.dart';
@@ -66,7 +67,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
      // navigatorKey: navigatorKey,
-      home: LoginScreen()
+      home:  CardsHome() //LoginScreen()
      // initialRoute: 'login',
       /*routes: {
         'login':(BuildContext context)=>LoginScreen(),

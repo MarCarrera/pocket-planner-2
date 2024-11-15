@@ -919,12 +919,6 @@ class _HomeState extends State<Home> {
           child: Text(
             'Historial de Transacciones',
             style: GoogleFonts.fredoka(fontSize: fontSize * 1.1),
-
-            // TextStyle(
-            //   fontWeight: FontWeight.w600,
-            //   fontSize: 19,
-            //   color: Colors.black,
-            // ),
           ),
         ),
       ]),
@@ -1469,44 +1463,4 @@ class BackgroundImage extends StatelessWidget {
   }
 }
 
-/**import 'package:flutter/material.dart';
 
-class MyDismissibleList extends StatefulWidget {
-  @override
-  _MyDismissibleListState createState() => _MyDismissibleListState();
-}
-
-class _MyDismissibleListState extends State<MyDismissibleList> {
-  List<String> items = List<String>.generate(10, (i) => 'Item $i');
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Dismissible List"),
-      ),
-      body: ListView.builder(
-        itemCount: items.length,
-        itemBuilder: (context, index) {
-          return Dismissible(
-            key: Key(items[index]),
-            onDismissed: (direction) {
-              // Aquí removemos el elemento de la lista
-              setState(() {
-                items.removeAt(index);
-              });
-
-              // Opcional: Mostrar un mensaje de confirmación
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('${items[index]} eliminado')),
-              );
-            },
-            background: Container(color: Colors.red),
-            child: ListTile(title: Text(items[index])),
-          );
-        },
-      ),
-    );
-  }
-}
- */
